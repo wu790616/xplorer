@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_07_165933) do
+ActiveRecord::Schema.define(version: 2018_09_07_174420) do
 
   create_table "bookmarks", force: :cascade do |t|
     t.integer "user_id"
@@ -38,8 +38,6 @@ ActiveRecord::Schema.define(version: 2018_09_07_165933) do
 
   create_table "issues", force: :cascade do |t|
     t.integer "user_id"
-    t.integer "reply_id"
-    t.integer "topic_tag_id"
     t.string "title"
     t.text "content"
     t.integer "likes_count", default: 0
