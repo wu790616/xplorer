@@ -7,4 +7,5 @@ Rails.application.routes.draw do
   resources :issues, only: [:show, :create, :edit, :update, :destroy]
 
   resources :topicfollowships, only: [:create, :destroy]
+  resources :bookmarks, only: [:create, :destroy]
 end
