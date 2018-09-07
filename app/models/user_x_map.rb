@@ -1,0 +1,2 @@
+class UserXMap < ApplicationRecord
+end
