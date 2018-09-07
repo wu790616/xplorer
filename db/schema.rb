@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_07_072512) do
+ActiveRecord::Schema.define(version: 2018_09_07_083822) do
+
+  create_table "topic_tagships", force: :cascade do |t|
+    t.integer "issue_id"
+    t.integer "topic_id"
+    t.string "progress", default: "init"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "topics", force: :cascade do |t|
     t.string "name"

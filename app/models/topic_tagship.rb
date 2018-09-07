@@ -1,0 +1,2 @@
+class TopicTagship < ApplicationRecord
+end
