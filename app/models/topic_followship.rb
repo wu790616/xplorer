@@ -1,0 +1,2 @@
+class TopicFollowship < ApplicationRecord
+end
