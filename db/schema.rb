@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_07_132603) do
+ActiveRecord::Schema.define(version: 2018_09_07_133422) do
 
   create_table "notifications", force: :cascade do |t|
     t.integer "user_id"
@@ -30,6 +30,13 @@ ActiveRecord::Schema.define(version: 2018_09_07_132603) do
   create_table "skillships", force: :cascade do |t|
     t.integer "user_id"
     t.integer "skill_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_followships", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "following_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

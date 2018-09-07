@@ -1,0 +1,2 @@
+class UserFollowship < ApplicationRecord
+end
