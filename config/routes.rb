@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :userfollowships, only: [:create, :destroy]
   resources :topicfollowships, only: [:create, :destroy]
   resources :bookmarks, only: [:create, :destroy]
 end
