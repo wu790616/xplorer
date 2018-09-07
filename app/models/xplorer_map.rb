@@ -1,0 +1,2 @@
+class XplorerMap < ApplicationRecord
+end
