@@ -4,5 +4,7 @@ Rails.application.routes.draw do
 
   resources :topics, only: [:index, :show]
 
+  resources :issues, only: [:show, :create, :edit, :update, :destroy]
+
   resources :topicfollowships, only: [:create, :destroy]
 end
