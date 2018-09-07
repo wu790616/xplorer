@@ -1,0 +1,2 @@
+class Skillship < ApplicationRecord
+end
