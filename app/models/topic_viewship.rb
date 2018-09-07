@@ -1,0 +1,2 @@
+class TopicViewship < ApplicationRecord
+end
