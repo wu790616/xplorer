@@ -1,0 +1,2 @@
+class IssueView < ApplicationRecord
+end
