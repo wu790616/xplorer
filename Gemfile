@@ -38,6 +38,9 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # User devise for user model authentication solution
 gem 'devise'
 
+# add OmniAuth gem
+gem 'omniauth-facebook'
+
 group :production do
   gem 'pg'
 end
