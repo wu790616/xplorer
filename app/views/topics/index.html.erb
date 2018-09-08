@@ -2,5 +2,5 @@
 
 <% @hot_topics.each do |topic| %>
   <%= topic.name %> (<%= topic.followers_count %>)<br>
-  <h3><%= link_to "#{topic.name}", topic_path(topic) %></h3>
+  <h3><%= link_to "#{topic.name}", topic_path(topic, :page_num => 1) %></h3>
 <% end %>

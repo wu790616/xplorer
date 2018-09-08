@@ -1,0 +1,22 @@
+<!--
+  後端送出之變數說明：
+  @center 為中心主題
+  @link1 ~ @link4 為相關的四個主題 (以關聯度排序)
+-->
+
+<h1>TOPIC SHOW</h1>
+
+<h3><%= link_to "#{@center.name}", topic_path(@center, :page_num => 1) %></h3>
+<ul><%= link_to "#{@link1.name}", topic_path(@link1, :page_num => 1) %></ul>
+<ul><%= link_to "#{@link2.name}", topic_path(@link2, :page_num => 1) %></ul>
+<ul><%= link_to "#{@link3.name}", topic_path(@link3, :page_num => 1) %></ul>
+<ul><%= link_to "#{@link4.name}", topic_path(@link4, :page_num => 1) %></ul>
+
+<h1><%= link_to "Re-generate", topic_path(@center, :page_num => 2) %></h1>
+
+<!--
+  以下註解單純說明目前 fake data 邏輯，可刪除
+  目前 fake data 會產生 link1 亂數 id，link2~link8 依序累加
+  ex: link1 == 31 ==> link2~8 == 32~38
+      以:page_num 區分，page1 顯示 31~34 / page2 顯示 35~38
+-->
