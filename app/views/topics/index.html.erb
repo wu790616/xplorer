@@ -1,1 +1,15 @@
 <h1> Index </h1>
+
+<!-- 以下是for user 登入登出測試用 -->
+ <% if current_user %>
+  Hi, <%= current_user.name %>
+  </br>
+    This is your email: <%= current_user.email %>
+  </br>
+    <%= link_to('登出', destroy_user_session_path, method: :delete) %> |
+    <%= link_to('修改密碼', edit_user_registration_path) %>
+  <% else %>
+    <%= link_to('註冊', new_user_registration_path) %> |
+    <%= link_to('登入', new_user_session_path) %> |
+    <%= link_to "Facebook登入/註冊", user_facebook_omniauth_authorize_path %>
+ <% end %>
