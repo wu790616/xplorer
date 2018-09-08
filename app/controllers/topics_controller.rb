@@ -5,7 +5,8 @@ class TopicsController < ApplicationController
   end
 
   def show
-    @center = Topic.find(params[:id])
+    @base = Topic.find(params[:id])
+    @center = Topic.find(params[:center_id].to_i)
     if(params[:page_num].to_i == 1)                # first X map
       @link1  = Topic.find(@center.topic_link1_id)
       @link2  = Topic.find(@center.topic_link2_id)
@@ -18,5 +19,5 @@ class TopicsController < ApplicationController
       @link4  = Topic.find(@center.topic_link8_id)
     end
   end
-  
+
 end
