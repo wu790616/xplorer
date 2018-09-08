@@ -20,4 +20,6 @@ Rails.application.routes.draw do
   resources :likes, only: [:create, :destroy]
 
   resources :search, only: [:index]
+
+  root "topics#index"
 end
