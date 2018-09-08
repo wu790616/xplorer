@@ -1,1 +1,6 @@
 <h1> Index </h1>
+
+<% @hot_topics.each do |topic| %>
+  <%= topic.name %> (<%= topic.followers_count %>)<br>
+  <h3><%= link_to "#{topic.name}", topic_path(topic) %></h3>
+<% end %>
