@@ -287,4 +287,8 @@ Devise.setup do |config|
   # ActiveSupport.on_load(:devise_failure_app) do
   #   include Turbolinks::Controller
   # end
+
+  # facebook登入
+  fb_config = Rails.application.config_for(:facebook)
+  config.omniauth :facebook, fb_config["app_id"], fb_config["secret"], scope: "public_profile,email", info_fields: "email,name", image_size: "large", callback_url: "https://xplorer-tw.herokuapp.com/users/auth/facebook/callback"
 end
