@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
   resources :topics, only: [:index, :show]
 
-  resources :issues, only: [:show, :create, :edit, :update, :destroy] do
+  resources :issues, except: [:index] do
     resources :comments, only: [:create] do
       resources :replies, only: [:create]
     end
