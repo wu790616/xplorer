@@ -40,6 +40,8 @@ gem 'devise'
 
 # add OmniAuth gem
 gem 'omniauth-facebook'
+gem 'bootstrap-sass'
+gem 'jquery-rails'
 
 group :production do
   gem 'pg'
