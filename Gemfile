@@ -40,6 +40,7 @@ gem 'devise'
 
 # add OmniAuth gem
 gem 'omniauth-facebook'
+gem "omniauth-google-oauth2"
 
 group :production do
   gem 'pg'
