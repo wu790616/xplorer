@@ -289,6 +289,5 @@ Devise.setup do |config|
   # end
 
   # facebook登入
-  fb_config = Rails.application.config_for(:facebook)
-  config.omniauth :facebook, fb_config["app_id"], fb_config["secret"], scope: "public_profile,email", info_fields: "email,name", image_size: "large", callback_url: "https://xplorer-tw.herokuapp.com/users/auth/facebook/callback"
+  config.omniauth :facebook, ENV["FB_APP_ID"], ENV["FB_SECRET"], scope: "public_profile,email", info_fields: "email,name", image_size: "large", callback_url: "https://xplorer-tw.herokuapp.com/users/auth/facebook/callback"
 end
