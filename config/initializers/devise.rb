@@ -288,6 +288,6 @@ Devise.setup do |config|
   #   include Turbolinks::Controller
   # end
 
-  # facebook登入
+  # facebook登入，需要在config/local_env.yml設定好參數
   config.omniauth :facebook, ENV["FB_APP_ID"], ENV["FB_SECRET"], scope: "public_profile,email", info_fields: "email,name", image_size: "large", callback_url: "https://xplorer-tw.herokuapp.com/users/auth/facebook/callback"
 end
