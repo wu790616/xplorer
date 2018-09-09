@@ -4,6 +4,7 @@ namespace :dev do
   TOPIC_NUM = 20
   ISSUE_NUM = 20
   TAG_NUM = 20
+  TOPICFOLLOW_NUM = 200
 
   task fake_user: :environment do
     User.destroy_all
@@ -48,15 +49,25 @@ namespace :dev do
   task fake_topic_followship: :environment do
     TopicFollowship.destroy_all
 
-    User.all.each do |user|
-      rand(1..TOPIC_NUM).times do |i|
-        topic = Topic.all.sample
-        user.topic_followships.create!(
-          user: user,
-          topic: topic
-        )
-      end
+    # 建立資料庫關聯後產生方法
+    # User.all.each do |user|
+    #   rand(1..TOPIC_NUM).times do |i|
+    #     topic = Topic.all.sample
+    #     user.topic_followships.create!(
+    #       user: user,
+    #       topic: topic
+    #     )
+    #   end
+    # end
+    
+    # 建立資料庫關聯前產生方法
+    TOPICFOLLOW_NUM.times do |i|
+      TopicFollowship.create!(
+        user_id: User.all.sample.id,
+        topic_id: Topic.all.sample.id
+      )
     end
+
     puts "have created fake topic_followships"
     puts "now you have #{TopicFollowship.count} topic_followships data"
   end
