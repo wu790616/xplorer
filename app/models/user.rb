@@ -3,7 +3,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :omniauthable, omniauth_providers: [:facebook]
+         :omniauthable, omniauth_providers: [:facebook, :google_oauth2]
 
   # 驗證name不可空白
   validates :name, presence: true
@@ -37,5 +37,37 @@ class User < ApplicationRecord
     user.avatar = auth.info.image
     user.save!
     return user
+  end
+
+  # for google omniauth
+  def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
+    data = access_token.info
+    
+    # Case 1: Find existing user by google uid
+    user = User.find_by_google_uid( access_token.uid )
+    if user
+      return user
+    end
+
+    # Case 2: Find existing user by email
+    existing_user = User.find_by_email( access_token.info.email )
+    if existing_user   
+      existing_user.google_uid = access_token.uid
+      existing_user.google_token = access_token.credentials.token
+      existing_user.save!
+      return existing_user
+    end
+
+    # Case 3: Create new password
+    user = User.new
+    user.google_uid = access_token.uid 
+    user.google_token = access_token.credentials.token
+    user.email = data.email
+    user.password = Devise.friendly_token[0,20]
+    user.name = data.name
+    user.avatar = data.image
+    user.save!
+    return user    
+
   end
 end

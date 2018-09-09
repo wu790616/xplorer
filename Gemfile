@@ -40,6 +40,9 @@ gem 'devise'
 
 # add OmniAuth gem
 gem 'omniauth-facebook'
+gem "omniauth-google-oauth2"
+
+# bootstrap and jquery
 gem 'bootstrap-sass'
 gem 'jquery-rails'
 

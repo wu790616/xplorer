@@ -290,4 +290,8 @@ Devise.setup do |config|
 
   # facebook登入，需要在config/local_env.yml設定好參數
   config.omniauth :facebook, ENV["FB_APP_ID"], ENV["FB_SECRET"], scope: "public_profile,email", info_fields: "email,name", image_size: "large", callback_url: "https://xplorer-tw.herokuapp.com/users/auth/facebook/callback"
+  # google登入，需要在config/local_env.yml設定好參數
+  config.omniauth :google_oauth2, ENV["GOOGLE_APP_ID"], ENV["GOOGLE_SECRET"], {
+    prompt: "select_account consent"
+  }
 end
