@@ -24,5 +24,7 @@ module Xplorer
       end if File.exists?(env_file)
     end
 
+    # add ckeditor models to the autoload path
+    config.autoload_paths += %w(#{config.root}/app/models/ckeditor)
   end
 end
