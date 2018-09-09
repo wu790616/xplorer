@@ -52,8 +52,8 @@ class User < ApplicationRecord
     # Case 2: Find existing user by email
     existing_user = User.find_by_email( access_token.info.email )
     if existing_user   
-      existing_user.google_uid = auth.uid
-      existing_user.google_token = auth.credentials.token
+      existing_user.google_uid = access_token.uid
+      existing_user.google_token = access_token.credentials.token
       existing_user.save!
       return existing_user
     end
