@@ -3,7 +3,7 @@
 <!-- 以下是topic測試用 -->
 <% @hot_topics.each do |topic| %>
   <%= topic.name %> (<%= topic.followers_count %>)<br>
-  <h3><%= link_to "#{topic.name}", topic_path(topic, :center_id => topic.id, :page_num => 1) %></h3>
+  <h3><%= link_to "#{topic.name}", topic_path(topic.id, :center => topic.id, :page_num => 0) %></h3>
 <% end %>
 
 <!-- 以下是for user 登入登出測試用 -->
