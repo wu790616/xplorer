@@ -42,6 +42,9 @@ gem 'devise'
 gem 'omniauth-facebook'
 gem "omniauth-google-oauth2"
 
+# add ahoy gem
+gem 'ahoy_matey'
+
 # bootstrap and jquery
 gem 'bootstrap-sass'
 gem 'jquery-rails'
