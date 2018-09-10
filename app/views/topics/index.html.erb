@@ -25,3 +25,12 @@
 <!-- 以下是issue測試用 -->
 <p>--------以下是issue測試用--------</p>
 <%= link_to "Create Issue", new_issue_path %>
+
+<% @issues.each do |issue| %>
+  <h3><%= issue.title %></h3> 
+  <%= link_to "Show", issue_path(issue) %> |
+  <% if issue.user == current_user %>
+    <%= link_to "Edit", edit_issue_path(issue) %> |
+    <%= link_to "Delete", issue_path(issue), method: :delete %>
+  <% end %>
+<% end %>

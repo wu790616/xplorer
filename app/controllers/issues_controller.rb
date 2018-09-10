@@ -28,6 +28,31 @@ class IssuesController < ApplicationController
     @issue = Issue.find(params[:id])
   end
 
+  def edit
+    @issue = Issue.find(params[:id])
+  end
+
+  def destroy
+    @issue = Issue.find(params[:id])
+    @issue.destroy
+    redirect_back(fallback_location: root_path)
+  end
+
+  def update
+    @issue = Issue.find(params[:id])
+    if @issue.update(issue_params)
+      if @issue.draft
+        redirect_to issue_path(@issue)
+      else
+        @issue.draft = true
+        @issue.save
+        redirect_to taglist_issue_path(@issue)
+      end
+    else
+      render :edit
+    end
+  end
+
   # 列出所有topic清單
   def taglist
     @issue = Issue.find(params[:id])
