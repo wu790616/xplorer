@@ -15,3 +15,5 @@
 <% else %>
   <%= link_to "Publish", publish_issue_path, method: :patch, class: "btn btn-primary disabled" %>
 <% end %> 
+
+<%= link_to "Back to issue", issue_path(@issue) , class: "btn btn-primary" %>

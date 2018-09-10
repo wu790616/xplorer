@@ -79,9 +79,13 @@ class IssuesController < ApplicationController
   # 將issue的draft改成false
   def publish
     @issue = Issue.find(params[:id])
-    @issue.draft = false
-    @issue.save
-    redirect_to issue_path(@issue)
+    if @issue.title.empty? or @issue.content.empty? 
+      redirect_to edit_issue_path(@issue)
+    else
+      @issue.draft = false
+      @issue.save
+      redirect_to issue_path(@issue)
+    end
   end
 
   private
