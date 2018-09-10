@@ -13,6 +13,13 @@ Rails.application.routes.draw do
     resources :comments, only: [:create] do
       resources :replies, only: [:create]
     end
+
+    member do
+      get :taglist
+      post :tag
+      post :untag
+      patch :publish
+    end
   end
 
   resources :userfollowships, only: [:create, :destroy]

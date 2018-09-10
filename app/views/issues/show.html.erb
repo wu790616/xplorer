@@ -1,0 +1,18 @@
+<!-- 為了測試用，先弄個簡易版印出內容 -->
+<h1>Issue Page</h1>
+
+<h3><%= @issue.title %></h3>
+
+<% if @issue.draft %>
+  <p>這是草稿</p>
+<% else %>
+  <p>這不是草稿</p>
+<% end %>
+
+<h5>Content:</h5>
+<%=raw @issue.content %>
+
+<h5>Topics:</h5>
+<% @issue.taged_topics.each do |topic| %>
+  <%= topic.name %>
+<% end %>

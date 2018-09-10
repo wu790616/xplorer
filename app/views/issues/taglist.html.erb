@@ -1,0 +1,17 @@
+<h1>Topic List</h1>
+
+<% @topics.each do |topic| %>
+  <%= topic.name %>
+  <% if topic.is_taged?(@issue) %> 
+    <%= link_to "Untaged", untag_issue_path(topic: topic, issue: @issue), method: :post, class: "btn btn-info" %>
+  <% else %>
+    <%= link_to "Tag", tag_issue_path(topic: topic, issue: @issue), method: :post, class: "btn btn-primary" %>
+  <% end %>
+<% end %>
+<br><br><br>
+
+<% if @issue.taged_topics.size > 0 %>
+  <%= link_to "Publish", publish_issue_path, method: :patch, class: "btn btn-primary" %>
+<% else %>
+  <%= link_to "Publish", publish_issue_path, method: :patch, class: "btn btn-primary disabled" %>
+<% end %> 
