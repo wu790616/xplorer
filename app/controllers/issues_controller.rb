@@ -1,5 +1,7 @@
 class IssuesController < ApplicationController
   before_action :authenticate_user!, except: :show
+  before_action :set_issue, only: [:show, :edit, :destroy, :update, :taglist, :publish]
+  before_action :set_topic_issue, only: [:tag, :untag]
 
   def new
     @issue = Issue.new
@@ -25,21 +27,17 @@ class IssuesController < ApplicationController
   end
 
   def show
-    @issue = Issue.find(params[:id])
   end
 
   def edit
-    @issue = Issue.find(params[:id])
   end
 
   def destroy
-    @issue = Issue.find(params[:id])
     @issue.destroy
     redirect_back(fallback_location: root_path)
   end
 
   def update
-    @issue = Issue.find(params[:id])
     if @issue.update(issue_params)
       if @issue.draft
         redirect_to issue_path(@issue)
@@ -55,22 +53,17 @@ class IssuesController < ApplicationController
 
   # 列出所有topic清單
   def taglist
-    @issue = Issue.find(params[:id])
     @topics = Topic.all
   end
 
   # Issue tag 該 topic
   def tag
-    @topic = Topic.find(params[:topic])
-    @issue = Issue.find(params[:issue])
     @issue.topic_tagships.create!(topic: @topic)
     redirect_back(fallback_location: root_path)
   end
 
   # Issue untag 該 topic
   def untag
-    @topic = Topic.find(params[:topic])
-    @issue = Issue.find(params[:issue])
     topic_tagships = TopicTagship.where(topic: @topic, issue: @issue)
     topic_tagships.destroy_all
     redirect_back(fallback_location: root_path)
@@ -78,7 +71,6 @@ class IssuesController < ApplicationController
 
   # 將issue的draft改成false
   def publish
-    @issue = Issue.find(params[:id])
     if @issue.title.empty? or @issue.content.empty? 
       redirect_to edit_issue_path(@issue)
     else
@@ -92,6 +84,15 @@ class IssuesController < ApplicationController
 
   def issue_params
     params.require(:issue).permit(:title, :content, :draft)
+  end
+
+  def set_issue
+    @issue = Issue.find(params[:id])
+  end
+
+  def set_topic_issue
+    @topic = Topic.find(params[:topic])
+    @issue = Issue.find(params[:issue])
   end
 
 end
