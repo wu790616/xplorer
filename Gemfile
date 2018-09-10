@@ -43,7 +43,7 @@ gem 'omniauth-facebook'
 
 gem 'bootstrap-sass'
 gem 'jquery-rails'
-gem "bootswatch", github: "thomaspark/bootswatch"
+gem 'bootswatch-rails'
 
 group :production do
   gem 'pg'
