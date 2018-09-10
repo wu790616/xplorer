@@ -14,9 +14,14 @@
   </br>
     <%= link_to('登出', destroy_user_session_path, method: :delete) %> |
     <%= link_to('修改密碼', edit_user_registration_path) %>
-  <% else %>
+<% else %>
     <%= link_to('註冊', new_user_registration_path) %> |
     <%= link_to('登入', new_user_session_path) %> |
     <%= link_to "Facebook登入/註冊", user_facebook_omniauth_authorize_path %> |
     <%= link_to "Google登入/註冊", user_google_oauth2_omniauth_authorize_path %>
 <% end %>
+</br></br>
+
+<!-- 以下是issue測試用 -->
+<p>--------以下是issue測試用--------</p>
+<%= link_to "Create Issue", new_issue_path %>
