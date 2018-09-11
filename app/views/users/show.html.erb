@@ -1,5 +1,10 @@
 <h1>個人頁面</h1>
 
+<% if @user == current_user %>
+  <%= link_to('修改個人檔案', edit_user_path(@user)) %>
+  <br>
+<% end %>  
+
 Name:
 <%= @user.name %>
 <br>
