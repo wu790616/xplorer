@@ -1,2 +1,0 @@
-class Skillship < ApplicationRecord
-end

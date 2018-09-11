@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: [:facebook, :google_oauth2]
   mount_uploader :avatar, AvatarUploader
+  acts_as_taggable_on :skills
 
   # 驗證name不可空白
   validates :name, presence: true
