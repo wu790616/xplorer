@@ -8,6 +8,9 @@ class User < ApplicationRecord
   # 驗證name不可空白
   validates :name, presence: true
 
+  # 一個使用者有多篇Issue
+  has_many :issues, dependent: :destroy
+
   # for fb omniauth
   def self.from_omniauth(auth)
     # Case 1: Find existing user by facebook uid

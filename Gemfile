@@ -46,6 +46,11 @@ gem "omniauth-google-oauth2"
 gem 'bootstrap-sass'
 gem 'jquery-rails'
 
+# gem for editor
+gem 'ckeditor'
+gem 'carrierwave'
+gem 'mini_magick'
+
 group :production do
   gem 'pg'
 end

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount Ckeditor::Engine => '/ckeditor'
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
@@ -8,9 +9,16 @@ Rails.application.routes.draw do
 
   resources :topics, only: [:index, :show]
 
-  resources :issues, only: [:show, :create, :edit, :update, :destroy] do
+  resources :issues, except: [:index] do
     resources :comments, only: [:create] do
       resources :replies, only: [:create]
+    end
+
+    member do
+      get :taglist
+      post :tag
+      post :untag
+      patch :publish
     end
   end
 

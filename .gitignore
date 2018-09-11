@@ -33,3 +33,6 @@
 
 # Ignore all secret info
 /config/local_env.yml
+
+# Ignore CarrierWave upload picture
+/public/uploads
