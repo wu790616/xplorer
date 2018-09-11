@@ -5,6 +5,12 @@
   <br>
 <% end %>  
 
+Avatar:
+<br>
+<% if @user.avatar? %>
+  <%= image_tag @user.avatar.url, width: '300px' %>
+<% end %>
+<br>
 Name:
 <%= @user.name %>
 <br>
