@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_11_153323) do
+ActiveRecord::Schema.define(version: 2018_09_11_155146) do
 
   create_table "ahoy_events", force: :cascade do |t|
     t.integer "visit_id"
@@ -176,7 +176,7 @@ ActiveRecord::Schema.define(version: 2018_09_11_153323) do
     t.integer "links_count", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "issues_count", default: 0
+    t.integer "topic_tagships_count", default: 0
   end
 
   create_table "user_followships", force: :cascade do |t|
