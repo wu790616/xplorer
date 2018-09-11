@@ -11,6 +11,10 @@ class User < ApplicationRecord
   # 一個使用者有多篇Issue
   has_many :issues, dependent: :destroy
 
+  # 一個使用者有多個關注Topic
+  has_many :topic_followships, dependent: :destroy
+  has_many :following_topics, through: :topic_followships, source: :topic
+
   # for fb omniauth
   def self.from_omniauth(auth)
     # Case 1: Find existing user by facebook uid

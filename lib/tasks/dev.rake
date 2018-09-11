@@ -50,23 +50,23 @@ namespace :dev do
     TopicFollowship.destroy_all
 
     # 建立資料庫關聯後產生方法
-    # User.all.each do |user|
-    #   rand(1..TOPIC_NUM).times do |i|
-    #     topic = Topic.all.sample
-    #     user.topic_followships.create!(
-    #       user: user,
-    #       topic: topic
-    #     )
-    #   end
-    # end
+    User.all.each do |user|
+      rand(1..TOPIC_NUM).times do |i|
+        topic = Topic.all.sample
+        user.topic_followships.create!(
+          user: user,
+          topic: topic
+        )
+      end
+    end
     
     # 建立資料庫關聯前產生方法
-    TOPICFOLLOW_NUM.times do |i|
-      TopicFollowship.create!(
-        user_id: User.all.sample.id,
-        topic_id: Topic.all.sample.id
-      )
-    end
+    #TOPICFOLLOW_NUM.times do |i|
+    #  TopicFollowship.create!(
+    #    user_id: User.all.sample.id,
+    #    topic_id: Topic.all.sample.id
+    #  )
+    #end
 
     puts "have created fake topic_followships"
     puts "now you have #{TopicFollowship.count} topic_followships data"
