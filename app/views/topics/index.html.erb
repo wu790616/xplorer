@@ -2,7 +2,7 @@
 
 <!-- 以下是topic測試用 -->
 <% @hot_topics.each do |topic| %>
-  <%= topic.name %> (<%= topic.followers_count %>)<br>
+  <%= topic.name %> (<%= topic.topic_tagships_count %>)<br>
   <h3><%= link_to "#{topic.name}", topic_path(topic.id, :center => topic.id, :page_num => 0) %></h3>
 <% end %>
 

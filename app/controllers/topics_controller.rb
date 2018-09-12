@@ -1,7 +1,11 @@
 class TopicsController < ApplicationController
 
   def index
-    @hot_topics = Topic.all.order(followers_count: :desc).limit(5)
+    if(current_user)
+      @hot_topics = current_user.following_topics.order(topic_tagships_count: :desc).limit(5)
+    else
+      @hot_topics = Topic.all.order(topic_tagships_count: :desc).limit(5)
+    end
     @issues = Issue.all.order(created_at: :desc).limit(5)
   end
 
