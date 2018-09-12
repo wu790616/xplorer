@@ -11,5 +11,13 @@
  * It is generally better to create a new file per style scope.
  *
  */
-@import 'bootstrap-sprockets';
-@import 'bootstrap';
+ // First import readable variables
+@import "bootswatch/readable/variables";
+@import "bootstrap-sprockets";
+@import "bootstrap";
+// Bootstrap body padding for fixed navbar
+body { padding-top: 70px; }
+
+// And finally bootswatch style itself
+@import "bootswatch/readable/bootswatch";
+@import "custom";

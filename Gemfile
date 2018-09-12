@@ -48,6 +48,7 @@ gem 'ahoy_matey'
 # bootstrap and jquery
 gem 'bootstrap-sass'
 gem 'jquery-rails'
+gem 'bootswatch-rails'
 
 # gem for editor
 gem 'ckeditor'
