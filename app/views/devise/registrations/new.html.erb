@@ -1,18 +1,18 @@
 
 <div class="custom-form">
-  <form class="form-horizontal">
-    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <div class="form-horizontal">
     <%= devise_error_messages! %>
     <fieldset>
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
       <legend>註冊</legend>
       <div class="form-group">
         <div class="col-lg-12">
-          <%= f.text_field :name, autofocus: true, class: "form-control", id: "inputName", placeholder: "暱稱"%>
+          <%= f.text_field :name, autofocus: true, class: "form-control", placeholder: "暱稱"%>
         </div>
       </div>
       <div class="form-group">
         <div class="col-lg-12">
-          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", id:"inputEmail", placeholder: "電子郵件"%>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "電子郵件"%>
         </div>
       </div>
       <div class="form-group">
@@ -33,13 +33,13 @@
           <%= f.submit "註冊", class: "btn btn-default btn-block"%>
         </div>
       </div>
+      <% end %>
       <div class="form-group">
         <div class="col-lg-12">
         <%= render "devise/shared/links" %>
         </div>
       </div>
     </fieldset>
-    <% end %>
-  </form>
+  </div>
 </div>
 
