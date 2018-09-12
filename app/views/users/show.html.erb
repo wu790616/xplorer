@@ -39,7 +39,9 @@ Introduction:
 <br>
 
 Skill:
-<%= @user.skill_list %>
+<% @user.skill_list.each do |skill| %>
+  <li><%= skill %></li>
+<% end %>
 <br>
 
 My X Map:

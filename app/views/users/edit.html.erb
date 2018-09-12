@@ -5,11 +5,17 @@
     <%= f.label :email, "Email:" %>
     <%= f.text_field :email, class: "form-control", disabled: true %>
   </div>  
+
    <div class="form-group">
     <%= f.label :name, "Name:" %>
     <%= f.text_field :name, class: "form-control" %>
   </div>  
-  
+
+  <div class="form-group">
+    <%= f.label :skill_list, 'Skills(用","分開) 例如Java, C#, C++' %><br/>
+    <%= f.text_field :skill_list,  value: f.object.skill_list.join(', '), class: "form-control" %> %>
+  </div> 
+
   <div class="form-group">
     <%= f.label :introduction, "自我介紹:" %>
     <%= f.text_area :introduction, class: "form-control", rows: "2" %>
