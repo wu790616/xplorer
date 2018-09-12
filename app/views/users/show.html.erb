@@ -17,7 +17,7 @@ Name:
 <br>
 
 Email:
-<!-- 使用者可以看到自己的mail和決定是否要公開 -->
+<!-- 使用者可以看到自己的Email和決定是否要公開 -->
 <% if @user == current_user %>
   <%= @user.email %>
   <% if @user.contact_privacy %> 
@@ -25,10 +25,10 @@ Email:
   <% else %>
     <%= button_to "改為公開", user_path(@user), method: :patch, params: { :"user[contact_privacy]" => true }, class: "btn btn-primary" %>
   <% end %>
-<!-- 非本人當使用者設定可以看到mail時，顯示mail -->
+<!-- 非本人當使用者設定可以看到Email時，顯示Email -->
 <% elsif @user.contact_privacy %>
   <%= @user.email %>
-<!-- 非本人當使用者設定不可以看到mail時，顯示使用者不公開 -->
+<!-- 非本人當使用者設定不可以看到Email時，顯示使用者不公開 -->
 <% else %>
   使用者不公開
 <% end %>
