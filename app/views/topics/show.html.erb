@@ -32,9 +32,11 @@
 
 <h1>TOPIC SHOW</h1>
 
+<h3>Base Topic: <%= @base.name %></h3>
+
 <h3>
   <%= link_to "#{@center.name}", topic_path(@center.id, :center => @center.id, :from => @center.id, :page_num => @page) %>
-  <%= link_to "(Regen)"        , topic_path(@center.id, :center => @center.id, :from => @center.id, :page_num => @page) %>
+  <%= link_to "(Regen)"        , topic_path(  @base.id, :center => @center.id, :from => @center.id, :page_num => @page) %>
 </h3>
 <ul><%= link_to "#{ @link1.name}", topic_path(  @base.id, :center =>  @link1.id, :from => @center.id, :page_num => 0) %></ul>
 <ul><%= link_to "#{ @link2.name}", topic_path(  @base.id, :center =>  @link2.id, :from => @center.id, :page_num => 0) %></ul>
@@ -47,6 +49,25 @@
   <ul><%= "#{log.name}" %><br></ul>
 <% end %>
 
+<h3><%= @base.topic_tagships_count %> Issues in Topic <%= "#{@base.name}" %></h3>
+<h3><%= @base.followers_count %> Followers in Topic <%= "#{@base.name}" %></h3>
+<% @issues.each do |issue| %>
+  <p>Create Time    : <%= "#{issue.created_at.to_s(:long)}" %><br></p>
+  <p>Updated Time   : <%= "#{issue.updated_at.to_s(:long)}" %><br></p>
+  <p>Author         : <%= "#{issue.user.name}" %><br></p>
+  <p>Title          : <%= "#{issue.title}" %><br></p>
+  <p>Content        : <%= "#{issue.content}" %><br></p>
+  <p>Likes count    : <%= "#{issue.likes_count}" %><br></p>
+  <p>Comments count : <%= "#{issue.comments_count}" %><br></p>
+  <p>Views count    : <%= "#{issue.views_count}" %><br></p>
+  <p>Bookmarks count: <%= "#{issue.bookmarks_count}" %><br></p>
+  <p>Shares count   : <%= "#{issue.shares_count}" %><br></p>
+  <% issue.taged_topics.each do |tagged| %>
+    <%= "#{tagged.name}, " %>
+  <% end %>
+  <br>
+  <hr>
+<% end %>
 <!--
   以下註解單純說明目前 fake data 邏輯，可刪除
   目前 fake data 會產生 link1 亂數 id，link2~link8 依序累加

@@ -22,6 +22,8 @@ class TopicsController < ApplicationController
       @page   = 0
     end
     
+    @issues = @base.taged_issues
+
     if((params[:from].to_i != 0)&(params[:from] != params[:center]))
       ahoy.track "XmapViewlog", {user: current_user, from: params[:from].to_i, to: params[:center].to_i, language: "Ruby"}
     end
