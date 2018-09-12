@@ -6,12 +6,14 @@
   <h3><%= link_to "#{topic.name}", topic_path(topic.id, :center => topic.id, :page_num => 0) %></h3>
 <% end %>
 
-<!-- 以下是for user 登入登出測試用 -->
+<!-- 以下是user測試用 -->
+<p>--------以下是user測試用--------</p>
 <% if current_user %>
   Hi, <%= current_user.name %>
   </br>
     This is your email: <%= current_user.email %>
   </br>
+    <%= link_to('個人檔案', user_path(current_user)) %> |
     <%= link_to('登出', destroy_user_session_path, method: :delete) %> |
     <%= link_to('修改密碼', edit_user_registration_path) %>
 <% else %>
