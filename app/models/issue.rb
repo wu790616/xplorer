@@ -10,7 +10,15 @@ class Issue < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :liked_users, through: :likes, source: :user
 
+  # 一個Issue可被多個使用者收藏
+  has_many :bookmarks, dependent: :destroy
+  has_many :bookmarked_users, through: :bookmarks, source: :user
+
   def is_liked?(user)
     self.liked_users.include?(user)
+  end
+
+  def is_bookmarked?(user)
+    self.bookmarked_users.include?(user)
   end
 end

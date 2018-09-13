@@ -24,6 +24,7 @@
 
 <!-- Count顯示區 -->
 Like: <span class="badge"><%= @issue.likes_count %></span>
+Bookmark: <span class="badge"><%= @issue.bookmarks_count %></span>
 
 <!-- 作者操作區 -->
 <div>
@@ -38,10 +39,16 @@ Like: <span class="badge"><%= @issue.likes_count %></span>
 
 
 <!-- like/unlike -->
-<div>
-  <% if @issue.is_liked?(current_user) %> 
-    <%= link_to 'Unlike', like_path(@issue), method: :delete, class: "btn btn-info" %>
-  <% else %>
-    <%= link_to 'Like', likes_path(issue_id: @issue), method: :post, class: "btn btn-primary" %>
-  <% end %>
-</div>
+<% if @issue.is_liked?(current_user) %> 
+  <%= link_to 'Unlike', like_path(@issue), method: :delete, class: "btn btn-info" %>
+<% else %>
+  <%= link_to 'Like', likes_path(issue_id: @issue), method: :post, class: "btn btn-primary" %>
+<% end %>
+
+<!-- bookmark/unbookmark -->
+<% if @issue.is_bookmarked?(current_user) %> 
+  <%= link_to '取消收藏', bookmark_path(@issue), method: :delete, class: "btn btn-info" %>
+<% else %>
+  <%= link_to '收藏', bookmarks_path(issue_id: @issue), method: :post, class: "btn btn-primary" %>
+<% end %>
+

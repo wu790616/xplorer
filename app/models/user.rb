@@ -19,7 +19,11 @@ class User < ApplicationRecord
 
   # 一個使用者可以like多篇issue
   has_many :likes, dependent: :destroy
-  has_many :liked_issues, through: :likes, source: :issue  
+  has_many :liked_issues, through: :likes, source: :issue
+
+  # 一個使用者可以收藏多篇issue
+  has_many :bookmarks, dependent: :destroy
+  has_many :bookmarked_issues, through: :bookmarks, source: :issue  
 
   # for fb omniauth
   def self.from_omniauth(auth)
