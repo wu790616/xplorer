@@ -72,5 +72,21 @@ Comment: <span class="badge"><%= @issue.comments_count %></span>
     <%= link_to 'Delete', issue_comment_path(@issue, comment), method: :delete, data: { confirm: "確認要刪除這篇評論嗎?" } %>   
   <% end %>
   <br>
+  <!-- 第二層留言 -->
+  <%= form_for [ @issue, comment, @reply ] do |f| %>
+    <%= f.text_field :content, placeholder: "回應這篇評論..." %>
+    <%= f.submit %>
+  <% end %>
+  <!-- 第二層留言顯示區 -->
+  <% comment.replies.each do |reply| %>
+    <span>|||||||</span>User: <%= reply.user.name %><br>
+    <span>|||||||</span>Reply at: <%= time_ago_in_words(reply.created_at) %> ago<br>
+    <span>|||||||</span><%= reply.content %><br>
+    <% if reply.user == current_user %>
+      <%= link_to 'Delete', issue_comment_reply_path(@issue, comment, reply), method: :delete, data: { confirm: "確認要刪除這篇回應嗎?" } %>
+    <% end %>
+    <p>-------------</p>
+  <% end %>
+  <hr> 
 <% end %>
 

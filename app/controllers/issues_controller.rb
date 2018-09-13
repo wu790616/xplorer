@@ -29,6 +29,7 @@ class IssuesController < ApplicationController
   def show
     @comment = Comment.new
     @comments = @issue.comments
+    @reply = Reply.new
   end
 
   def edit

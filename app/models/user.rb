@@ -29,6 +29,8 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :commented_issues, through: :comments, source: :issue
 
+  # 一個使用者有多個Reply
+  has_many :replies, dependent: :destroy
 
   # for fb omniauth
   def self.from_omniauth(auth)
