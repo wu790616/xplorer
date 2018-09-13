@@ -23,7 +23,12 @@ class User < ApplicationRecord
 
   # 一個使用者可以收藏多篇issue
   has_many :bookmarks, dependent: :destroy
-  has_many :bookmarked_issues, through: :bookmarks, source: :issue  
+  has_many :bookmarked_issues, through: :bookmarks, source: :issue
+
+  # 一個使用者有多個Comment
+  has_many :comments, dependent: :destroy
+  has_many :commented_issues, through: :comments, source: :issue
+
 
   # for fb omniauth
   def self.from_omniauth(auth)

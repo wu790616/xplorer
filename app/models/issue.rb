@@ -14,6 +14,9 @@ class Issue < ApplicationRecord
   has_many :bookmarks, dependent: :destroy
   has_many :bookmarked_users, through: :bookmarks, source: :user
 
+  # 一個Issue可有多篇comment
+  has_many :comments, dependent: :destroy
+
   def is_liked?(user)
     self.liked_users.include?(user)
   end

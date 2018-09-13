@@ -27,6 +27,8 @@ class IssuesController < ApplicationController
   end
 
   def show
+    @comment = Comment.new
+    @comments = @issue.comments
   end
 
   def edit
