@@ -1,7 +1,10 @@
+<%= alert %>
+
 <!-- 為了測試用，先弄個簡易版印出內容 -->
 <h1>Issue Page</h1>
 
 <h3>標題: <%= @issue.title %></h3>
+<h4>作者: <%= @issue.user.name %></h4>
 
 <!-- 草稿顯示區 -->
 <div>
@@ -12,6 +15,15 @@
   <% end %>
 </div>
 
+<!-- Topic顯示區 -->
+<h5>Topics:
+<% @issue.taged_topics.each do |topic| %>
+  <%= topic.name %>,
+<% end %>
+</h5>
+
+<!-- Count顯示區 -->
+Like: <span class="badge"><%= @issue.likes_count %></span>
 
 <!-- 作者操作區 -->
 <div>
@@ -21,14 +33,15 @@
   <% end %>  
 </div>
 
-
 <h5>Content:</h5>
 <%=raw @issue.content %>
 
-<h5>Topics:</h5>
-<% @issue.taged_topics.each do |topic| %>
-  <%= topic.name %>
-<% end %>
 
-<br>
-<%= link_to "Index", root_path %>
+<!-- like/unlike -->
+<div>
+  <% if @issue.is_liked?(current_user) %> 
+    <%= link_to 'Unlike', like_path(@issue), method: :delete, class: "btn btn-info" %>
+  <% else %>
+    <%= link_to 'Like', likes_path(issue_id: @issue), method: :post, class: "btn btn-primary" %>
+  <% end %>
+</div>
