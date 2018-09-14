@@ -10,8 +10,8 @@ Rails.application.routes.draw do
   resources :topics, only: [:index, :show]
 
   resources :issues, except: [:index] do
-    resources :comments, only: [:create] do
-      resources :replies, only: [:create]
+    resources :comments, only: [:create, :destroy] do
+      resources :replies, only: [:create, :destroy]
     end
 
     member do

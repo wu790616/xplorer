@@ -27,6 +27,9 @@ class IssuesController < ApplicationController
   end
 
   def show
+    @comment = Comment.new
+    @comments = @issue.comments
+    @reply = Reply.new
   end
 
   def edit
@@ -34,7 +37,7 @@ class IssuesController < ApplicationController
 
   def destroy
     @issue.destroy
-    redirect_back(fallback_location: root_path)
+    redirect_to root_path
   end
 
   def update

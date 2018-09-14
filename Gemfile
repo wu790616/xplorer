@@ -58,6 +58,9 @@ gem 'mini_magick'
 # gem for tag
 gem 'acts-as-taggable-on', '~> 6.0'
 
+# A simple HTTP and REST client for Ruby
+gem 'rest-client'
+
 group :production do
   gem 'pg'
 end
