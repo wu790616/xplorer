@@ -26,6 +26,10 @@
 Like: <span class="badge"><%= @issue.likes_count %></span>
 Bookmark: <span class="badge"><%= @issue.bookmarks_count %></span>
 Comment: <span class="badge"><%= @issue.comments_count %></span>
+<!-- 先更新shares_count再顯示 -->
+<% link = "http://graph.facebook.com/?id="+request.original_url %>
+<% @issue.update_share_count(@issue, link) %>
+Share: <span class="badge"><%= @issue.shares_count %></span>
 
 <!-- 作者操作區 -->
 <div>
@@ -52,6 +56,21 @@ Comment: <span class="badge"><%= @issue.comments_count %></span>
 <% else %>
   <%= link_to '收藏', bookmarks_path(issue_id: @issue), method: :post, class: "btn btn-primary" %>
 <% end %>
+
+<!-- Facebook share button -->
+<!-- Load Facebook SDK for JavaScript -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v3.1&appId=343403586402427&autoLogAppEvents=1';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<!-- share button code -->
+<div class="fb-share-button" data-href="<%= request.original_url %>" data-layout="button" data-size="large" data-mobile-iframe="true">
+  <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">分享</a>
+</div>
 
 <!-- 留言區 -->
 <%= form_for [ @issue, @comment ] do |f| %>
