@@ -1,4 +1,317 @@
-<h1>個人頁面</h1>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 col-lg-12">
+      <div class="well profile custom-well row">
+        <div class="col-sm-12">
+          <div class="col-xs-4 col-sm-4 text-center">
+            <figure>
+              <% if @user.avatar? %>
+                <%= image_tag @user.avatar.url, width: '300px' %>
+              <% end %>
+            </figure>
+          </div>
+          <div class="col-xs-8 col-sm-8">
+              <h2>
+                <%= @user.name %>
+                <% if @user == current_user %>
+                <%= link_to('修改個人檔案', edit_user_path(@user), class: "btn btn-default") %>
+                <br>
+              <% end %>
+              </h2>
+              <p><strong>電子郵件: </strong>
+                <% if @user == current_user %>
+                  <%= @user.email %>
+                  <% if @user.contact_privacy %> 
+                    <%= button_to "郵件公開", user_path(@user), method: :patch, params: { :"user[contact_privacy]" => false }, class: "btn btn-primary btn-xs" %>
+                  <% else %>
+                    <%= button_to "郵件不公開", user_path(@user), method: :patch, params: { :"user[contact_privacy]" => true }, class: "btn btn-primary btn-xs" %>
+                  <% end %>
+                <!-- 非本人當使用者設定可以看到Email時，顯示Email -->
+                <% elsif @user.contact_privacy %>
+                  <%= @user.email %>
+                <!-- 非本人當使用者設定不可以看到Email時，顯示使用者不公開 -->
+                <% else %>
+                  使用者不公開
+                <% end %>
+                <br> 
+             </p>
+              <p><strong>簡介: </strong><%= @user.introduction %></p>
+              <p><strong>技能: </strong>
+                  <% @user.skill_list.each do |skill| %>
+                    <span class="label label-success"><%= skill %></span>
+                  <% end %>
+              </p>
+          </div>    
+        </div>
+        <div class="col-xs-12 divider text-center">
+          <div class="col-xs-12 col-sm-4 col-lg-2 emphasis">
+            <h3><strong> 20,7K </strong></h3>                    
+            <p><small>追蹤者</small></p>
+            <button class="btn btn-success btn-block"><span class="fa fa-plus-circle"></span> 追蹤 </button>
+          </div>
+          <div class="col-xs-12 col-sm-4 col-lg-2 emphasis">
+            <h3><strong>245</strong></h3>                    
+            <p><small>追隨者</small></p>
+            <button class="btn btn-info btn-block"><span class="fa fa-user"></span> View Profile </button>
+          </div>
+          <div class="col-xs-12 col-sm-4 col-lg-2 emphasis">
+            <h3><strong>245</strong></h3>                    
+            <p><small>瀏覽數</small></p>
+            <button class="btn btn-info btn-block"><span class="fa fa-user"></span> View Profile </button>
+          </div>
+          <div class="col-xs-12 col-sm-4 col-lg-2 emphasis">
+            <h3><strong>245</strong></h3>                    
+            <p><small>欣賞數</small></p>
+            <button class="btn btn-info btn-block"><span class="fa fa-user"></span> View Profile </button>
+          </div>
+          <div class="col-xs-12 col-sm-4 col-lg-2 emphasis">
+            <h3><strong>245</strong></h3>                    
+            <p><small>議題數</small></p>
+            <button class="btn btn-info btn-block"><span class="fa fa-user"></span> View Profile </button>
+          </div>
+          <div class="col-xs-12 col-sm-4 col-lg-2 emphasis">
+            <h3><strong>43</strong></h3>                    
+            <p><small>瀏覽數</small></p>
+            <div class="btn-group dropup btn-block">
+              <button type="button" class="btn btn-primary"><span class="fa fa-gear"></span> Options </button>
+              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <ul class="dropdown-menu text-left" role="menu">
+                <li><a href="#"><span class="fa fa-envelope pull-right"></span> Send an email </a></li>
+                <li><a href="#"><span class="fa fa-list pull-right"></span> Add or remove from a list  </a></li>
+                <li class="divider"></li>
+                <li><a href="#"><span class="fa fa-warning pull-right"></span>Report this user for spam</a></li>
+                <li class="divider"></li>
+                <li><a href="#" class="btn disabled" role="button"> Unfollow </a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>                 
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div data-spy="scroll" class="tabbable-panel">
+      <div class="tabbable-line">
+        <ul class="nav nav-tabs ">
+          <li class="active">
+            <a href="#tab_default_1" data-toggle="tab">
+            已發布議題 </a>
+          </li>
+          <li>
+            <a href="#tab_default_2" data-toggle="tab">
+           使用紀錄</a>
+          </li>
+          <li>
+            <a href="#tab_default_3" data-toggle="tab">
+           追蹤者</a>
+          </li>
+          <li>
+            <a href="#tab_default_4" data-toggle="tab">
+           追隨者</a>
+          </li>
+          <li>
+            <a href="#tab_default_5" data-toggle="tab">
+           X Map</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="tab_default_1">
+            <!-- 議題文繞圖 -->
+            <div class="container">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <h4><strong><a href="#">Title of the post</a></strong></h4>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-2">
+                      <a href="#" class="thumbnail">
+                          <img src="http://placehold.it/260x180" alt="">
+                      </a>
+                    </div>
+                    <div class="col-lg-9">      
+                      <p>
+                        Lorem ipsum dolor sit amet, id nec conceptam conclusionemque. Et eam tation option. Utinam salutatus ex eum. Ne mea dicit tibique facilisi, ea mei omittam explicari conclusionemque, ad nobis propriae quaerendum sea.
+                      </p>
+                      <p><a class="btn" href="#">Read more</a></p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="ol-lg-9">
+                      <p></p>
+                      <p>
+                        <i class="icon-user"></i> by <a href="#">John</a> 
+                        | <i class="icon-calendar"></i> Sept 16th, 2012
+                        | <i class="icon-comment"></i> <a href="#">3 Comments</a>
+                        | <i class="icon-share"></i> <a href="#">39 Shares</a>
+                        | <i class="icon-tags"></i> Tags : <a href="#"><span class="label label-info">Snipp</span></a> 
+                        <a href="#"><span class="label label-info">Bootstrap</span></a> 
+                        <a href="#"><span class="label label-info">UI</span></a> 
+                        <a href="#"><span class="label label-info">growth</span></a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr>
+            </div>
+         
+          </div>
+          <div class="tab-pane" id="tab_default_2">
+            <p>
+              Education& Career
+            </p>
+            <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                   <label for="email">Highest Education:</label>
+                    <p> MBA/PGDM</p>
+               </div>
+                <div class="form-group">
+                   <label for="email">Place of Birth:</label>
+                    <p> pune, maharashtra</p>
+               </div>
+                <div class="form-group">
+                   <label for="email">Place of Birth:</label>
+                    <p> pune, maharashtra</p>
+               </div>
+                <div class="form-group">
+                   <label for="email">Place of Birth:</label>
+                    <p> pune, maharashtra</p>
+               </div>
+            </div>
+            <div class="col-sm-6">
+               <div class="form-group">
+                   <label for="email">Place of Birth:</label>
+                    <p> pune, maharashtra</p>
+               </div>
+                <div class="form-group">
+                   <label for="email">Place of Birth:</label>
+                    <p> pune, maharashtra</p>
+               </div>
+                <div class="form-group">
+                   <label for="email">Place of Birth:</label>
+                    <p> pune, maharashtra</p>
+               </div>
+                <div class="form-group">
+                   <label for="email">Place of Birth:</label>
+                    <p> pune, maharashtra</p>
+               </div>
+
+             </div>
+            </div>
+
+           
+         
+          </div>
+          <div class="tab-pane" id="tab_default_3">
+            <p>
+              Family Details
+            </p>
+            <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                   <label for="email">Highest Education:</label>
+                    <p> MBA/PGDM</p>
+               </div>
+                <div class="form-group">
+                   <label for="email">Place of Birth:</label>
+                    <p> pune, maharashtra</p>
+               </div>
+                <div class="form-group">
+                   <label for="email">Place of Birth:</label>
+                    <p> pune, maharashtra</p>
+               </div>
+                <div class="form-group">
+                   <label for="email">Place of Birth:</label>
+                    <p> pune, maharashtra</p>
+               </div>
+            </div>
+            <div class="col-sm-6">
+               <div class="form-group">
+                   <label for="email">Place of Birth:</label>
+                    <p> pune, maharashtra</p>
+               </div>
+                <div class="form-group">
+                   <label for="email">Place of Birth:</label>
+                    <p> pune, maharashtra</p>
+               </div>
+                <div class="form-group">
+                   <label for="email">Place of Birth:</label>
+                    <p> pune, maharashtra</p>
+               </div>
+                <div class="form-group">
+                   <label for="email">Place of Birth:</label>
+                    <p> pune, maharashtra</p>
+               </div>
+
+             </div>
+            </div>
+          </div>
+           <div class="tab-pane" id="tab_default_4">
+            <p>
+             Lifestyle
+
+            </p>
+             <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                   <label for="email">Highest Education:</label>
+                    <p> MBA/PGDM</p>
+               </div>
+                <div class="form-group">
+                   <label for="email">Place of Birth:</label>
+                    <p> pune, maharashtra</p>
+               </div>
+                <div class="form-group">
+                   <label for="email">Place of Birth:</label>
+                    <p> pune, maharashtra</p>
+               </div>
+                <div class="form-group">
+                   <label for="email">Place of Birth:</label>
+                    <p> pune, maharashtra</p>
+               </div>
+            </div>
+            <div class="col-sm-6">
+               <div class="form-group">
+                   <label for="email">Place of Birth:</label>
+                    <p> pune, maharashtra</p>
+               </div>
+                <div class="form-group">
+                   <label for="email">Place of Birth:</label>
+                    <p> pune, maharashtra</p>
+               </div>
+                <div class="form-group">
+                   <label for="email">Place of Birth:</label>
+                    <p> pune, maharashtra</p>
+               </div>
+                <div class="form-group">
+                   <label for="email">Place of Birth:</label>
+                    <p> pune, maharashtra</p>
+               </div>
+
+             </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+    </div>
+  </div>
+
+<!-- 原始測試資料 -->
+
+>>>>test
+<br />
 
 <% if @user == current_user %>
   <%= link_to('修改個人檔案', edit_user_path(@user)) %>
@@ -79,3 +392,4 @@ My Bookmark Issue:
   使用者不公開
 <% end %>
 <br>
+    
