@@ -33,4 +33,9 @@ class Issue < ApplicationRecord
       issue.save!
     end
   end
+
+  def view_count_increment(issue)
+    issue.views_count+=1
+    issue.save!
+  end
 end
