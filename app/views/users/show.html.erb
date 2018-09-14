@@ -305,4 +305,89 @@
     
     </div>
   </div>
+
+<!-- 原始測試資料 -->
+
+>>>>test
+<br />
+
+<% if @user == current_user %>
+  <%= link_to('修改個人檔案', edit_user_path(@user)) %>
+  <br>
+<% end %>  
+
+Avatar:
+<br>
+<% if @user.avatar? %>
+  <%= image_tag @user.avatar.url, width: '300px' %>
+<% end %>
+<br>
+
+Name:
+<%= @user.name %>
+<br>
+
+Email:
+<!-- 使用者可以看到自己的Email和決定是否要公開 -->
+<% if @user == current_user %>
+  <%= @user.email %>
+  <% if @user.contact_privacy %> 
+    <%= button_to "改為不公開", user_path(@user), method: :patch, params: { :"user[contact_privacy]" => false }, class: "btn btn-info" %>
+  <% else %>
+    <%= button_to "改為公開", user_path(@user), method: :patch, params: { :"user[contact_privacy]" => true }, class: "btn btn-primary" %>
+  <% end %>
+<!-- 非本人當使用者設定可以看到Email時，顯示Email -->
+<% elsif @user.contact_privacy %>
+  <%= @user.email %>
+<!-- 非本人當使用者設定不可以看到Email時，顯示使用者不公開 -->
+<% else %>
+  使用者不公開
+<% end %>
+<br>
+
+Introduction:
+<%= @user.introduction %>
+<br>
+
+Skill:
+<% @user.skill_list.each do |skill| %>
+  <li><%= skill %></li>
+<% end %>
+<br>
+
+My X Map:
+<!-- 使用者可以看到自己的X MAP和決定是否要公開 -->
+<% if @user == current_user %>
+  For test(X MAP)
+  <% if @user.topic_follow_privacy %> 
+    <%= button_to "改為不公開", user_path(@user), method: :patch, params: { :"user[topic_follow_privacy]" => false }, class: "btn btn-info" %>
+  <% else %>
+    <%= button_to "改為公開", user_path(@user), method: :patch, params: { :"user[topic_follow_privacy]" => true }, class: "btn btn-primary" %>
+  <% end %>
+<!-- 非本人當使用者設定可以看到X MAP時，顯示X MAP -->
+<% elsif @user.topic_follow_privacy %>
+  For test(X MAP)
+<!-- 非本人當使用者設定不可以看到X MAP時，顯示使用者不公開 -->
+<% else %>
+  使用者不公開
+<% end %>
+<br>
+
+My Bookmark Issue:
+<!-- 使用者可以看到自己的Bookmark和決定是否要公開 -->
+<% if @user == current_user %>
+  For test(Bookmark)
+  <% if @user.issue_book_privacy %> 
+    <%= button_to "改為不公開", user_path(@user), method: :patch, params: { :"user[issue_book_privacy]" => false }, class: "btn btn-info" %>
+  <% else %>
+    <%= button_to "改為公開", user_path(@user), method: :patch, params: { :"user[issue_book_privacy]" => true }, class: "btn btn-primary" %>
+  <% end %>
+<!-- 非本人當使用者設定可以看到Bookmark時，顯示Bookmark -->
+<% elsif @user.issue_book_privacy %>
+  For test(Bookmark)
+<!-- 非本人當使用者設定不可以看到Bookmark時，顯示使用者不公開 -->
+<% else %>
+  使用者不公開
+<% end %>
+<br>
     
