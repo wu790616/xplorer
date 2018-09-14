@@ -10,13 +10,15 @@
                 <%= image_tag @user.avatar.url, width: '300px' %>
               <% end %>
             </figure>
-            <% if @user == current_user %>
-              <%= link_to('修改個人檔案', edit_user_path(@user), class: "btn btn-default") %>
-              <br>
-            <% end %>  
           </div>
           <div class="col-xs-8 col-sm-8">
-              <h2><%= @user.name %></h2>
+              <h2>
+                <%= @user.name %>
+                <% if @user == current_user %>
+                <%= link_to('修改個人檔案', edit_user_path(@user), class: "btn btn-default") %>
+                <br>
+              <% end %>
+              </h2>
               <p><strong>電子郵件: </strong>
                 <% if @user == current_user %>
                   <%= @user.email %>
