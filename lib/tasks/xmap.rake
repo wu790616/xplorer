@@ -14,6 +14,47 @@ namespace :xmap do
   #  t.datetime "updated_at", null: false
   #end
 
+  task :create_link, [:from_topic, :to_topic] => [:environment] do |t, args|
+    puts "Inside xmap:create_link"
+    link = XplorerMap.all.where(from_id: args[:from_topic], to_id: args[:to_topic]).first
+    if(link == nil)
+      link = XplorerMap.create(from_id: args[:from_topic], to_id: args[:to_topic])
+      puts "New link from #{args[:from_topic]} to #{args[:to_topic]}"
+    else
+      puts "Link from #{args[:from_topic]} to #{args[:to_topic]}"
+    end
+    link.strength = link.strength + 1
+    link.save
+    puts "link save"    
+  end
+
+  task viewlog: :environment do
+    link_count = 0
+
+    while 1 do
+      viewsteps = Ahoy::Event.all.where(name: "XmapViewlog").select { |event| event.properties['progress'] == "init" }
+      puts "in loop - #{link_count}"
+      break if viewsteps.first == nil
+
+      visitlog = viewsteps.select { |event| event.visit_id == viewsteps.first.visit_id }
+
+      visitlog.each do |log|
+        from_topic = log.properties["from"]
+        to_topic = log.properties["to"]
+
+        if from_topic != to_topic
+          Rake::Task["xmap:create_link"].execute :from_topic => from_topic, :to_topic => to_topic
+          link_count = link_count + 1
+        end
+      end
+
+      visitlog.each do |log|
+        log.properties["progress"] = "processed"
+        log.save
+      end
+    end
+  end
+
   task issuetag: :environment do
     issue_cnt = 0
     link_count = 0
@@ -28,15 +69,7 @@ namespace :xmap do
       group.each do |from_topic|
         group.each do |to_topic|
           if from_topic != to_topic
-            link = XplorerMap.all.where(from_id: from_topic.topic_id, to_id: to_topic.topic_id).first
-            if(link == nil)
-              link = XplorerMap.create(from_id: from_topic.topic_id, to_id: to_topic.topic_id)
-              puts "New link from #{from_topic.topic_id} to #{to_topic.topic_id}]"
-            else
-              puts "Link from #{from_topic.topic_id} to #{to_topic.topic_id}]"
-            end
-            link.strength = link.strength + 1
-            link.save
+            Rake::Task["xmap:create_link"].execute :from_topic => from_topic.topic_id, :to_topic => to_topic.topic_id
             link_count = link_count + 1
           end
         end

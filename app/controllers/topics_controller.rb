@@ -29,7 +29,7 @@ class TopicsController < ApplicationController
     @issues = @base.taged_issues
 
     if((params[:from].to_i != 0)&(params[:from] != params[:center]))
-      ahoy.track "XmapViewlog", {user: current_user, from: params[:from].to_i, to: params[:center].to_i, language: "Ruby"}
+      ahoy.track "XmapViewlog", {user: current_user, from: params[:from].to_i, to: params[:center].to_i, progress: "init"}
     end
 
     @logs = []
