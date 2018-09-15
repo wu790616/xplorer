@@ -27,6 +27,9 @@ class IssuesController < ApplicationController
   end
 
   def show
+    if @issue.draft==true && @issue.user!=current_user
+      redirect_to root_path
+    end
     @comment = Comment.new
     @comments = @issue.comments
     @reply = Reply.new
