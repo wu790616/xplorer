@@ -33,7 +33,11 @@ class TopicsController < ApplicationController
     end
 
     @logs = []
-    viewlogs = Ahoy::Event.where(visit: current_visit, name: "XmapViewlog").order(id: :desc).limit(10)
+    if current_user
+      viewlogs = Ahoy::Event.where(user: current_user, visit: current_visit, name: "XmapViewlog").order(id: :desc).limit(10)
+    else
+      viewlogs = Ahoy::Event.where(visit: current_visit, name: "XmapViewlog").order(id: :desc).limit(10)
+    end
     viewlogs.each do |log|
       @logs.push(Topic.find(log.properties["from"]))
     end
