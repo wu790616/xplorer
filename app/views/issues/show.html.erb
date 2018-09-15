@@ -28,7 +28,10 @@ Comment: <span class="badge"><%= @issue.comments_count %></span>
 <% link = "http://graph.facebook.com/?id="+request.original_url %>
 <% @issue.update_share_count(@issue, link) %>
 Share: <span class="badge"><%= @issue.shares_count %></span>
-<% @issue.view_count_increment(@issue) %>
+<!-- 不是草稿才增加view count -->
+<% if issue.draft == false %> 
+  <% @issue.view_count_increment(@issue) %>
+<% end %>
 View: <span class="badge"><%= @issue.views_count %></span>
 
 <!-- 作者操作區 -->
