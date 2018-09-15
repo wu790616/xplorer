@@ -29,7 +29,7 @@ Comment: <span class="badge"><%= @issue.comments_count %></span>
 <% @issue.update_share_count(@issue, link) %>
 Share: <span class="badge"><%= @issue.shares_count %></span>
 <!-- 不是草稿才增加view count -->
-<% if @issue.draft == false %> 
+<% if @issue.user != current_user %> 
   <% @issue.view_count_increment(@issue) %>
 <% end %>
 View: <span class="badge"><%= @issue.views_count %></span>
