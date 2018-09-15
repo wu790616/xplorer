@@ -114,4 +114,21 @@ namespace :xmap do
     puts "have created #{enter_count} followship"
   end
 
+
+  task topic_strength_follow: :environment do
+    BASIC_STRENGTH = 200
+    follow_count = 0
+    
+    topic_followships = TopicFollowship.all.where(progress: "init")
+    topic_followships.each do |follow|
+      follow.strength = follow.strength + BASIC_STRENGTH
+      follow.progress = "procressed"
+      follow.save
+      follow_count = follow_count + 1
+    end
+
+    puts "have created #{follow_count} followship"
+  end
+
+
 end
