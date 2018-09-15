@@ -61,6 +61,8 @@ gem 'acts-as-taggable-on', '~> 6.0'
 # A simple HTTP and REST client for Ruby
 gem 'rest-client'
 
+gem 'social-share-button'
+
 group :production do
   gem 'pg'
 end

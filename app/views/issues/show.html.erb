@@ -1,5 +1,3 @@
-<%= alert %>
-
 <!-- 為了測試用，先弄個簡易版印出內容 -->
 <h1>Issue Page</h1>
 
@@ -60,19 +58,7 @@ View: <span class="badge"><%= @issue.views_count %></span>
 <% end %>
 
 <!-- Facebook share button -->
-<!-- Load Facebook SDK for JavaScript -->
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = 'https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v3.1&appId=343403586402427&autoLogAppEvents=1';
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-<!-- share button code -->
-<div class="fb-share-button" data-href="<%= request.original_url %>" data-layout="button" data-size="large" data-mobile-iframe="true">
-  <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">分享</a>
-</div>
+<%= social_share_button_tag('Share to Facebook', :url => request.original_url, desc: @issue.title) %>
 
 <!-- 留言區 -->
 <%= form_for [ @issue, @comment ] do |f| %>

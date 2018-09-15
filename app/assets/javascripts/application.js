@@ -18,4 +18,4 @@
 //= require jquery3
 //= require bootstrap-sprockets
 //= require ahoy
-
+//= require social-share-button
