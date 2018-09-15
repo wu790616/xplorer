@@ -58,7 +58,6 @@ namespace :xmap do
   task issuetag: :environment do
     issue_cnt = 0
     link_count = 0
-
     
     while 1 do
       tagships = TopicTagship.all.where(progress: "init")
@@ -83,6 +82,36 @@ namespace :xmap do
       issue_cnt = issue_cnt + 1
     end
     puts "have created #{link_count} links from #{issue_cnt} issues"
+  end
+
+  task topic_strength_enter: :environment do
+    enter_count = 0
+    
+    while 1 do
+      topic_enter = Ahoy::Event.all.where(name: "TopicEnterlog").select { |event| event.properties['progress'] == "init" }
+      break if topic_enter.first == nil
+
+      user = topic_enter.first.user
+      topic_enter = topic_enter.select{ |event| event.user == user }
+      
+      topic_enter.each do |enter|
+        followship = user.topic_followships.where(topic_id: enter.properties["topic"]).first
+        if followship == nil
+          followship = user.topic_followships.create(topic_id: enter.properties["topic"])
+        end
+
+        followship.strength = followship.strength + 1
+        followship.save
+      end
+
+      topic_enter.each do |enter|
+        enter.properties["progress"] = "processed"
+        enter.save
+      end
+
+      enter_count = enter_count + 1
+    end
+    puts "have created #{enter_count} followship"
   end
 
 end
