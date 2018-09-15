@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_11_164309) do
+ActiveRecord::Schema.define(version: 2018_09_15_113126) do
 
   create_table "ahoy_events", force: :cascade do |t|
     t.integer "visit_id"
@@ -122,19 +122,6 @@ ActiveRecord::Schema.define(version: 2018_09_11_164309) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "skills", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "skillships", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "skill_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "taggings", force: :cascade do |t|
     t.integer "tag_id"
     t.string "taggable_type"
@@ -166,6 +153,7 @@ ActiveRecord::Schema.define(version: 2018_09_11_164309) do
     t.string "progress", default: "init"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "strength", default: 0
   end
 
   create_table "topic_tagships", force: :cascade do |t|
