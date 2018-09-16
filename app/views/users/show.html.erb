@@ -356,6 +356,20 @@ Skill:
 <% end %>
 <br>
 
+<!-- 追蹤／取消追蹤 -->
+追隨者人數：
+<%= @user.followers_count %>
+<br>
+追蹤使用者：
+<% if @user == current_user %>
+  <%= link_to '追蹤', user_followships_path(following_id: @user), method: :post, class: "btn btn-primary disabled" %>
+<% elsif current_user.following?(@user) %>
+  <%= link_to '取消追蹤', user_followship_path(@user), method: :delete, class: "btn btn-danger" %>
+<% else %>
+  <%= link_to '追蹤', user_followships_path(following_id: @user), method: :post, class: "btn btn-primary" %>
+<% end %>
+<br>
+
 My X Map:
 <!-- 使用者可以看到自己的X MAP和決定是否要公開 -->
 <% if @user == current_user %>

@@ -32,6 +32,19 @@ class User < ApplicationRecord
   # 一個使用者有多個Reply
   has_many :replies, dependent: :destroy
 
+  # 一個 User 擁有很多追蹤紀錄，透過追蹤紀錄，一個 User 追蹤很多其他 User (followings)
+  has_many :user_followships, dependent: :destroy
+  has_many :followings, through: :user_followships
+
+  # 一個 User 擁有很多被追蹤紀錄，透過被追蹤紀錄，一個 User 被很多其他 User 追蹤 (followers)
+  has_many :inverse_user_followships, class_name: "UserFollowship", foreign_key: "following_id"
+  has_many :followers, through: :inverse_user_followships, source: :user
+
+  # 檢查是否有追蹤紀錄
+  def following?(user)
+    self.followings.include?(user)
+  end  
+
   # for fb omniauth
   def self.from_omniauth(auth)
     # Case 1: Find existing user by facebook uid

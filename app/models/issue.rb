@@ -28,7 +28,7 @@ class Issue < ApplicationRecord
   def update_share_count(issue, link)
     response = RestClient.get(link)
     if response
-      data = JSON.parse(response)
+      data = JSON.parse(RestClient.get(link))
       issue.shares_count = data['share']['share_count']
       issue.save!
     end

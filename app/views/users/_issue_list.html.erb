@@ -18,9 +18,6 @@
       </li>
       <li>Like Count:<%= issue.likes_count %></li>
       <li>Comment Count:<%= issue.comments_count %></li>
-      <!-- 先更新share_count -->
-      <% link = "http://graph.facebook.com/?id="+issue_url(issue) %>
-      <% issue.update_share_count(issue, link) %>
       <li>Share Count:<%= issue.shares_count %></li>
       <li>
         <% if issue.user == current_user %>
