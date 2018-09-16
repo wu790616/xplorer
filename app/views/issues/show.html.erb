@@ -1,21 +1,104 @@
 <!-- 為了測試用，先弄個簡易版印出內容 -->
 <h1>Issue Page</h1>
 
-<h3><%= @issue.title %></h3>
+<h3>標題: <%= @issue.title %></h3>
+<h4>作者: <%= @issue.user.name %></h4>
+<h4>更新日期: <%= @issue.updated_at.localtime.strftime('%Y-%m-%d %H:%M') %></h4>
+<!-- 草稿顯示區 -->
+<div>
+  <% if @issue.draft %>
+  <h6 class="label label-default">Draft</h6>
+  <% else %>
+  <h6 class="label label-success">Published</h6>
+  <% end %>
+</div>
 
-<% if @issue.draft %>
-  <p>這是草稿</p>
-<% else %>
-  <p>這不是草稿</p>
+<!-- Topic顯示區 -->
+<h5>Topics:
+<% @issue.taged_topics.each do |topic| %>
+  <%= topic.name %>,
 <% end %>
+</h5>
+
+<!-- Count顯示區 -->
+Like: <span class="badge"><%= @issue.likes_count %></span>
+Bookmark: <span class="badge"><%= @issue.bookmarks_count %></span>
+Comment: <span class="badge"><%= @issue.comments_count %></span>
+<!-- 先更新shares_count再顯示 -->
+<% link = "http://graph.facebook.com/?id="+request.original_url %>
+<% @issue.update_share_count(@issue, link) %>
+Share: <span class="badge"><%= @issue.shares_count %></span>
+<!-- 不是草稿才增加view count -->
+<% if @issue.user != current_user %> 
+  <% @issue.view_count_increment(@issue) %>
+<% end %>
+View: <span class="badge"><%= @issue.views_count %></span>
+
+<!-- 作者操作區 -->
+<div>
+  <% if @issue.user == current_user %>
+    <%= link_to "Edit", edit_issue_path(@issue) %> |
+    <%= link_to "Delete", issue_path(@issue), method: :delete, data: { confirm: "確認要刪除這篇議題嗎?" } %>
+  <% end %>  
+</div>
 
 <h5>Content:</h5>
 <%=raw @issue.content %>
 
-<h5>Topics:</h5>
-<% @issue.taged_topics.each do |topic| %>
-  <%= topic.name %>
+<% if @issue.draft == false %>
+  <!-- like/unlike -->
+  <% if @issue.is_liked?(current_user) %> 
+    <%= link_to 'Unlike', like_path(@issue), method: :delete, class: "btn btn-info" %>
+  <% else %>
+    <%= link_to 'Like', likes_path(issue_id: @issue), method: :post, class: "btn btn-primary" %>
+  <% end %>
+
+  <!-- bookmark/unbookmark -->
+  <% if @issue.is_bookmarked?(current_user) %> 
+    <%= link_to '取消收藏', bookmark_path(@issue), method: :delete, class: "btn btn-info" %>
+  <% else %>
+    <%= link_to '收藏', bookmarks_path(issue_id: @issue), method: :post, class: "btn btn-primary" %>
+  <% end %>
+
+  <!-- Facebook share button -->
+  <!-- 套用GEM, 要修給這個button的格式，請到app/assets/stylesheets/application.scss -->
+  <%= social_share_button_tag('分享到Facebook', :url => request.original_url, desc: @issue.title) %>
 <% end %>
 
-<br>
-<%= link_to "Index", root_path %>
+<!-- 留言區 -->
+<%= form_for [ @issue, @comment ] do |f| %>
+  <div class="form-group">
+    <%= f.text_area :content, placeholder: "留下你的評論...", class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.submit class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+<!-- 留言顯示區 -->
+<% @comments.each do |comment| %>
+  User: <%= comment.user.name %><br>
+  Post at: <%= time_ago_in_words(comment.created_at) %> ago<br>
+  <%= comment.content %><br>
+  <% if comment.user == current_user %>
+    <%= link_to 'Delete', issue_comment_path(@issue, comment), method: :delete, data: { confirm: "確認要刪除這篇評論嗎?" } %>   
+  <% end %>
+  <br>
+  <!-- 第二層留言 -->
+  <%= form_for [ @issue, comment, @reply ] do |f| %>
+    <%= f.text_field :content, placeholder: "回應這篇評論..." %>
+    <%= f.submit %>
+  <% end %>
+  <!-- 第二層留言顯示區 -->
+  <% comment.replies.each do |reply| %>
+    <span>|||||||</span>User: <%= reply.user.name %><br>
+    <span>|||||||</span>Reply at: <%= time_ago_in_words(reply.created_at) %> ago<br>
+    <span>|||||||</span><%= reply.content %><br>
+    <% if reply.user == current_user %>
+      <%= link_to 'Delete', issue_comment_reply_path(@issue, comment, reply), method: :delete, data: { confirm: "確認要刪除這篇回應嗎?" } %>
+    <% end %>
+    <p>-------------</p>
+  <% end %>
+  <hr> 
+<% end %>
+

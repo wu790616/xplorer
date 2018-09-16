@@ -21,3 +21,15 @@ body { padding-top: 70px; }
 // And finally bootswatch style itself
 @import "bootswatch/readable/bootswatch";
 @import "custom";
+
+@import "social-share-button";
+$size: 35px;
+
+.social-share-button {
+  display: inline-block;
+  .ssb-icon {
+    background-size: $size $size;
+    height: $size;
+    width: $size;
+  }
+}
