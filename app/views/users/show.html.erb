@@ -374,6 +374,9 @@ My X Map:
 <% end %>
 <br>
 
+My Personal Issue:
+<%= render partial: "issue_list", locals: {issues: @posted_issues} %>
+
 My Bookmark Issue:
 <!-- 使用者可以看到自己的Bookmark和決定是否要公開 -->
 <% if @user == current_user %>

@@ -3,6 +3,7 @@ class UsersController < ApplicationController
 
   def show
     @marked_issues = @user.bookmarked_issues
+    @posted_issues = @user.issues
   end
 
   def edit
