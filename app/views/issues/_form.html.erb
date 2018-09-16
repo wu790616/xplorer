@@ -1,21 +1,58 @@
-<%= form_for @issue do |f| %>
-  <div>
-    <h4>Title:</h4>
-    <%= f.text_field :title %><br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel-group" id="accordion">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                <span class="glyphicon glyphicon-file"></span>
+                <% if params[:action] == 'new' %>
+                新增議題
+                <% else %>
+                編輯議題
+                <% end %> 
+              </a>
+            </h4>
+          </div>
+          <%= form_for @issue do |f| %>
+            <div id="collapseOne" class="panel-collapse collapse in">
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <%= f.text_field :title, class: "form-control", placeholder: "標題" %>
+                    </div>
+                    <div class="form-group">
+                      <%= f.cktext_area :content, class: "form-control", placeholder: "內文"%>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-8">
+                    <div class="form-group">
+                      <label for="tags">標籤(待後端開發)</label>
+                      <input type="text" class="form-control" id="tags" placeholder="Tags" />
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="well well-sm well-primary text-center">
+                      <div class="form form-inline " role="form">
+                        <div class="form-group">
+                          <%= f.check_box :draft %>儲存為草稿？
+                        </div>
+                        <div class="form-group">
+                          <%= f.submit '送出', class: "btn btn-default btn-sm" %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <div>
-    <h4>Content:</h4>
-    <%= f.cktext_area :content %><br>    
-  </div>
-
-  <div>
-    儲存為草稿？
-    <%= f.check_box :draft %> <br>
-  </div>
-
-  <div>
-    <%= f.submit %>
-  </div>
-
-<% end %>
+</div>
