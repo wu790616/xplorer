@@ -68,14 +68,12 @@
 <div class="container">
   <div class="row">
     <hr class="hr-primary" />
-    <% if current_user.topic_followships.count > 0 %>
       <ol class="breadcrumb bread-primary">
         <div class="btn btn-primary">熱門主題</div>
         <% @hot_topics.each do |topic| %>
           <li><%= link_to "#{topic.name}", topic_path(topic.id, :center => topic.id, :page_num => 0) %></li>
-        <% end %>
+        <% end %> 
       </ol>
-    <% end %>
   </div>
 </div>
 
@@ -141,10 +139,16 @@
   </div>
 </div>
 
+<p>--------以下是topic測試用--------</p>
+<!-- 以下是topic測試用 -->
 <% @hot_topics.each do |topic| %>
   <%= topic.name %> (<%= topic.topic_tagships_count %>)<br>
   <h3><%= link_to "#{topic.name}", topic_path(topic.id, :center => topic.id, :page_num => 0) %></h3>
 <% end %>
+
+<!-- 以下是issue測試用 -->
+<p>--------以下是issue測試用--------</p>
+<%= link_to "Create Issue", new_issue_path %>
 
 <% @issues.each do |issue| %>
   <h3><%= issue.title %></h3> 
