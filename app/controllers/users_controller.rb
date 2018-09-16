@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   def show
     @marked_issues = @user.bookmarked_issues
     @posted_issues = @user.issues
+    @commented_issues = @user.commented_issues.uniq
   end
 
   def edit
