@@ -3,7 +3,7 @@
 
 <h3>標題: <%= @issue.title %></h3>
 <h4>作者: <%= @issue.user.name %></h4>
-
+<h4>更新日期: <%= @issue.updated_at.localtime.strftime('%Y-%m-%d %H:%M') %></h4>
 <!-- 草稿顯示區 -->
 <div>
   <% if @issue.draft %>
@@ -45,24 +45,25 @@ View: <span class="badge"><%= @issue.views_count %></span>
 <h5>Content:</h5>
 <%=raw @issue.content %>
 
+<% if @issue.draft == false %>
+  <!-- like/unlike -->
+  <% if @issue.is_liked?(current_user) %> 
+    <%= link_to 'Unlike', like_path(@issue), method: :delete, class: "btn btn-info" %>
+  <% else %>
+    <%= link_to 'Like', likes_path(issue_id: @issue), method: :post, class: "btn btn-primary" %>
+  <% end %>
 
-<!-- like/unlike -->
-<% if @issue.is_liked?(current_user) %> 
-  <%= link_to 'Unlike', like_path(@issue), method: :delete, class: "btn btn-info" %>
-<% else %>
-  <%= link_to 'Like', likes_path(issue_id: @issue), method: :post, class: "btn btn-primary" %>
+  <!-- bookmark/unbookmark -->
+  <% if @issue.is_bookmarked?(current_user) %> 
+    <%= link_to '取消收藏', bookmark_path(@issue), method: :delete, class: "btn btn-info" %>
+  <% else %>
+    <%= link_to '收藏', bookmarks_path(issue_id: @issue), method: :post, class: "btn btn-primary" %>
+  <% end %>
+
+  <!-- Facebook share button -->
+  <!-- 套用GEM, 要修給這個button的格式，請到app/assets/stylesheets/application.scss -->
+  <%= social_share_button_tag('分享到Facebook', :url => request.original_url, desc: @issue.title) %>
 <% end %>
-
-<!-- bookmark/unbookmark -->
-<% if @issue.is_bookmarked?(current_user) %> 
-  <%= link_to '取消收藏', bookmark_path(@issue), method: :delete, class: "btn btn-info" %>
-<% else %>
-  <%= link_to '收藏', bookmarks_path(issue_id: @issue), method: :post, class: "btn btn-primary" %>
-<% end %>
-
-<!-- Facebook share button -->
-<!-- 套用GEM, 要修給這個button的格式，請到app/assets/stylesheets/application.scss -->
-<%= social_share_button_tag('分享到Facebook', :url => request.original_url, desc: @issue.title) %>
 
 <!-- 留言區 -->
 <%= form_for [ @issue, @comment ] do |f| %>
