@@ -39,11 +39,3 @@
   <hr>
 </div>
 
-<% @issues.each do |issue| %>
-  <h3><%= issue.title %></h3> 
-  <%= link_to "Show", issue_path(issue) %> |
-  <% if issue.user == current_user %>
-    <%= link_to "Edit", edit_issue_path(issue) %> |
-    <%= link_to "Delete", issue_path(issue), method: :delete %>
-  <% end %>
-<% end %>
