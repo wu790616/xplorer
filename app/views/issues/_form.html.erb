@@ -39,18 +39,10 @@
                     <div class="well well-sm well-primary text-center">
                       <div class="form form-inline " role="form">
                         <div class="form-group">
-                          <select class="form-control">
-                            <option>Draft <% @issue.draft == true %></option>
-                            <option>Publish <% @issue.draft == false %></option>
-                          </select>
+                          <%= f.check_box :draft %>儲存為草稿？
                         </div>
                         <div class="form-group">
-                          <button type="submit" class="btn btn-success btn-sm">
-                            <span class="glyphicon glyphicon-floppy-disk"></span> Save as draft
-                          </button>
-                          <button type="submit" class="btn btn-default btn-sm">
-                            <span class="glyphicon glyphicon-ok"></span> Submit
-                          </button>
+                          <%= f.submit '送出', class: "btn btn-default btn-sm" %>
                         </div>
                       </div>
                     </div>
