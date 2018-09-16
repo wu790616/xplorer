@@ -1,0 +1,29 @@
+<% issues.each do |issue| %>
+  <ul>
+    <li><%= link_to issue.title.to_s, issue_path(issue) %></li>
+    <ul>
+      <li>更新日期：<%= issue.updated_at.localtime.strftime('%Y-%m-%d') %></li>
+      <li>
+        Topics:
+        <% issue.taged_topics.each do |topic| %>
+          <%= topic.name %>
+        <% end %>
+      </li>
+      <li>Like Count:<%= issue.likes_count %></li>
+      <li>Comment Count:<%= issue.comments_count %></li>
+      <!-- 先更新share_count -->
+      <% link = "http://graph.facebook.com/?id="+issue_url(issue) %>
+      <% issue.update_share_count(issue, link) %>
+      <li>Share Count:<%= issue.shares_count %></li>
+      <li>
+        <% if issue.user == current_user %>
+          <%= link_to "Edit", edit_issue_path(issue) %> |
+          <%= link_to "Delete", issue_path(issue), method: :delete, data: { confirm: "確認要刪除這篇議題嗎?" } %>
+        <% end %>
+        <% if current_user.bookmarked_issues.include?(issue) %>
+          <%= link_to '取消收藏', bookmark_path(issue), method: :delete, data: { confirm: "確認要取消收藏這篇議題嗎?" } %>
+        <% end %>  
+      </li>
+    </ul>
+  </ul>
+<% end %>

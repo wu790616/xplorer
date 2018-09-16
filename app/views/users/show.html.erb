@@ -309,9 +309,8 @@
   </div>
 
 <!-- 原始測試資料 -->
-
->>>>test
-<br />
+<hr>
+<p>----------------------- 原始測試資料 -----------------------</p>
 
 <% if @user == current_user %>
   <%= link_to('修改個人檔案', edit_user_path(@user)) %>
@@ -378,7 +377,7 @@ My X Map:
 My Bookmark Issue:
 <!-- 使用者可以看到自己的Bookmark和決定是否要公開 -->
 <% if @user == current_user %>
-  For test(Bookmark)
+  <%= render partial: "issue_list", locals: {issues: @marked_issues} %>
   <% if @user.issue_book_privacy %> 
     <%= button_to "改為不公開", user_path(@user), method: :patch, params: { :"user[issue_book_privacy]" => false }, class: "btn btn-info" %>
   <% else %>
@@ -386,7 +385,7 @@ My Bookmark Issue:
   <% end %>
 <!-- 非本人當使用者設定可以看到Bookmark時，顯示Bookmark -->
 <% elsif @user.issue_book_privacy %>
-  For test(Bookmark)
+  <%= render partial: "issue_list", locals: {issues: @marked_issues} %>
 <!-- 非本人當使用者設定不可以看到Bookmark時，顯示使用者不公開 -->
 <% else %>
   使用者不公開
