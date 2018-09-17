@@ -72,6 +72,7 @@ namespace :dev do
       issue.content = FFaker::Lorem::sentence(500)
       issue.draft = "false"
       issue.views_count = rand(1..300)
+      issue.edit_time = Time.now
       issue.save!
     end
 
