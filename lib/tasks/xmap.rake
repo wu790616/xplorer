@@ -130,5 +130,39 @@ namespace :xmap do
     puts "have created #{follow_count} followship"
   end
 
+  #create_table "user_x_maps", force: :cascade do |t|
+  #  t.integer "user_id"
+  #  t.integer "from_id"
+  #  t.integer "to_id"
+  #  t.integer "strength"
+  #  t.datetime "created_at", null: false
+  #  t.datetime "updated_at", null: false
+  #end
+  
+  task usermap: :environment do
+    user_count = 0
+    
+    users = User.all
+    users.each do |user|
+      if (UserXMap.all.where(user_id: user.id).first != nil)
+        UserXMap.all.where(user_id: user.id).destroy_all
+      end
 
+      topics = user.topic_followships.all
+      topics.each do |topic_a|
+        topics.each do |topic_b|
+          if(topic_a.topic_id != topic_b.topic_id)
+            link = XplorerMap.all.where(from_id: topic_a.topic_id, to_id: topic_b.topic_id).first
+            if(link != nil)
+              UserXMap.create(user_id: user.id, from_id: topic_a.topic_id, to_id: topic_b.topic_id, strength: link.strength)
+              puts "User #{user.id}: Link #{topic_a.topic_id} to #{topic_b.topic_id}"
+            end
+          end
+        end
+      end
+      user_count = user_count + 1
+    end
+
+    puts "have created #{user_count} personal Xmap"
+  end
 end

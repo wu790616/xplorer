@@ -2,6 +2,14 @@ class UsersController < ApplicationController
    before_action :set_user, only: [:show, :edit, :update]
 
   def show
+    @marked_issues = @user.bookmarked_issues
+    @posted_issues = @user.issues.where( :draft => false )
+    @unposted_issues = @user.issues.where( :draft => true )
+    @commented_issues = @user.commented_issues.uniq
+    @followers = @user.followers
+    @followings = @user.followings
+    @likes_total = @posted_issues.sum(:likes_count)
+    @views_total = @posted_issues.sum(:views_count)
   end
 
   def edit
