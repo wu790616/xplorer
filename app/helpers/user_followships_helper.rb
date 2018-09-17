@@ -1,0 +1,2 @@
+module UserFollowshipsHelper
+end
