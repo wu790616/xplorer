@@ -35,32 +35,28 @@
 <h3>Base Topic: <%= @base.name %></h3>
 <svg></svg>
 <script>
-  var topics = [ { name: "Center0", strength: 50 },
-                 { name: "Branch1", strength: 20 },
-                 { name: "Branch2", strength: 20 },
-                 { name: "Branch3", strength: 20 },
-                 { name: "Branch4", strength: 20 },]
+  var width = 960;
+  var height = 600;               
+  var svg = d3.select("svg").attr("width", width).attr("height", height)
+  var topics = [ { name: "<%=@center.name%>", strength: 50 },
+                 { name: "<%=@link1.name%>", strength: 20 },
+                 { name: "<%=@link2.name%>", strength: 20 },
+                 { name: "<%=@link3.name%>", strength: 20 },
+                 { name: "<%=@link4.name%>", strength: 20 },]
   var links  = [ {	source:0,	target:1, strength: 100	},
             	   {	source:0,	target:2, strength: 100	},
                  {	source:0,	target:3, strength: 100	},
                  {	source:0,	target:4, strength: 200	},];
-
-  var width = 960;
-  var height = 600;               
-  var svg = d3.select("svg").attr("width", width).attr("height", height) 
-
   xmap(svg, topics, links, width, height);
-
 </script>
-
 <h3>
-  <%= link_to "#{@center.name}", topic_path(@center.id, :center => @center.id, :from => @center.id, :page_num => @page) %>
-  <%= link_to "(Regen)"        , topic_path(  @base.id, :center => @center.id, :from => @center.id, :page_num => @page) %>
+  <%= link_to "#{@center.name}", topic_path(@center.id, :center => @center.id, :from => @center.id, :page_num => @page), :remote => true, :data => { :type => :json }, :class => "ajax_update" %>
+  <%= link_to "(Regen)"        , topic_path(  @base.id, :center => @center.id, :from => @center.id, :page_num => @page), :remote => true, :data => { :type => :json }, :class => "ajax_update" %>
 </h3>
-<ul><%= link_to "#{ @link1.name}", topic_path(  @base.id, :center =>  @link1.id, :from => @center.id, :page_num => 0) %></ul>
-<ul><%= link_to "#{ @link2.name}", topic_path(  @base.id, :center =>  @link2.id, :from => @center.id, :page_num => 0) %></ul>
-<ul><%= link_to "#{ @link3.name}", topic_path(  @base.id, :center =>  @link3.id, :from => @center.id, :page_num => 0) %></ul>
-<ul><%= link_to "#{ @link4.name}", topic_path(  @base.id, :center =>  @link4.id, :from => @center.id, :page_num => 0) %></ul>
+<ul><%= link_to "#{ @link1.name}", topic_path(  @base.id, :center =>  @link1.id, :from => @center.id, :page_num => 0), :remote => true, :data => { :type => :json }, :class => "ajax_update" %></ul>
+<ul><%= link_to "#{ @link2.name}", topic_path(  @base.id, :center =>  @link2.id, :from => @center.id, :page_num => 0), :remote => true, :data => { :type => :json }, :class => "ajax_update" %></ul>
+<ul><%= link_to "#{ @link3.name}", topic_path(  @base.id, :center =>  @link3.id, :from => @center.id, :page_num => 0), :remote => true, :data => { :type => :json }, :class => "ajax_update" %></ul>
+<ul><%= link_to "#{ @link4.name}", topic_path(  @base.id, :center =>  @link4.id, :from => @center.id, :page_num => 0), :remote => true, :data => { :type => :json }, :class => "ajax_update" %></ul>
 
 
 <h3> Xplorer Map View Log </h3>
