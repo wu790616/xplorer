@@ -1,76 +1,87 @@
-<!--
-  後端送出之變數說明：
-  @base   為顯示議題列表之topic
-  @center Xplorer map 中心主題
-  @link1 ~ @link4 與中心主題為相關的四個主題 (以關聯度排序)
--->
-
-<!--
-  Topic_path變數說明：
-  :id     為顯示議題列表之 topic_id
-  :center 下一頁 Xplorer map 中心 topic_id
-  :from   這一頁 Xplorer map 中心 topic_id
-  :page   第0/1張以 @center 為中心的 Xplorer map
--->
-
-<!--
-  Topic_path變數說明：
-  :id     為顯示議題列表之 topic_id
-  :center 下一頁 Xplorer map 中心 topic_id
-  :from   這一頁 Xplorer map 中心 topic_id
-  :page   第0/1張以 @center 為中心的 Xplorer map
--->
-
-<!--
-  Xplorer Map View Log 說明：
-  @log 屬於 Topic class (Topic Model)
-  可顯示 id/name/avatar(尚未完成)/topic_link1_id~topic_link8_id/followers_count/links_count(尚未完成)
-
-  由上一步->上兩步->上三步->----
-  目前後端提供前10步紀錄，如須增刪可再討論。
--->
-
-<h1>TOPIC SHOW</h1>
-
-<h3>Base Topic: <%= @base.name %></h3>
-
-<h3>
-  <%= link_to "#{@center.name}", topic_path(@center.id, :center => @center.id, :from => @center.id, :page_num => @page) %>
-  <%= link_to "(Regen)"        , topic_path(  @base.id, :center => @center.id, :from => @center.id, :page_num => @page) %>
-</h3>
-<ul><%= link_to "#{ @link1.name}", topic_path(  @base.id, :center =>  @link1.id, :from => @center.id, :page_num => 0) %></ul>
-<ul><%= link_to "#{ @link2.name}", topic_path(  @base.id, :center =>  @link2.id, :from => @center.id, :page_num => 0) %></ul>
-<ul><%= link_to "#{ @link3.name}", topic_path(  @base.id, :center =>  @link3.id, :from => @center.id, :page_num => 0) %></ul>
-<ul><%= link_to "#{ @link4.name}", topic_path(  @base.id, :center =>  @link4.id, :from => @center.id, :page_num => 0) %></ul>
-
-
-<h3> Xplorer Map View Log </h3>
-<% @logs.each do |log| %>
-  <ul><%= "#{log.name}" %><br></ul>
-<% end %>
-
-<h3><%= @base.topic_tagships_count %> Issues in Topic <%= "#{@base.name}" %></h3>
-<h3><%= @base.followers_count %> Followers in Topic <%= "#{@base.name}" %></h3>
-<% @issues.each do |issue| %>
-  <p>Create Time    : <%= "#{issue.created_at.to_s(:long)}" %><br></p>
-  <p>Updated Time   : <%= "#{issue.updated_at.to_s(:long)}" %><br></p>
-  <p>Author         : <%= "#{issue.user.name}" %><br></p>
-  <p>Title          : <%= "#{issue.title}" %><br></p>
-  <p>Content        : <%= "#{issue.content}" %><br></p>
-  <p>Likes count    : <%= "#{issue.likes_count}" %><br></p>
-  <p>Comments count : <%= "#{issue.comments_count}" %><br></p>
-  <p>Views count    : <%= "#{issue.views_count}" %><br></p>
-  <p>Bookmarks count: <%= "#{issue.bookmarks_count}" %><br></p>
-  <p>Shares count   : <%= "#{issue.shares_count}" %><br></p>
-  <% issue.taged_topics.each do |tagged| %>
-    <%= "#{tagged.name}, " %>
-  <% end %>
-  <br>
-  <hr>
-<% end %>
-<!--
-  以下註解單純說明目前 fake data 邏輯，可刪除
-  目前 fake data 會產生 link1 亂數 id，link2~link8 依序累加
-  ex: link1 == 31 ==> link2~8 == 32~38
-      以:page_num 區分，page1 顯示 31~34 / page2 顯示 35~38
--->
+<div class="container">
+  <div class="row">
+    <div class="panel panel-default widget">
+      <div class="panel-heading", style="text-align: center;">
+        <h3 class="panel-title">
+            <%= @base.name %></h3>
+        <span class="glyphicon glyphicon-star", style="float: right;"></span>
+      </div>
+      <div class="panel-body">
+        <ul class="list-group">
+          <% @issues.each do |issue| %>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-xs-2 col-md-1">
+                  <img src="http://placehold.it/80" class="img-circle img-responsive" alt="" />
+                </div>
+                <div class="col-xs-10 col-md-11">
+                  <div>
+                    <%= link_to "#{issue.title}", issue_path(issue) %>
+                    <div class="mic-info">
+                      By <%= link_to "#{issue.user.name}", user_path(issue.user) %> | <%= "#{issue.updated_at.to_s(:long)}" %>
+                    </div>
+                  </div>
+                  <div class="comment-text">
+                    <%= truncate("#{issue.content}", length: 100, omission: "... (continued)") %><%= link_to "更多", issue_path(issue) %>
+                  </div>
+                  <p>
+                    <i class="icon-user"></i> by <a href="#">John</a> 
+                    | <i class="icon-calendar"></i> Sept 16th, 2012
+                    | <i class="icon-comment"></i> <a href="#">3 Comments</a>
+                    | <i class="icon-share"></i> <a href="#">39 Shares</a>
+                    | <i class="icon-tags"></i> Tags : <a href="#"><span class="label label-info">Snipp</span></a> 
+                    <a href="#"><span class="label label-info">Bootstrap</span></a> 
+                    <a href="#"><span class="label label-info">UI</span></a> 
+                    <a href="#"><span class="label label-info">growth</span></a>
+                  </p>
+                  <div class="action">
+                    <button type="button" class="btn btn-primary btn-xs" title="Edit">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </button>
+                    <button type="button" class="btn btn-success btn-xs" title="Approved">
+                        <span class="glyphicon glyphicon-ok"></span>
+                    </button>
+                    <button type="button" class="btn btn-danger btn-xs" title="Delete">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </li>
+          <% end %>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-xs-2 col-md-1">
+                <img src="http://placehold.it/80" class="img-circle img-responsive" alt="" />
+              </div>
+              <div class="col-xs-10 col-md-11">
+                <div>
+                  <a href="http://bootsnipp.com/BhaumikPatel/snippets/Obgj">Admin Panel Quick Shortcuts</a>
+                  <div class="mic-info">
+                      By: <a href="#">Bhaumik Patel</a> on 11 Nov 2013
+                  </div>
+                </div>
+                <div class="comment-text">
+                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh
+                    euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim
+                </div>
+                <div class="action">
+                  <button type="button" class="btn btn-primary btn-xs" title="Edit">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                  </button>
+                  <button type="button" class="btn btn-success btn-xs" title="Approved">
+                    <span class="glyphicon glyphicon-ok"></span>
+                  </button>
+                  <button type="button" class="btn btn-danger btn-xs" title="Delete">
+                    <span class="glyphicon glyphicon-trash"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <a href="#" class="btn btn-primary btn-sm btn-block" role="button"><span class="glyphicon glyphicon-refresh"></span> More</a>
+      </div>
+    </div>
+  </div>
+</div>
