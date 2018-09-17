@@ -63,6 +63,8 @@ gem 'rest-client'
 
 gem 'social-share-button'
 
+gem 'ffaker'
+
 group :production do
   gem 'pg'
 end
