@@ -356,15 +356,26 @@ Skill:
 <% end %>
 <br>
 
-<!-- 追蹤／取消追蹤 -->
+<!-- 個人成就資料 -->
 追隨者人數：
 <%= @user.followers_count %>
 <br>
-追隨者清單：
-<%= render partial: "follow_list", locals: {users: @followers} %>
-<br>
 追蹤的人數：
 <%= @user.followings_count %>
+<br>
+發布議題數量：
+<%= @posted_issues.size %>
+<br>
+發布議題總like數：
+<%= @likes_total %>
+<br>
+發布議題總瀏覽數：
+<%= @views_total %>
+<br>
+
+<!-- 追蹤／取消追蹤 -->
+追隨者清單：
+<%= render partial: "follow_list", locals: {users: @followers} %>
 <br>
 追蹤清單：
 <%= render partial: "follow_list", locals: {users: @followings} %>
@@ -399,6 +410,10 @@ My X Map:
 
 My Personal Issue:
 <%= render partial: "issue_list", locals: {issues: @posted_issues} %>
+<!-- 草稿只有自己看得到 -->
+<% if @user == current_user %>
+  <%= render partial: "issue_list", locals: {issues: @unposted_issues} %>
+<% end %>
 
 My Bookmark Issue:
 <!-- 使用者可以看到自己的Bookmark和決定是否要公開 -->

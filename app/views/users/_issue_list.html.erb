@@ -17,8 +17,8 @@
         <% end %>
       </li>
       <li>Like Count:<%= issue.likes_count %></li>
+      <li>View Coutn:<%= issue.views_count %></li>
       <li>Comment Count:<%= issue.comments_count %></li>
-      <li>Share Count:<%= issue.shares_count %></li>
       <li>
         <% if issue.user == current_user %>
           <%= link_to "Edit", edit_issue_path(issue) %> |

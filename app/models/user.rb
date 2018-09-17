@@ -105,6 +105,5 @@ class User < ApplicationRecord
     user.avatar = data.image
     user.save!
     return user    
-
   end
 end
