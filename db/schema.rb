@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_17_053323) do
+ActiveRecord::Schema.define(version: 2018_09_17_171544) do
 
   create_table "ahoy_events", force: :cascade do |t|
     t.integer "visit_id"
@@ -96,6 +96,7 @@ ActiveRecord::Schema.define(version: 2018_09_17_053323) do
     t.boolean "draft", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "edit_time"
   end
 
   create_table "likes", force: :cascade do |t|
