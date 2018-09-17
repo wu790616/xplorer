@@ -1,0 +1,8 @@
+<% users.each do |user| %>
+  <div>
+    <% if user.avatar? %>
+      <%= image_tag user.avatar.url, width: '100px' %>
+    <% end %>
+    <%= link_to user.name.to_s, user_path(user) %>    
+  </div>
+<% end %>

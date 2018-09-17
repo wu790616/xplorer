@@ -25,10 +25,10 @@ class Issue < ApplicationRecord
     self.bookmarked_users.include?(user)
   end
 
-  def update_share_count(issue, link)
+  def update_share_count(issue, link)   
     response = RestClient.get(link)
     if response
-      data = JSON.parse(RestClient.get(link))
+      data = JSON.parse(response)
       issue.shares_count = data['share']['share_count']
       issue.save!
     end
