@@ -65,6 +65,8 @@ gem 'social-share-button'
 
 gem 'ffaker'
 
+gem 'rubocop', require: false
+
 group :production do
   gem 'pg'
 end
