@@ -24,7 +24,7 @@
 <!--
   Xplorer Map View Log 說明：
   @log 屬於 Topic class (Topic Model)
-  可顯示 id/name/avatar(尚未完成)/topic_link1_id~topic_link8_id/followers_count/links_count(尚未完成)
+  可顯示 id/name/avatar/topic_link1_id~topic_link8_id/followers_count/links_count(尚未完成)
 
   由上一步->上兩步->上三步->----
   目前後端提供前10步紀錄，如須增刪可再討論。
@@ -33,6 +33,25 @@
 <h1>TOPIC SHOW</h1>
 
 <h3>Base Topic: <%= @base.name %></h3>
+<svg></svg>
+<script>
+  var topics = [ { name: "Center0", strength: 50 },
+                 { name: "Branch1", strength: 20 },
+                 { name: "Branch2", strength: 20 },
+                 { name: "Branch3", strength: 20 },
+                 { name: "Branch4", strength: 20 },]
+  var links  = [ {	source:0,	target:1, strength: 100	},
+            	   {	source:0,	target:2, strength: 100	},
+                 {	source:0,	target:3, strength: 100	},
+                 {	source:0,	target:4, strength: 200	},];
+
+  var width = 960;
+  var height = 600;               
+  var svg = d3.select("svg").attr("width", width).attr("height", height) 
+
+  xmap(svg, topics, links, width, height);
+
+</script>
 
 <h3>
   <%= link_to "#{@center.name}", topic_path(@center.id, :center => @center.id, :from => @center.id, :page_num => @page) %>
