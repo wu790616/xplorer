@@ -32,7 +32,7 @@ namespace :dev do
 
     TOPIC_NUM.times do |i|
 
-      file = File.open("#{Rails.root}/public/topic/avatar#{(i%6)+1}.png")
+      file = File.open("#{Rails.root}/public/topic/avatar#{(i%20)+1}.jpg")
       Topic.create!(
         name: "topic_#{i.to_s}",
         avatar: file
