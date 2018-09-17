@@ -147,9 +147,6 @@
 
 <!-- 以下是issue測試用 -->
 <p>--------以下是issue測試用--------</p>
-<% @issues.each do |issue| %>
-  <%= link_to issue_path(issue) do %>
-    <%= issue.title %>
-  <% end %>
-  <br>
-<% end %>
+<!-- 全站熱門議題 -->
+<h3>全站熱門議題</h3>
+<%= render partial: "brief_issue", locals: { issues: @hot_issues } %>
