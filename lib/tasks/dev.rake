@@ -8,6 +8,9 @@ namespace :dev do
   VISIT_NUM = 20
   STEPS_NUM = 20
 
+  MAX_COMMENT = 20
+  MAX_REPLY = 20
+
   task fake_user: :environment do
     User.destroy_all
 
@@ -133,6 +136,7 @@ namespace :dev do
   end
 
   task fake_xmap_viewlogs: :environment do
+    Ahoy::Event.all.where(name: "XmapViewlog").destroy_all
     VISIT_NUM.times do |i|
       topic_from = Topic.all.sample
       step_cnt = 0
@@ -154,6 +158,7 @@ namespace :dev do
   end
 
   task fake_topic_enterlogs: :environment do
+    Ahoy::Event.all.where(name: "TopicEnterlog").destroy_all
     User.all.each do |user|
       topic = Topic.all.sample
       step_cnt = 0
@@ -181,6 +186,7 @@ namespace :dev do
   #  t.datetime "updated_at", null: false
   #end
   task fake_bookmarks: :environment do
+    Bookmark.destroy_all
     User.all.each do |user|
       count = 0
       rand(1..Issue.count).times do |j|
@@ -204,9 +210,10 @@ namespace :dev do
   #  t.datetime "updated_at", null: false
   #end
   task fake_comments: :environment do
+    Comment.destroy_all
     User.all.each do |user|
       count = 0
-      rand(1..Issue.count).times do |j|
+      MAX_COMMENT.times do |j|
         issue = Issue.all.sample
         user.comments.create(
           issue: issue,
@@ -233,6 +240,7 @@ namespace :dev do
   #  t.datetime "updated_at", null: false
   #end
   task fake_likes: :environment do
+    Like.destroy_all
     User.all.each do |user|
       count = 0
       rand(1..Issue.count).times do |j|
@@ -256,9 +264,10 @@ namespace :dev do
   #  t.datetime "updated_at", null: false
   #end
   task fake_replies: :environment do
+    Reply.destroy_all
     User.all.each do |user|
       count = 0
-      rand(1..Comment.count).times do |j|
+      MAX_REPLY.times do |j|
         comment = Comment.all.sample
         user.replies.create(
           comment: comment,

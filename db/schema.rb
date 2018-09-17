@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_15_113126) do
+ActiveRecord::Schema.define(version: 2018_09_17_053323) do
 
   create_table "ahoy_events", force: :cascade do |t|
     t.integer "visit_id"
@@ -241,6 +241,7 @@ ActiveRecord::Schema.define(version: 2018_09_15_113126) do
     t.string "google_token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "followings_count", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
