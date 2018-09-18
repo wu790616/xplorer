@@ -79,12 +79,21 @@
 <!--
   Xplorer Map View Log 說明：
   @log 屬於 Topic class (Topic Model)
-  可顯示 id/name/avatar(尚未完成)/topic_link1_id~topic_link8_id/followers_count/links_count(尚未完成)
+  可顯示 id/name/avatar/topic_link1_id~topic_link8_id/followers_count/links_count(尚未完成)
 
   由上一步->上兩步->上三步->----
   目前後端提供前10步紀錄，如須增刪可再討論。
 -->
 
+<svg></svg>
+<script>
+  var width = 960;
+  var height = 600;
+  var svg = d3.select("svg").attr("width", width).attr("height", height)
+  var topics = <%= raw(@topics.to_json) %>
+  var links  = <%= raw(@links.to_json) %>
+  xmap(svg, topics, links, width, height);
+</script>
 <h3>Base Topic: <%= @base.name %></h3>
 <% if current_user %>
   <% if current_user.followingtopic?(@base) %>
@@ -93,6 +102,7 @@
     <h5><%= link_to "Follow", topic_followships_path(:topic_id => @base), method: :post %></h5>
   <% end %>
 <% end %>
+
 <h3>
   <%= link_to "#{@center.name}", topic_path(@center.id, :center => @center.id, :from => @center.id, :page_num => @page) %>
   <%= link_to "(Regen)"        , topic_path(  @base.id, :center => @center.id, :from => @center.id, :page_num => @page) %>
