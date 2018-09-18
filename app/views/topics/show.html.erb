@@ -17,7 +17,9 @@
                 <div class="col-xs-10 col-mßd-11">
                   <h4><%= link_to "#{issue.title}", issue_path(issue) %></h4>
                   <div class="comment-text">
-                    <%= truncate("#{issue.content}", length: 100, omission: "... (continued)") %><%= link_to "瀏覽更多", issue_path(issue) %>
+                    <%= truncate(strip_tags(issue.content), length: 100 ) %>
+                    <br />
+                    <%= link_to "瀏覽更多", issue_path(issue) %>
                   </div>
                   <div class="mic-info">
                     <p>
