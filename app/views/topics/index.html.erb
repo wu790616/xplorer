@@ -145,6 +145,18 @@
   <h3><%= link_to "#{topic.name}", topic_path(topic.id, :center => topic.id, :page_num => 0) %></h3>
 <% end %>
 
+<!-- 以下是user測試用 -->
+<h3>熱門作者</h3>
+<% @hot_users.each do |hot_user| %>
+  <% if hot_user.avatar? %>
+    <%= image_tag hot_user.avatar.url, width: '100px' %>
+  <% end %>
+  <%= link_to user_path(hot_user) do %>
+    <%= hot_user.name %>
+  <% end %>
+  <br>
+<% end %>
+
 <!-- 以下是issue測試用 -->
 <p>--------以下是issue測試用--------</p>
 <!-- 全站熱門議題 -->
