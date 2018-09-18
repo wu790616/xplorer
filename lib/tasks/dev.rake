@@ -293,9 +293,13 @@ namespace :dev do
 
     Issue.all.each do |issue|
       rand(1..TAG_NUM).times do |i|
-        issue.topic_tagships.create(
-          topic: Topic.all.sample
-        )
+        topic = Topic.all.sample
+        if topic.is_taged?(issue)
+        else
+          issue.topic_tagships.create(
+            topic: Topic.all.sample
+          )
+        end
       end
     end
     puts "have created fake topic_tagships"
