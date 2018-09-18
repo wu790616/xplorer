@@ -26,7 +26,7 @@ class TopicsController < ApplicationController
       @page   = 0
     end
     
-    @issues = @base.taged_issues
+    @issues = @base.taged_issues.page(params[:page]).per(15)
 
     if((params[:from].to_i != 0)&(params[:from] != params[:center]))
       ahoy.track "XmapViewlog", {from: params[:from].to_i, to: params[:center].to_i, progress: "init"}
