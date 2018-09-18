@@ -23,7 +23,7 @@
                     <p>
                        by <%= link_to "#{issue.user.name}", user_path(issue.user) %> 
                       | <%= "#{issue.updated_at.to_s(:long)}" %>
-                      | <span class="glyphicon glyphicon-comment"></span><%= "#{issue.comments_count}" %> 則留言
+                      | <span class="glyphicon glyphicon-comment"></span> <%= "#{issue.comments_count}" %> 則留言
                       | <span class="glyphicon glyphicon-eye-open"></span> <%= "#{issue.views_count}" %> 瀏覽數
                       | <span class="glyphicon glyphicon-heart"></span> <%= "#{issue.likes_count}" %> 讚
                       | <span class="glyphicon glyphicon-bookmark"></span> <%= "#{issue.bookmarks_count}" %> 人收藏
@@ -41,36 +41,12 @@
             </li>
           <% end %>
         </ul>
-        <div class="panel-footer">
-          <div class="row">
-            <div class="col-md-6">
-              <h6>
-                Total Count <span class="label label-info">25</span></h6>
-            </div>
-            <div class="col-md-6">
-              <ul class="pagination pagination-sm pull-right">
-                <li class="disabled"><a href="javascript:void(0)">«</a></li>
-                <li class="active"><a href="javascript:void(0)">1 <span class="sr-only">(current)</span></a></li>
-                <li><a href="http://www.jquery2dotnet.com">2</a></li>
-                <li><a href="http://www.jquery2dotnet.com">3</a></li>
-                <li><a href="http://www.jquery2dotnet.com">4</a></li>
-                <li><a href="http://www.jquery2dotnet.com">5</a></li>
-                <li><a href="javascript:void(0)">»</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <a href="#" class="btn btn-primary btn-sm btn-block" role="button"><span class="glyphicon glyphicon-refresh"></span> More</a>
       </div>
-      <ul class="pagination">
-        <li class="disabled"><a href="#">&laquo;</a></li>
-        <li class="active"><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
-        <li><a href="#">&raquo;</a></li>
-      </ul>
+      <div class="panel-footer", style="text-align: center">
+        <div class="row">
+          <%= paginate @issues %>
+        </div>
+      </div>
     </div>
   </div>
 </div>
