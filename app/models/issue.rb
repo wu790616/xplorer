@@ -1,4 +1,7 @@
 class Issue < ApplicationRecord
+  # Filter非草稿issue
+  scope :published, -> { where( :draft => false ) }
+
   # 一個Issue屬於一個使用者
   belongs_to :user
 
