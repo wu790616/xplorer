@@ -156,7 +156,7 @@
 <!-- 熱門作者的最新文章 -->
 <h3>熱門作者最新文章</h3>
 <% @hot_users.each do |hot_user| %>
-  <% user_issue = hot_user.issues.where( :draft => false ).order("created_at").last %>
+  <% user_issue = hot_user.issues.published.order("created_at").last %>
   <%= render partial: "brief_issue", locals: { issue: user_issue } %>
 <% end %> 
 
