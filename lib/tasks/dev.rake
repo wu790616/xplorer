@@ -98,10 +98,11 @@ namespace :dev do
     User.all.each do |user|
       rand(1..User.count).times do |i|
         user2 = User.all.sample
-        if(user != user2)
+        if((user == user2) || (user.following?(user2)))
           #user.user_followships.create!(
           #  following: user2
           #)
+        else
           UserFollowship.create(
             user_id: user.id,
             following_id: user2.id
