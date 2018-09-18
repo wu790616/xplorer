@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   end
 
   resources :user_followships, only: [:create, :destroy]
-  resources :topicfollowships, only: [:create, :destroy]
+  resources :topic_followships, only: [:create, :destroy]
   resources :bookmarks, only: [:create, :destroy]
   resources :likes, only: [:create, :destroy]
 

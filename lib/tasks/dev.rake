@@ -124,10 +124,13 @@ namespace :dev do
     User.all.each do |user|
       rand(1..TOPIC_NUM).times do |i|
         topic = Topic.all.sample
-        user.topic_followships.create!(
-          user: user,
-          topic: topic
-        )
+        if user.followingtopic?(topic)
+        else
+          user.topic_followships.create!(
+            user: user,
+            topic: topic
+          )
+        end
       end
     end
 

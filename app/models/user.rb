@@ -44,6 +44,9 @@ class User < ApplicationRecord
   def following?(user)
     self.followings.include?(user)
   end  
+  def followingtopic?(topic)
+    self.following_topics.include?(topic)
+  end  
 
   # for fb omniauth
   def self.from_omniauth(auth)

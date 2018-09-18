@@ -33,7 +33,11 @@
 <h1>TOPIC SHOW</h1>
 
 <h3>Base Topic: <%= @base.name %></h3>
-<h5><%= link_to "Follow Topic", topicfollowships_path(:topic_id => @base.id) %></h5>
+<% if current_user.followingtopic?(@base) %>
+  <h5><%= link_to "Unfollow", topic_followship_path(@base), method: :delete %></h5>
+<% else %>
+  <h5><%= link_to "Follow", topic_followships_path(:topic_id => @base), method: :post %></h5>
+<% end %>
 <h3>
   <%= link_to "#{@center.name}", topic_path(@center.id, :center => @center.id, :from => @center.id, :page_num => @page) %>
   <%= link_to "(Regen)"        , topic_path(  @base.id, :center => @center.id, :from => @center.id, :page_num => @page) %>
@@ -42,7 +46,6 @@
 <ul><%= link_to "#{ @link2.name}", topic_path(  @base.id, :center =>  @link2.id, :from => @center.id, :page_num => 0) %></ul>
 <ul><%= link_to "#{ @link3.name}", topic_path(  @base.id, :center =>  @link3.id, :from => @center.id, :page_num => 0) %></ul>
 <ul><%= link_to "#{ @link4.name}", topic_path(  @base.id, :center =>  @link4.id, :from => @center.id, :page_num => 0) %></ul>
-
 
 <h3> Xplorer Map View Log </h3>
 <% @logs.each do |log| %>
@@ -68,6 +71,7 @@
   <br>
   <hr>
 <% end %>
+
 <!--
   以下註解單純說明目前 fake data 邏輯，可刪除
   目前 fake data 會產生 link1 亂數 id，link2~link8 依序累加

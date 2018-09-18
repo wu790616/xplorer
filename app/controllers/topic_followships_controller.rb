@@ -1,6 +1,6 @@
 class TopicFollowshipsController < ApplicationController
   def create
-    @followship = current_user.topic_followships.create(topic_id: params[:topic_id])
+    @followship = current_user.topic_followships.build(topic_id: params[:topic_id])
 
     if @followship.save
       redirect_back(fallback_location: root_path)
@@ -10,7 +10,7 @@ class TopicFollowshipsController < ApplicationController
   end
 
   def destroy
-    @followship = current_user.topic_followships.where(topic_id: params[:topic_id]).first
+    @followship = current_user.topic_followships.where(topic_id: params[:id]).first
     @followship.destroy
     redirect_back(fallback_location: root_path)
   end
