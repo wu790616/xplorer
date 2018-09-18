@@ -33,10 +33,12 @@
 <h1>TOPIC SHOW</h1>
 
 <h3>Base Topic: <%= @base.name %></h3>
-<% if current_user.followingtopic?(@base) %>
-  <h5><%= link_to "Unfollow", topic_followship_path(@base), method: :delete %></h5>
-<% else %>
-  <h5><%= link_to "Follow", topic_followships_path(:topic_id => @base), method: :post %></h5>
+<% if current_user %>
+  <% if current_user.followingtopic?(@base) %>
+    <h5><%= link_to "Unfollow", topic_followship_path(@base), method: :delete %></h5>
+  <% else %>
+    <h5><%= link_to "Follow", topic_followships_path(:topic_id => @base), method: :post %></h5>
+  <% end %>
 <% end %>
 <h3>
   <%= link_to "#{@center.name}", topic_path(@center.id, :center => @center.id, :from => @center.id, :page_num => @page) %>
