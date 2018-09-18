@@ -8,7 +8,7 @@ class TopicsController < ApplicationController
       @hot_topics = Topic.all.order(topic_tagships_count: :desc).limit(5)
     end
     # issue
-    @hot_issues = Issue.published.order(views_count: :desc)
+    @hot_issues = Issue.published.order(views_count: :desc).page(params[:page]).per(10)
     @hot_users = User.order(followers_count: :desc).limit(10)
     if(current_user)
       @user_followings = current_user.followings

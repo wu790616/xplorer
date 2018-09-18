@@ -1,79 +1,42 @@
-<!-- 先暫時隱藏 
-<div class="container">
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="row">
-        <div class="col-lg-12">
-          <h4><strong><a href="#">Title of the post</a></strong></h4>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-2">
-          <a href="#" class="thumbnail">
-              <img src="http://placehold.it/260x180" alt="">
-          </a>
-        </div>
-        <div class="col-lg-9">      
-          <p>
-            Lorem ipsum dolor sit amet, id nec conceptam conclusionemque. Et eam tation option. Utinam salutatus ex eum. Ne mea dicit tibique facilisi, ea mei omittam explicari conclusionemque, ad nobis propriae quaerendum sea.
-          </p>
-          <p><a class="btn" href="#">Read more</a></p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="ol-lg-9">
-          <p></p>
-          <p>
-            <i class="icon-user"></i> by <a href="#">John</a> 
-            | <i class="icon-calendar"></i> Sept 16th, 2012
-            | <i class="icon-comment"></i> <a href="#">3 Comments</a>
-            | <i class="icon-share"></i> <a href="#">39 Shares</a>
-            | <i class="icon-tags"></i> Tags : <a href="#"><span class="label label-info">Snipp</span></a> 
-            <a href="#"><span class="label label-info">Bootstrap</span></a> 
-            <a href="#"><span class="label label-info">UI</span></a> 
-            <a href="#"><span class="label label-info">growth</span></a>
-          </p>
-        </div>
-      </div>
-    </div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <h4><strong>
+      <%= link_to issue_path(issue) do %>
+        <%= issue.title %>
+      <% end %>
+    </strong></h4>
   </div>
-  <hr>
 </div>
--->
-
-<!-- 原始資料 -->
-<%= link_to issue_path(issue) do %>
-  <%= issue.title %>
-<% end %>
-<br>
-
-作者：
-<%= link_to user_path(issue.user) do %>
-  <%= issue.user.name %>
-<% end %>|
-
-日期：
-<%= issue.edit_time.localtime.strftime('%Y-%m-%d') %>|
-<br>
-
-Content:
-<%= truncate(strip_tags(issue.content), length: 100 ) %><%= link_to "瀏覽更多", issue_path(issue) %>
-<br>
-
-Comment:
-<%= issue.comments_count %>|
-
-View:
-<%= issue.views_count %>|
-
-Bookmark:
-<%= issue.bookmarks_count %>
-
-<br>
-
-Topics:
-<% issue.taged_topics.each do |topic| %>
-  <%= topic.name %>
-<% end %>
-
+<div class="row">
+  <div class="col-lg-2">
+    <a href="#" class="thumbnail">
+        <img src="http://placehold.it/260x180" alt="">
+    </a>
+  </div>
+  <div class="col-lg-9">      
+    <p>
+      <%= truncate(strip_tags(issue.content), length: 100 ) %><%= link_to "瀏覽更多", issue_path(issue)%>
+    </p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <p></p>
+    <p>
+      by
+      <%= link_to user_path(issue.user) do %>
+        <%= issue.user.name %>
+      <% end %> 
+      | <%= issue.edit_time.localtime.strftime('%Y-%m-%d') %>
+      | <span class="glyphicon glyphicon-comment"></span> <%= issue.comments_count %> 則留言
+      | <span class="glyphicon glyphicon-eye-open"></span> <%= issue.views_count %> 瀏覽數
+      | <span class="glyphicon glyphicon-bookmark"></span> <%= issue.bookmarks_count %> 人收藏
+      | <span class="glyphicon glyphicon-bookmark"></span> 標籤: 
+        <% issue.taged_topics.each do |topic| %>
+          <span class="label label-info"><%= topic.name %></span>
+        <% end %>
+    </p>
+  </div>
+</div>
 <hr>
