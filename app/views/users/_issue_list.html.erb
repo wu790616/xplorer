@@ -9,7 +9,7 @@
       <% end %>
     </li>
     <ul>
-      <li>更新日期：<%= issue.updated_at.localtime.strftime('%Y-%m-%d') %></li>
+      <li>更新日期：<%= issue.edit_time.localtime.to_s(:long) %></li>
       <li>
         Topics:
         <% issue.taged_topics.each do |topic| %>
@@ -19,15 +19,15 @@
       <li>Like Count:<%= issue.likes_count %></li>
       <li>View Coutn:<%= issue.views_count %></li>
       <li>Comment Count:<%= issue.comments_count %></li>
-      <li>
-        <% if issue.user == current_user %>
-          <%= link_to "Edit", edit_issue_path(issue) %> |
-          <%= link_to "Delete", issue_path(issue), method: :delete, data: { confirm: "確認要刪除這篇議題嗎?" } %>
-        <% end %>
-        <% if current_user.bookmarked_issues.include?(issue) %>
-          <%= link_to '取消收藏', bookmark_path(issue), method: :delete, data: { confirm: "確認要取消收藏這篇議題嗎?" } %>
-        <% end %>  
-      </li>
+
+      <% if issue.user == current_user %>
+        <%= link_to "Edit", edit_issue_path(issue) %> |
+        <%= link_to "Delete", issue_path(issue), method: :delete, data: { confirm: "確認要刪除這篇議題嗎?" } %>
+      <% end %>
+      <% if current_user && current_user.bookmarked_issues.include?(issue) %>
+        <%= link_to '取消收藏', bookmark_path(issue), method: :delete, data: { confirm: "確認要取消收藏這篇議題嗎?" } %>
+      <% end %>  
+
     </ul>
   </ul>
 <% end %>

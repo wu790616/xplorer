@@ -24,7 +24,7 @@
                   <div class="mic-info">
                     <p>
                        by <%= link_to "#{issue.user.name}", user_path(issue.user) %> 
-                      | <%= "#{issue.updated_at.to_s(:long)}" %>
+                      | <%= "#{issue.edit_time.localtime.to_s(:long)}" %>
                       | <span class="glyphicon glyphicon-comment"></span> <%= "#{issue.comments_count}" %> 則留言
                       | <span class="glyphicon glyphicon-eye-open"></span> <%= "#{issue.views_count}" %> 瀏覽數
                       | <span class="glyphicon glyphicon-heart"></span> <%= "#{issue.likes_count}" %> 讚
