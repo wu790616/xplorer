@@ -149,4 +149,21 @@
 <p>--------以下是issue測試用--------</p>
 <!-- 全站熱門議題 -->
 <h3>全站熱門議題</h3>
-<%= render partial: "brief_issue", locals: { issues: @hot_issues } %>
+<% @hot_issues.each do |hot_issue| %>
+  <%= render partial: "brief_issue", locals: { issue: hot_issue } %>
+<% end %>
+
+<!-- 熱門作者的最新文章 -->
+<h3>熱門作者最新文章</h3>
+<% @hot_users.each do |hot_user| %>
+  <% user_issue = hot_user.issues.where( :draft => false ).order("created_at").last %>
+  <%= render partial: "brief_issue", locals: { issue: user_issue } %>
+<% end %> 
+
+<!-- 關注作者的最新文章 -->
+<% if current_user %>
+  <h3>關注作者最新文章</h3>
+  <% @followings_issues.find_each do |followings_issue| %>
+    <%= render partial: "brief_issue", locals: { issue: followings_issue } %>
+  <% end %>
+<% end %>

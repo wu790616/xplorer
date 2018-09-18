@@ -10,6 +10,11 @@ class TopicsController < ApplicationController
     # issue
     posted_issues = Issue.all.where( :draft => false )
     @hot_issues = posted_issues.order(views_count: :desc).limit(10)
+    @hot_users = User.all.order(followers_count: :desc).limit(10)
+    if(current_user)
+      @user_followings = current_user.followings
+      @followings_issues = Issue.where(user: @user_followings).order(edit_time: :desc).limit(20)
+    end
   end
 
   def show

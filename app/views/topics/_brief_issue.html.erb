@@ -1,3 +1,4 @@
+<!-- 先暫時隱藏 
 <div class="container">
   <div class="row">
     <div class="col-lg-12">
@@ -38,37 +39,36 @@
   </div>
   <hr>
 </div>
+-->
 
 <!-- 原始資料 -->
-<% issues.each do |issue| %>
-  <%= link_to issue_path(issue) do %>
-    <%= issue.title %>
-  <% end %>
-  <br>
-
-  作者：
-  <%= link_to user_path(issue.user) do %>
-    <%= issue.user.name %>
-  <% end %>|
-  
-  日期：
-  <%= issue.updated_at.strftime('%Y-%m-%d') %>|
-
-  Comment:
-  <%= issue.comments_count %>|
-
-  View:
-  <%= issue.views_count %>|
-
-  Bookmark:
-  <%= issue.bookmarks_count %>
-
-  <br>
-
-  Topics:
-  <% issue.taged_topics.each do |topic| %>
-    <%= topic.name %>
-  <% end %>
-
-  <hr>
+<%= link_to issue_path(issue) do %>
+  <%= issue.title %>
 <% end %>
+<br>
+
+作者：
+<%= link_to user_path(issue.user) do %>
+  <%= issue.user.name %>
+<% end %>|
+
+日期：
+<%= issue.edit_time.localtime.strftime('%Y-%m-%d') %>|
+
+Comment:
+<%= issue.comments_count %>|
+
+View:
+<%= issue.views_count %>|
+
+Bookmark:
+<%= issue.bookmarks_count %>
+
+<br>
+
+Topics:
+<% issue.taged_topics.each do |topic| %>
+  <%= topic.name %>
+<% end %>
+
+<hr>
