@@ -54,6 +54,11 @@
 
 日期：
 <%= issue.edit_time.localtime.strftime('%Y-%m-%d') %>|
+<br>
+
+Content:
+<%= truncate(strip_tags(issue.content), length: 100 ) %><%= link_to "瀏覽更多", issue_path(issue) %>
+<br>
 
 Comment:
 <%= issue.comments_count %>|
