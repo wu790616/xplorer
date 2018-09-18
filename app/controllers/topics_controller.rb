@@ -1,12 +1,22 @@
 class TopicsController < ApplicationController
 
   def index
+    # hot topics
     if(current_user)
       @hot_topics = current_user.following_topics.order(topic_tagships_count: :desc).limit(5)
     else
       @hot_topics = Topic.all.order(topic_tagships_count: :desc).limit(5)
     end
-    @issues = Issue.all.order(created_at: :desc).limit(5)
+    # issue
+    @hot_issues = Issue.published.order(views_count: :desc)
+    @hot_users = User.order(followers_count: :desc).limit(10)
+    if(current_user)
+      @user_followings = current_user.followings
+      @followings_issues = Issue.published.where(:user => @user_followings).order(edit_time: :desc)
+      @topic_followings = current_user.following_topics
+      @tagships = TopicTagship.where(:topic => @topic_followings)
+      @topic_followings_issues = Issue.published.where(:topic_tagships => @tagships).order(edit_time: :desc)
+    end
   end
 
   def show
@@ -39,7 +49,7 @@ class TopicsController < ApplicationController
     @links.push({source: 0, target:3, strength: XplorerMap.where(from_id: @center.id, to_id: @link3.id).first.strength})
     @links.push({source: 0, target:4, strength: XplorerMap.where(from_id: @center.id, to_id: @link4.id).first.strength})
 
-    @issues = @base.taged_issues
+    @issues = @base.taged_issues.page(params[:page]).per(15)
 
     if((params[:from].to_i != 0)&(params[:from] != params[:center]))
       ahoy.track "XmapViewlog", {from: params[:from].to_i, to: params[:center].to_i, progress: "init"}

@@ -72,6 +72,7 @@ namespace :dev do
       issue.content = FFaker::Lorem::sentence(500)
       issue.draft = "false"
       issue.views_count = rand(1..300)
+      issue.edit_time = Time.now
       issue.save!
     end
 
@@ -98,10 +99,11 @@ namespace :dev do
     User.all.each do |user|
       rand(1..User.count).times do |i|
         user2 = User.all.sample
-        if(user != user2)
+        if((user == user2) || (user.following?(user2)))
           #user.user_followships.create!(
           #  following: user2
           #)
+        else
           UserFollowship.create(
             user_id: user.id,
             following_id: user2.id
@@ -124,10 +126,13 @@ namespace :dev do
     User.all.each do |user|
       rand(1..TOPIC_NUM).times do |i|
         topic = Topic.all.sample
-        user.topic_followships.create!(
-          user: user,
-          topic: topic
-        )
+        if user.followingtopic?(topic)
+        else
+          user.topic_followships.create!(
+            user: user,
+            topic: topic
+          )
+        end
       end
     end
 
@@ -289,9 +294,13 @@ namespace :dev do
 
     Issue.all.each do |issue|
       rand(1..TAG_NUM).times do |i|
-        issue.topic_tagships.create(
-          topic: Topic.all.sample
-        )
+        topic = Topic.all.sample
+        if topic.is_taged?(issue)
+        else
+          issue.topic_tagships.create(
+            topic: Topic.all.sample
+          )
+        end
       end
     end
     puts "have created fake topic_tagships"

@@ -10,6 +10,7 @@ class IssuesController < ApplicationController
   def create
     @issue = Issue.new(issue_params)
     @issue.user = current_user
+    @issue.edit_time = Time.current
     if @issue.draft
       if @issue.save
         redirect_to root_path
@@ -44,6 +45,7 @@ class IssuesController < ApplicationController
   end
 
   def update
+    @issue.edit_time = Time.current
     if @issue.update(issue_params)
       if @issue.draft
         redirect_to issue_path(@issue)
@@ -89,7 +91,7 @@ class IssuesController < ApplicationController
   private
 
   def issue_params
-    params.require(:issue).permit(:title, :content, :draft)
+    params.require(:issue).permit(:title, :content, :draft, :edit_time)
   end
 
   def set_issue

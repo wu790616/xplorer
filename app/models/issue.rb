@@ -1,4 +1,7 @@
 class Issue < ApplicationRecord
+  # Filter非草稿issue
+  scope :published, -> { where( :draft => false ) }
+
   # 一個Issue屬於一個使用者
   belongs_to :user
 
@@ -25,7 +28,7 @@ class Issue < ApplicationRecord
     self.bookmarked_users.include?(user)
   end
 
-  def update_share_count(issue, link)
+  def update_share_count(issue, link)   
     response = RestClient.get(link)
     if response
       data = JSON.parse(response)

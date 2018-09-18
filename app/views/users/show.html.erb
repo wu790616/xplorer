@@ -309,9 +309,8 @@
   </div>
 
 <!-- 原始測試資料 -->
-
->>>>test
-<br />
+<hr>
+<p>----------------------- 原始測試資料 -----------------------</p>
 
 <% if @user == current_user %>
   <%= link_to('修改個人檔案', edit_user_path(@user)) %>
@@ -357,6 +356,40 @@ Skill:
 <% end %>
 <br>
 
+<!-- 個人成就資料 -->
+追隨者人數：
+<%= @user.followers_count %>
+<br>
+追蹤的人數：
+<%= @user.followings_count %>
+<br>
+發布議題數量：
+<%= @posted_issues.size %>
+<br>
+發布議題總like數：
+<%= @likes_total %>
+<br>
+發布議題總瀏覽數：
+<%= @views_total %>
+<br>
+
+<!-- 追蹤／取消追蹤 -->
+追隨者清單：
+<%= render partial: "follow_list", locals: {users: @followers} %>
+<br>
+追蹤清單：
+<%= render partial: "follow_list", locals: {users: @followings} %>
+追蹤使用者：
+<br>
+<% if @user == current_user %>
+  <%= link_to '追蹤', user_followships_path(following_id: @user), method: :post, class: "btn btn-primary disabled" %>
+<% elsif current_user.following?(@user) %>
+  <%= link_to '取消追蹤', user_followship_path(@user), method: :delete, class: "btn btn-danger" %>
+<% else %>
+  <%= link_to '追蹤', user_followships_path(following_id: @user), method: :post, class: "btn btn-primary" %>
+<% end %>
+<br>
+
 My X Map:
 <!-- 使用者可以看到自己的X MAP和決定是否要公開 -->
 <% if @user == current_user %>
@@ -375,10 +408,17 @@ My X Map:
 <% end %>
 <br>
 
+My Personal Issue:
+<%= render partial: "issue_list", locals: {issues: @posted_issues} %>
+<!-- 草稿只有自己看得到 -->
+<% if @user == current_user %>
+  <%= render partial: "issue_list", locals: {issues: @unposted_issues} %>
+<% end %>
+
 My Bookmark Issue:
 <!-- 使用者可以看到自己的Bookmark和決定是否要公開 -->
 <% if @user == current_user %>
-  For test(Bookmark)
+  <%= render partial: "issue_list", locals: {issues: @marked_issues} %>
   <% if @user.issue_book_privacy %> 
     <%= button_to "改為不公開", user_path(@user), method: :patch, params: { :"user[issue_book_privacy]" => false }, class: "btn btn-info" %>
   <% else %>
@@ -386,10 +426,15 @@ My Bookmark Issue:
   <% end %>
 <!-- 非本人當使用者設定可以看到Bookmark時，顯示Bookmark -->
 <% elsif @user.issue_book_privacy %>
-  For test(Bookmark)
+  <%= render partial: "issue_list", locals: {issues: @marked_issues} %>
 <!-- 非本人當使用者設定不可以看到Bookmark時，顯示使用者不公開 -->
 <% else %>
   使用者不公開
 <% end %>
 <br>
+
+My Commented Issue:
+<%= render partial: "issue_list", locals: {issues: @commented_issues} %>
+
+
     
