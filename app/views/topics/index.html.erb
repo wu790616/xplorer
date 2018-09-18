@@ -83,7 +83,7 @@
       ================================================== -->
       <ul class="nav nav-tabs">
         <li class="active"><a href="#hotissue" data-toggle="tab">熱門議題</a></li>
-        <li><a href="#hotissue of hotauthor" data-toggle="tab">熱門作者的議題</a></li>
+        <li><a href="#hotissue_of_hotauthor" data-toggle="tab">熱門作者的議題</a></li>
         <% if current_user %>
           <li><a href="#hottopic" data-toggle="tab">關注主題</a></li>
           <li><a href="#following" data-toggle="tab">追蹤者</a></li>
@@ -92,15 +92,37 @@
       <div id="myTabContent" class="tab-content">
         <div class="tab-pane fade active in" id="hotissue">
           <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
+          <!-- 全站熱門議題 -->
+          <% @hot_issues.each do |hot_issue| %>
+            <%= render partial: "brief_issue", locals: { issue: hot_issue } %>
+          <% end %>
         </div>
-        <div class="tab-pane fade" id="hotissue of hotauthor">
+        <div class="tab-pane fade" id="hotissue_of_hotauthor">
           <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.</p>
+          <!-- 熱門作者的最新文章 -->
+          <% @hot_users.each do |hot_user| %>
+            <% user_issue = hot_user.issues.published.order("created_at").last %>
+            <%= render partial: "brief_issue", locals: { issue: user_issue } %>
+          <% end %>
         </div>
         <div class="tab-pane fade" id="hottopic">
           <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.</p>
+          <!-- 關注topic的最新文章 -->
+          <% if current_user %>
+            <h3>關注topic的最新文章</h3>
+            <% @topic_followings_issues.each do |topic_followings_issue| %>
+              <%= render partial: "brief_issue", locals: { issue: topic_followings_issue } %>
+            <% end %>
+          <% end %>
         </div>
         <div class="tab-pane fade" id="following">
           <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.</p>
+          <!-- 關注作者的最新文章 -->
+          <% if current_user %>
+            <% @followings_issues.find_each do |followings_issue| %>
+              <%= render partial: "brief_issue", locals: { issue: followings_issue } %>
+            <% end %>
+          <% end %>
         </div>
       </div><!-- /.tabs -->
     </div>
@@ -157,31 +179,3 @@
   <br>
 <% end %>
 
-<!-- 以下是issue測試用 -->
-<p>--------以下是issue測試用--------</p>
-<!-- 全站熱門議題 -->
-<h3>全站熱門議題</h3>
-<% @hot_issues.each do |hot_issue| %>
-  <%= render partial: "brief_issue", locals: { issue: hot_issue } %>
-<% end %>
-
-<!-- 熱門作者的最新文章 -->
-<h3>熱門作者最新文章</h3>
-<% @hot_users.each do |hot_user| %>
-  <% user_issue = hot_user.issues.published.order("created_at").last %>
-  <%= render partial: "brief_issue", locals: { issue: user_issue } %>
-<% end %> 
-
-<!-- 登入後 -->
-<% if current_user %>
-  <!-- 關注作者的最新文章 -->
-  <h3>關注作者最新文章</h3>
-  <% @followings_issues.find_each do |followings_issue| %>
-    <%= render partial: "brief_issue", locals: { issue: followings_issue } %>
-  <% end %>
-  <!-- 關注topic的最新文章 -->
-  <h3>關注topic的最新文章</h3>
-  <% @topic_followings_issues.each do |topic_followings_issue| %>
-    <%= render partial: "brief_issue", locals: { issue: topic_followings_issue } %>
-  <% end %>
-<% end %>
