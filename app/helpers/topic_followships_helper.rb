@@ -1,0 +1,2 @@
+module TopicFollowshipsHelper
+end

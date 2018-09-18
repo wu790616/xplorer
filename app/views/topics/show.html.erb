@@ -52,3 +52,66 @@
     </div>
   </div>
 </div>
+
+<!--
+  後端送出之變數說明：
+  @base   為顯示議題列表之topic
+  @center Xplorer map 中心主題
+  @link1 ~ @link4 與中心主題為相關的四個主題 (以關聯度排序)
+-->
+
+<!--
+  Topic_path變數說明：
+  :id     為顯示議題列表之 topic_id
+  :center 下一頁 Xplorer map 中心 topic_id
+  :from   這一頁 Xplorer map 中心 topic_id
+  :page   第0/1張以 @center 為中心的 Xplorer map
+-->
+
+<!--
+  Topic_path變數說明：
+  :id     為顯示議題列表之 topic_id
+  :center 下一頁 Xplorer map 中心 topic_id
+  :from   這一頁 Xplorer map 中心 topic_id
+  :page   第0/1張以 @center 為中心的 Xplorer map
+-->
+
+<!--
+  Xplorer Map View Log 說明：
+  @log 屬於 Topic class (Topic Model)
+  可顯示 id/name/avatar(尚未完成)/topic_link1_id~topic_link8_id/followers_count/links_count(尚未完成)
+
+  由上一步->上兩步->上三步->----
+  目前後端提供前10步紀錄，如須增刪可再討論。
+-->
+
+<h3>Base Topic: <%= @base.name %></h3>
+<% if current_user %>
+  <% if current_user.followingtopic?(@base) %>
+    <h5><%= link_to "Unfollow", topic_followship_path(@base), method: :delete %></h5>
+  <% else %>
+    <h5><%= link_to "Follow", topic_followships_path(:topic_id => @base), method: :post %></h5>
+  <% end %>
+<% end %>
+<h3>
+  <%= link_to "#{@center.name}", topic_path(@center.id, :center => @center.id, :from => @center.id, :page_num => @page) %>
+  <%= link_to "(Regen)"        , topic_path(  @base.id, :center => @center.id, :from => @center.id, :page_num => @page) %>
+</h3>
+<ul><%= link_to "#{ @link1.name}", topic_path(  @base.id, :center =>  @link1.id, :from => @center.id, :page_num => 0) %></ul>
+<ul><%= link_to "#{ @link2.name}", topic_path(  @base.id, :center =>  @link2.id, :from => @center.id, :page_num => 0) %></ul>
+<ul><%= link_to "#{ @link3.name}", topic_path(  @base.id, :center =>  @link3.id, :from => @center.id, :page_num => 0) %></ul>
+<ul><%= link_to "#{ @link4.name}", topic_path(  @base.id, :center =>  @link4.id, :from => @center.id, :page_num => 0) %></ul>
+
+<h3> Xplorer Map View Log </h3>
+<% @logs.each do |log| %>
+  <ul><%= "#{log.name}" %><br></ul>
+<% end %>
+
+
+<!--
+  以下註解單純說明目前 fake data 邏輯，可刪除
+  目前 fake data 會產生 link1 亂數 id，link2~link8 依序累加
+  ex: link1 == 31 ==> link2~8 == 32~38
+      以:page_num 區分，page1 顯示 31~34 / page2 顯示 35~38
+-->
+
