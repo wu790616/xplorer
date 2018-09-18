@@ -1,0 +1,2 @@
+class TopicFollowshipsController < ApplicationController
+end

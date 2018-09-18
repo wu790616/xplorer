@@ -33,7 +33,7 @@
 <h1>TOPIC SHOW</h1>
 
 <h3>Base Topic: <%= @base.name %></h3>
-
+<h5><%= link_to "Follow Topic", topicfollowships_path(:topic => @base.id) %></h5>
 <h3>
   <%= link_to "#{@center.name}", topic_path(@center.id, :center => @center.id, :from => @center.id, :page_num => @page) %>
   <%= link_to "(Regen)"        , topic_path(  @base.id, :center => @center.id, :from => @center.id, :page_num => @page) %>
