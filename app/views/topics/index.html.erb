@@ -160,10 +160,16 @@
   <%= render partial: "brief_issue", locals: { issue: user_issue } %>
 <% end %> 
 
-<!-- 關注作者的最新文章 -->
+<!-- 登入後 -->
 <% if current_user %>
+  <!-- 關注作者的最新文章 -->
   <h3>關注作者最新文章</h3>
   <% @followings_issues.find_each do |followings_issue| %>
     <%= render partial: "brief_issue", locals: { issue: followings_issue } %>
+  <% end %>
+  <!-- 關注topic的最新文章 -->
+  <h3>關注topic的最新文章</h3>
+  <% @topic_followings_issues.each do |topic_followings_issue| %>
+    <%= render partial: "brief_issue", locals: { issue: topic_followings_issue } %>
   <% end %>
 <% end %>

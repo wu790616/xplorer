@@ -13,7 +13,10 @@ class TopicsController < ApplicationController
     @hot_users = User.all.order(followers_count: :desc).limit(10)
     if(current_user)
       @user_followings = current_user.followings
-      @followings_issues = Issue.where(user: @user_followings).order(edit_time: :desc).limit(20)
+      @followings_issues = Issue.where(:user => @user_followings).order(edit_time: :desc)
+      @topic_followings = current_user.following_topics
+      @tagships = TopicTagship.where(:topic => @topic_followings)
+      @topic_followings_issues = Issue.where(:topic_tagships => @tagships).order(edit_time: :desc)
     end
   end
 
