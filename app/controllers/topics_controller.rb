@@ -2,7 +2,7 @@ class TopicsController < ApplicationController
 
   def index
     # hot topics
-    if(current_user)
+    if(current_user && (current_user.following_topics.first != nil))
       @hot_topics = current_user.following_topics.order(topic_tagships_count: :desc).limit(5)
     else
       @hot_topics = Topic.all.order(topic_tagships_count: :desc).limit(5)
