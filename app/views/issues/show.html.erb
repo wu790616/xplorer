@@ -3,7 +3,7 @@
     <div class="container">
       <h2><%= @issue.title %></h2>
       <div class="body-text">
-        <p class='text-muted'>By <%= @issue.user.name %> | <%= @issue.updated_at.localtime.strftime('%Y-%m-%d %H:%M') %></p>
+        <p class='text-muted'>By <%= @issue.user.name %> | <%= @issue.edit_time.localtime.to_s(:long) %></p>
         <% if @issue.draft %>
           <h6 class="label label-default">Draft</h6>
         <% else %>
