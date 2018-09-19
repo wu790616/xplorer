@@ -28,7 +28,7 @@
       <%= link_to user_path(issue.user) do %>
         <%= issue.user.name %>
       <% end %> 
-      | <%= issue.edit_time.localtime.strftime('%Y-%m-%d') %>
+      | <%= issue.edit_time.localtime.to_s(:long) %>
       | <span class="glyphicon glyphicon-comment"></span> <%= issue.comments_count %> 則留言
       | <span class="glyphicon glyphicon-eye-open"></span> <%= issue.views_count %> 瀏覽數
       | <span class="glyphicon glyphicon-bookmark"></span> <%= issue.bookmarks_count %> 人收藏

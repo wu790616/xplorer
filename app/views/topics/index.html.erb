@@ -95,33 +95,42 @@
           <% @hot_issues.find_each do |hot_issue| %>
             <%= render partial: "brief_issue", locals: { issue: hot_issue } %>
           <% end %>
-          <%= paginate @hot_issues %>
+          <div style="text-align: center"> 
+            <%= paginate @hot_issues %>
+          </div>
+          <!--<div style="text-align: center">
+          </div>-->
         </div>
         <div class="tab-pane fade" id="hotissue_of_hotauthor">
-          <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.</p>
           <!-- 熱門作者的最新文章 -->
-          <% @hot_users.each do |hot_user| %>
-            <% user_issue = hot_user.issues.published.order("edit_time").last %>
-            <%= render partial: "brief_issue", locals: { issue: user_issue } %>
+          <% @hot_users_issues.each do |hot_user_issue| %>
+            <%= render partial: "brief_issue", locals: { issue: hot_user_issue } %>
           <% end %>
+          <div style="text-align: center"> 
+            <%= paginate @hot_users_issues %>
+          </div>
         </div>
         <div class="tab-pane fade" id="hottopic">
-          <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.</p>
           <!-- 關注topic的最新文章 -->
           <% if current_user %>
             <% @topic_followings_issues.find_each do |topic_followings_issue| %>
               <%= render partial: "brief_issue", locals: { issue: topic_followings_issue } %>
             <% end %>
           <% end %>
+          <div style="text-align: center">
+            <%= paginate @topic_followings_issues %>
+          </div>
         </div>
         <div class="tab-pane fade" id="following">
-          <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.</p>
           <!-- 關注作者的最新文章 -->
           <% if current_user %>
             <% @followings_issues.find_each do |followings_issue| %>
               <%= render partial: "brief_issue", locals: { issue: followings_issue } %>
             <% end %>
           <% end %>
+          <div style="text-align: center">
+            <%= paginate @followings_issues %>
+          </div>
         </div>
       </div><!-- /.tabs -->
     </div>
@@ -134,22 +143,23 @@
           <div class="table-container">
             <table class="table-users table" border="0">
               <tbody>
-                <tr>
-                  <td width="10" align="center">
-                    <span class="glyphicon glyphicon-user"></span>
-                  </td>
-                  <td>
-                    John Smith<br>
-                  </td>
-                </tr>
-                <tr>
-                  <td width="10">
-                    <img class="pull-left img-circle nav-user-photo" width="50" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxhcCYW4QDWMOjOuUTxOd50KcJvK-rop9qE9zRltSbVS_bO-cfWA" />  
-                  </td>
-                  <td>
-                    Herbert Hoover<br>
-                  </td>
-                </tr>
+                <% @hot_users.each do |hot_user| %>
+                  <tr>
+                    <td width="10" align="center">
+                      <% if hot_user.avatar? %>
+                        <%= image_tag hot_user.avatar.url, width: '50', class: "pull-left img-circle nav-user-photo"  %>
+                      <% else %>
+                        <span class="glyphicon glyphicon-user"></span>
+                      <% end %>
+                    </td>
+                    <td>
+                      <%= link_to user_path(hot_user) do %>
+                        <%= hot_user.name %>
+                      <% end %>
+                      <br>
+                    </td>
+                  </tr>
+                <% end %>
               </tbody>
             </table>
           </div>
@@ -158,23 +168,3 @@
     </div>
   </div>
 </div>
-
-<p>--------以下是topic測試用--------</p>
-<!-- 以下是topic測試用 -->
-<% @hot_topics.each do |topic| %>
-  <%= topic.name %> (<%= topic.topic_tagships_count %>)<br>
-  <h3><%= link_to "#{topic.name}", topic_path(topic.id, :center => topic.id, :page_num => 0) %></h3>
-<% end %>
-
-<!-- 以下是user測試用 -->
-<h3>熱門作者</h3>
-<% @hot_users.each do |hot_user| %>
-  <% if hot_user.avatar? %>
-    <%= image_tag hot_user.avatar.url, width: '100px' %>
-  <% end %>
-  <%= link_to user_path(hot_user) do %>
-    <%= hot_user.name %>
-  <% end %>
-  <br>
-<% end %>
-

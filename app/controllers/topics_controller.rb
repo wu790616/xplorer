@@ -10,12 +10,13 @@ class TopicsController < ApplicationController
     # issue
     @hot_issues = Issue.published.order(views_count: :desc).page(params[:page]).per(10)
     @hot_users = User.order(followers_count: :desc).limit(10)
+    @hot_users_issues = Issue.published.where(:user => @hot_users).order(edit_time: :desc).page(params[:page]).per(10)
     if(current_user)
       @user_followings = current_user.followings
-      @followings_issues = Issue.published.where(:user => @user_followings).order(edit_time: :desc)
+      @followings_issues = Issue.published.where(:user => @user_followings).order(edit_time: :desc).page(params[:page]).per(10)
       @topic_followings = current_user.following_topics
       @tagships = TopicTagship.where(:topic => @topic_followings)
-      @topic_followings_issues = Issue.published.where(:topic_tagships => @tagships).order(edit_time: :desc)
+      @topic_followings_issues = Issue.published.where(:topic_tagships => @tagships).order(edit_time: :desc).page(params[:page]).per(10)
     end
   end
 
