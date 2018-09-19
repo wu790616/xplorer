@@ -97,10 +97,10 @@
             <% @topic_followings_issues.find_each do |topic_followings_issue| %>
               <%= render partial: "brief_issue", locals: { issue: topic_followings_issue } %>
             <% end %>
+            <div style="text-align: center">
+              <%= paginate @topic_followings_issues %>
+            </div>
           <% end %>
-          <div style="text-align: center">
-            <%= paginate @topic_followings_issues %>
-          </div>
         </div>
         <div class="tab-pane fade" id="following">
           <!-- 關注作者的最新文章 -->
@@ -108,10 +108,10 @@
             <% @followings_issues.find_each do |followings_issue| %>
               <%= render partial: "brief_issue", locals: { issue: followings_issue } %>
             <% end %>
+            <div style="text-align: center">
+              <%= paginate @followings_issues %>
+            </div>
           <% end %>
-          <div style="text-align: center">
-            <%= paginate @followings_issues %>
-          </div>
         </div>
       </div><!-- /.tabs -->
     </div>
