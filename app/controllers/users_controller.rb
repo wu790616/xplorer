@@ -3,8 +3,8 @@ class UsersController < ApplicationController
 
   def show
     @marked_issues = @user.bookmarked_issues
-    @posted_issues = @user.issues.where( :draft => false )
-    @unposted_issues = @user.issues.where( :draft => true )
+    @posted_issues = @user.issues.where( :draft => false ).order(edit_time: :desc)
+    @unposted_issues = @user.issues.where( :draft => true ).order(edit_time: :desc)
     @commented_issues = @user.commented_issues.uniq
     @followers = @user.followers
     @followings = @user.followings

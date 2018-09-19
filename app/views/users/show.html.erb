@@ -391,7 +391,7 @@ Skill:
     <%= link_to '追蹤', user_followships_path(following_id: @user), method: :post, class: "btn btn-primary" %>
   <% end %>
 <% else %>
-  <%= link_to '追蹤', user_followships_path(following_id: @user), method: :post, class: "btn btn-primary disabled" %>
+  <%= link_to '追蹤', user_followships_path(following_id: @user), method: :post, class: "btn btn-primary" %>
 <% end %>
 <br>
 
