@@ -10,7 +10,11 @@ class TopicsController < ApplicationController
     # issue
     @hot_issues = Issue.published.order(views_count: :desc).page(params[:page]).per(10)
     @hot_users = User.order(followers_count: :desc).limit(10)
-    @hot_users_issues = Issue.published.where(:user => @hot_users).order(edit_time: :desc).page(params[:page]).per(10)
+    hot_user_ids = Array.new
+    @hot_users.each do |user|
+      hot_user_ids.push(user.id)
+    end
+    @hot_users_issues = Issue.published.where(:user => hot_user_ids).order(edit_time: :desc).page(params[:page]).per(10)
     if(current_user)
       @user_followings = current_user.followings
       @followings_issues = Issue.published.where(:user => @user_followings).order(edit_time: :desc).page(params[:page]).per(10)
