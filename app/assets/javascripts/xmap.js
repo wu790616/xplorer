@@ -17,7 +17,8 @@ function xmap(svg, topics, links, width, height) {
 									.selectAll("circle")
 									.data(topics)
 									.enter().append("circle")
-									.attr("r", function(d){return d.strength;})
+								//.attr("r", function(d){return d.strength;})
+									.attr("r", topic_radius)
 									.attr("fill", function(d,i) { return color(i); })
 									.attr('stroke','white')
 									.attr('stroke-width',2)
@@ -73,6 +74,18 @@ function xmap(svg, topics, links, width, height) {
 			if (!d3.event.active) simulation.alphaTarget(0);
 			d.fx = null;
 			d.fy = null;
+		};
+
+		function topic_radius(d) {
+			if(d.strength > 2048) return 40;
+			if(d.strength > 1024) return 35;
+			if(d.strength >  512) return 30;
+			if(d.strength >  256) return 25;
+			if(d.strength >  128) return 20;
+			if(d.strength >   64) return 15;
+			if(d.strength >   32) return 10;
+			if(d.strength >   16) return  5;
+			if(d.strength >    8) return  1;
 		};
 
 		function link_distance(d) {

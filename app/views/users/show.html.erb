@@ -312,7 +312,7 @@
 <hr>
 <p>----------------------- 原始測試資料 -----------------------</p>
 
-Personal Xmap:
+<h2>Personal Xmap:</h2>
 <svg></svg>
 <script>
   var width = 960;
@@ -322,7 +322,7 @@ Personal Xmap:
   var links  = <%= raw(@map_links.to_json) %>
   xmap(svg, topics, links, width, height);
 </script>
-
+<br>
 <% if @user == current_user %>
   <%= link_to('修改個人檔案', edit_user_path(@user)) %>
   <br>
