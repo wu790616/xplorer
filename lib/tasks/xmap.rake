@@ -1,4 +1,38 @@
 namespace :xmap do
+  #create_table "topics", force: :cascade do |t|
+  #  t.string "name"
+  #  t.string "avatar"
+  #  t.integer "topic_link1_id"
+  #  t.integer "topic_link2_id"
+  #  t.integer "topic_link3_id"
+  #  t.integer "topic_link4_id"
+  #  t.integer "topic_link5_id"
+  #  t.integer "topic_link6_id"
+  #  t.integer "topic_link7_id"
+  #  t.integer "topic_link8_id"
+  #  t.integer "followers_count", default: 0
+  #  t.integer "links_count", default: 0
+  #  t.datetime "created_at", null: false
+  #  t.datetime "updated_at", null: false
+  #  t.integer "topic_tagships_count", default: 0
+  #end
+
+  task update_link: :environment do
+    Topic.all.each do |topic|
+      links_count          = XplorerMap.where(from_id: topic.id).count
+      topic.topic_link1_id = (links_count < 1) ? nil : XplorerMap.where(from_id: topic.id).order(strength: :desc)[0].to_id
+      topic.topic_link2_id = (links_count < 2) ? nil : XplorerMap.where(from_id: topic.id).order(strength: :desc)[1].to_id
+      topic.topic_link3_id = (links_count < 3) ? nil : XplorerMap.where(from_id: topic.id).order(strength: :desc)[2].to_id
+      topic.topic_link4_id = (links_count < 4) ? nil : XplorerMap.where(from_id: topic.id).order(strength: :desc)[3].to_id
+      topic.topic_link5_id = (links_count < 5) ? nil : XplorerMap.where(from_id: topic.id).order(strength: :desc)[4].to_id
+      topic.topic_link6_id = (links_count < 6) ? nil : XplorerMap.where(from_id: topic.id).order(strength: :desc)[5].to_id
+      topic.topic_link7_id = (links_count < 7) ? nil : XplorerMap.where(from_id: topic.id).order(strength: :desc)[6].to_id
+      topic.topic_link8_id = (links_count < 8) ? nil : XplorerMap.where(from_id: topic.id).order(strength: :desc)[7].to_id
+      topic.links_count    = links_count
+      topic.save
+    end
+  end
+
   #create_table "xplorer_maps", force: :cascade do |t|
   #  t.integer "from_id"
   #  t.integer "to_id"
