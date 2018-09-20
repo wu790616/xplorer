@@ -42,11 +42,11 @@ class TopicsController < ApplicationController
     end
     
     @topics = []
-    @topics.push({name: "#{@center.name}", strength: 50})
-    @topics.push({name: "#{@link1.name }", strength: 50})
-    @topics.push({name: "#{@link2.name }", strength: 50})
-    @topics.push({name: "#{@link3.name }", strength: 50})
-    @topics.push({name: "#{@link4.name }", strength: 50})
+    @topics.push({name: "#{@center.name}", strength: 2000})
+    @topics.push({name: "#{@link1.name }", strength: 1000})
+    @topics.push({name: "#{@link2.name }", strength: 1000})
+    @topics.push({name: "#{@link3.name }", strength: 1000})
+    @topics.push({name: "#{@link4.name }", strength: 1000})
 
     @links = []
     @links.push({source: 0, target:1, strength: XplorerMap.where(from_id: @center.id, to_id: @link1.id).first.strength})
