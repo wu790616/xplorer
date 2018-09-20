@@ -10,6 +10,21 @@ class UsersController < ApplicationController
     @followings = @user.followings
     @likes_total = @posted_issues.sum(:likes_count)
     @views_total = @posted_issues.sum(:views_count)
+
+    # Personal map
+    following_topics = @user.following_topics
+    @map_topics = []
+    @map_links = []
+    following_topics.count.times do |i|
+      @map_topics.push({name: following_topics[i].name, strength: @user.topic_followships.where(topic: following_topics[i]).first.strength})
+      following_topics.count.times do |j|
+        link = XplorerMap.where(from_id: following_topics[i].id, to_id: following_topics[j].id).first
+        if(link == nil)
+        else
+          @map_links.push({source: i, target:j, strength: link.strength})
+        end
+      end
+    end
   end
 
   def edit
