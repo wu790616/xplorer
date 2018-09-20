@@ -70,10 +70,16 @@ gem 'rubocop', require: false
 gem 'kaminari'
 
 group :production do
-  gem 'pg'
+  # for heroku deploy
+  # gem 'pg'
+  # for gcp deploy
+  gem 'mysql2', '< 0.5'
 end
 
 group :development, :test do
+  gem 'capistrano-rails'
+  gem 'capistrano-passenger'
+  
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Use sqlite3 as the database for Active Record
