@@ -70,7 +70,10 @@ gem 'rubocop', require: false
 gem 'kaminari'
 
 group :production do
-  gem 'pg'
+  # for heroku deploy
+  # gem 'pg'
+  # for gcp deploy
+  gem 'mysql2', '< 0.5'
 end
 
 group :development, :test do
