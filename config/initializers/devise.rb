@@ -289,7 +289,7 @@ Devise.setup do |config|
   # end
 
   # facebook登入，需要在config/local_env.yml設定好參數
-  config.omniauth :facebook, ENV["FB_APP_ID"], ENV["FB_SECRET"], scope: "public_profile,email", info_fields: "email,name", image_size: "large", callback_url: "https://www.xplorer.gq/users/auth/facebook/callback"
+  config.omniauth :facebook, ENV["FB_APP_ID"], ENV["FB_SECRET"], scope: "public_profile,email", info_fields: "email,name", image_size: "large"
   # google登入，需要在config/local_env.yml設定好參數
   config.omniauth :google_oauth2, ENV["GOOGLE_APP_ID"], ENV["GOOGLE_SECRET"], {
     prompt: "select_account consent"
