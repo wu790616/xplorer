@@ -31,9 +31,8 @@
                 <div class="row">
                   <div class="col-md-8">
                     <div class="form-group">
-                      <label for="tags">標籤(待後端開發)</label><br>
-                      <!--<input type="text" class="form-control" id="tags" placeholder="Tags" />-->
-                      <%= f.collection_check_boxes :taged_topic_ids, Topic.all, :id, :name %><br>
+                      <label for="tags">標籤</label><br>
+                      <%= f.collection_check_boxes :taged_topic_ids, Topic.all, :id, :name, class: "form-control" %><br>
                     </div>
                   </div>
                   <div class="col-md-4">
