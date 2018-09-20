@@ -68,7 +68,7 @@ class IssuesController < ApplicationController
   private
 
   def issue_params
-    params.require(:issue).permit(:title, :content, :draft, :edit_time, :taged_topic_ids => [])
+    params.require(:issue).permit(:title, :content, :draft, :edit_time, :topic_list, :taged_topic_ids => [])
   end
 
   def set_issue

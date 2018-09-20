@@ -41,4 +41,20 @@ class Issue < ApplicationRecord
     issue.views_count+=1
     issue.save!
   end
+
+  # issue tag topics functions
+  def self.tagged_with(name)
+    Topic.find_by!(name: name).taged_issues
+  end
+
+  def topic_list
+    taged_topics.map(&:name).join(', ')
+  end
+
+  def topic_list=(names)
+    self.taged_topics = names.split(',').map do |n|
+      Topic.where(name: n.strip).first_or_create!
+    end
+  end
+
 end
