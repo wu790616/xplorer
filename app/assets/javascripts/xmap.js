@@ -16,7 +16,7 @@ function xmap(svg, topics, links, width, height) {
 									.selectAll("a").data(topics)
 									.enter()
 									.append("a")
-									.attr("xlink:href", function(d) { return "http://0.0.0.0:3000/topics/"+d.base+"?center="+d.center+"&from="+d.from+"&page_num="+d.page })
+									.attr("xlink:href", function(d) { return "http://"+window.location.host+"/topics/"+d.base+"?center="+d.center+"&from="+d.from+"&page_num="+d.page })
 									.attr("class", "nodes")
 									.append("circle")
 									.attr("r", topic_radius)
