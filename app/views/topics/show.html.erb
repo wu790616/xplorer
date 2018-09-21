@@ -119,10 +119,10 @@
   <%= link_to "#{@center.name}", topic_path(@center.id, :center => @center.id, :from => @center.id, :page_num => @page) %>
   <%= link_to "(Regen)"        , topic_path(  @base.id, :center => @center.id, :from => @center.id, :page_num => @page) %>
 </h3>
-<ul><%= link_to "#{ @link1.name}", topic_path(  @base.id, :center =>  @link1.id, :from => @center.id, :page_num => 0) %></ul>
-<ul><%= link_to "#{ @link2.name}", topic_path(  @base.id, :center =>  @link2.id, :from => @center.id, :page_num => 0) %></ul>
-<ul><%= link_to "#{ @link3.name}", topic_path(  @base.id, :center =>  @link3.id, :from => @center.id, :page_num => 0) %></ul>
-<ul><%= link_to "#{ @link4.name}", topic_path(  @base.id, :center =>  @link4.id, :from => @center.id, :page_num => 0) %></ul>
+<ul><% if not @link1 == nil %><%= link_to "#{ @link1.name}", topic_path(  @base.id, :center =>  @link1.id, :from => @center.id, :page_num => 0) %><% end %></ul>
+<ul><% if not @link2 == nil %><%= link_to "#{ @link2.name}", topic_path(  @base.id, :center =>  @link2.id, :from => @center.id, :page_num => 0) %><% end %></ul>
+<ul><% if not @link3 == nil %><%= link_to "#{ @link3.name}", topic_path(  @base.id, :center =>  @link3.id, :from => @center.id, :page_num => 0) %><% end %></ul>
+<ul><% if not @link4 == nil %><%= link_to "#{ @link4.name}", topic_path(  @base.id, :center =>  @link4.id, :from => @center.id, :page_num => 0) %><% end %></ul>
 
 <h3> Xplorer Map View Log </h3>
 <% @logs.each do |log| %>
