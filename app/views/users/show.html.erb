@@ -14,10 +14,17 @@
           <div class="col-xs-12 col-sm-8">
               <h2>
                 <%= @user.name %>
-                <% if @user == current_user %>
-                <%= link_to('修改個人檔案', edit_user_path(@user), class: "btn btn-default") %>
-                <br>
-              <% end %>
+                <% if current_user %>
+                  <% if @user == current_user %>
+                    <%= link_to('修改個人檔案', edit_user_path(@user), class: "btn btn-default") %>
+                    <% elsif current_user.following?(@user) %>
+                      <%= link_to '取消追蹤', user_followship_path(@user), method: :delete, class: "btn btn-danger" %>
+                    <% else %>
+                      <%= link_to '追蹤', user_followships_path(following_id: @user), method: :post, class: "btn btn-primary" %>
+                  <% end %>
+                  <% else %>
+                    <%= link_to '追蹤', user_followships_path(following_id: @user), method: :post, class: "btn btn-primary" %>
+                <% end %>
               </h2>
               <p><strong>電子郵件: </strong>
                 <% if @user == current_user %>
@@ -46,7 +53,7 @@
         </div>
         <div class="col-xs-12 divider text-center">
           <div class="col-xs-12 col-sm-4 col-lg-2 emphasis">
-            <h3><strong> 20,7K </strong></h3>                    
+            <h3><strong> <%= @user.followers_count %> </strong></h3>                    
             <p><small>追蹤者</small></p>
             <button class="btn btn-success btn-block"><span class="fa fa-plus-circle"></span> 追蹤 </button>
           </div>
