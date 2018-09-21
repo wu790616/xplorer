@@ -43,12 +43,12 @@ class TopicsController < ApplicationController
     
     # JSON for Xmap
     @topics = []
-    @topics.push({name: "#{@center.name}", base: "#{@center.id}", center: "#{@center.id}", from: @center.id, enter: 1, page: @page ,strength: 2000})
-    @topics.push({name: "#{@link1.name }", base: "#{@base.id}"  , center: "#{@link1.id }", from: @center.id, enter: 0, page: 0     ,strength: 1000})
-    @topics.push({name: "#{@link2.name }", base: "#{@base.id}"  , center: "#{@link2.id }", from: @center.id, enter: 0, page: 0     ,strength: 1000})
-    @topics.push({name: "#{@link3.name }", base: "#{@base.id}"  , center: "#{@link3.id }", from: @center.id, enter: 0, page: 0     ,strength: 1000})
-    @topics.push({name: "#{@link4.name }", base: "#{@base.id}"  , center: "#{@link4.id }", from: @center.id, enter: 0, page: 0     ,strength: 1000})
-    @topics.push({name: "Re-generate"    , base: "#{@base.id}"  , center: "#{@center.id}", from: @center.id, enter: 1, page: @page ,strength: 2000})
+    @topics.push({name: "#{@center.name}", base: "#{@center.id}", center: "#{@center.id}", from: @center.id, page: @page ,strength: 2000})
+    @topics.push({name: "#{@link1.name }", base: "#{@base.id}"  , center: "#{@link1.id }", from: @center.id, page: 0     ,strength: 1000})
+    @topics.push({name: "#{@link2.name }", base: "#{@base.id}"  , center: "#{@link2.id }", from: @center.id, page: 0     ,strength: 1000})
+    @topics.push({name: "#{@link3.name }", base: "#{@base.id}"  , center: "#{@link3.id }", from: @center.id, page: 0     ,strength: 1000})
+    @topics.push({name: "#{@link4.name }", base: "#{@base.id}"  , center: "#{@link4.id }", from: @center.id, page: 0     ,strength: 1000})
+    @topics.push({name: "Re-generate"    , base: "#{@base.id}"  , center: "#{@center.id}", from: @center.id, page: @page ,strength: 2000})
 
     @links = []
     @links.push({source: 0, target:1, strength: XplorerMap.where(from_id: @center.id, to_id: @link1.id).first.strength})
