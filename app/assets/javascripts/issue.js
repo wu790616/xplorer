@@ -1,3 +1,5 @@
 $(document).on("turbolinks:load", function() {
-  $(".selectize").selectize();
+  $(".selectize").selectize({
+    plugins: ['remove_button'],
   });
+});
