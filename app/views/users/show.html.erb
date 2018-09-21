@@ -52,49 +52,30 @@
           </div>    
         </div>
         <div class="col-xs-12 divider text-center">
+          <hr>
           <div class="col-xs-12 col-sm-4 col-lg-2 emphasis">
-            <h3><strong> <%= @user.followers_count %> </strong></h3>                    
-            <p><small>追蹤者</small></p>
-            <button class="btn btn-success btn-block"><span class="fa fa-plus-circle"></span> 追蹤 </button>
+            <h4><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 追隨者</h4>
+            <h4><strong> <%= @user.followings_count %> </strong></h4>
           </div>
           <div class="col-xs-12 col-sm-4 col-lg-2 emphasis">
-            <h3><strong>245</strong></h3>                    
-            <p><small>追隨者</small></p>
-            <button class="btn btn-info btn-block"><span class="fa fa-user"></span> View Profile </button>
+            <h4><span class="glyphicon glyphicon-file" aria-hidden="true"></span> 議題數</h4>
+            <h4><strong> <%= @posted_issues.size %> </strong></h4>
           </div>
           <div class="col-xs-12 col-sm-4 col-lg-2 emphasis">
-            <h3><strong>245</strong></h3>                    
-            <p><small>瀏覽數</small></p>
-            <button class="btn btn-info btn-block"><span class="fa fa-user"></span> View Profile </button>
+            <h4><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> 瀏覽數</h4>
+            <h4><strong> <%= @views_total %> </strong></h4>
           </div>
           <div class="col-xs-12 col-sm-4 col-lg-2 emphasis">
-            <h3><strong>245</strong></h3>                    
-            <p><small>欣賞數</small></p>
-            <button class="btn btn-info btn-block"><span class="fa fa-user"></span> View Profile </button>
+            <h4><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> 讚數</h4>
+            <h4><strong> <%= @likes_total %> </strong></h4>
+          </div>
+          <div class="col-xs-12 col-sm-4 col-lg-2 emphasis">      
+            <h4><span class="glyphicon glyphicon-share" aria-hidden="true"></span> 分享數</h4>
+            <h4><strong>43</strong></h4>       
           </div>
           <div class="col-xs-12 col-sm-4 col-lg-2 emphasis">
-            <h3><strong>245</strong></h3>                    
-            <p><small>議題數</small></p>
-            <button class="btn btn-info btn-block"><span class="fa fa-user"></span> View Profile </button>
-          </div>
-          <div class="col-xs-12 col-sm-4 col-lg-2 emphasis">
-            <h3><strong>43</strong></h3>                    
-            <p><small>瀏覽數</small></p>
-            <div class="btn-group dropup btn-block">
-              <button type="button" class="btn btn-primary"><span class="fa fa-gear"></span> Options </button>
-              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                <span class="caret"></span>
-                <span class="sr-only">Toggle Dropdown</span>
-              </button>
-              <ul class="dropdown-menu text-left" role="menu">
-                <li><a href="#"><span class="fa fa-envelope pull-right"></span> Send an email </a></li>
-                <li><a href="#"><span class="fa fa-list pull-right"></span> Add or remove from a list  </a></li>
-                <li class="divider"></li>
-                <li><a href="#"><span class="fa fa-warning pull-right"></span>Report this user for spam</a></li>
-                <li class="divider"></li>
-                <li><a href="#" class="btn disabled" role="button"> Unfollow </a></li>
-              </ul>
-            </div>
+            <h4><span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span> 收藏數</h4>
+            <h4><strong>43</strong></h4>
           </div>
         </div>
       </div>                 
@@ -117,7 +98,7 @@
           </li>
           <li>
             <a href="#tab_default_3" data-toggle="tab">
-           追蹤者</a>
+           追蹤者 (<%= @user.followers_count %>)</a>
           </li>
           <li>
             <a href="#tab_default_4" data-toggle="tab">
