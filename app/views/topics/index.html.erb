@@ -73,7 +73,7 @@
       <div id="myTabContent" class="tab-content">
         <div class="tab-pane fade active in" id="hotissue">
           <!-- 全站熱門議題 -->
-          <% @hot_issues.find_each do |hot_issue| %>
+          <% @hot_issues.each do |hot_issue| %>
             <%= render partial: "brief_issue", locals: { issue: hot_issue } %>
           <% end %>
           <div style="text-align: center"> 
@@ -94,7 +94,7 @@
         <div class="tab-pane fade" id="hottopic">
           <!-- 關注topic的最新文章 -->
           <% if current_user %>
-            <% @topic_followings_issues.find_each do |topic_followings_issue| %>
+            <% @topic_followings_issues.each do |topic_followings_issue| %>
               <%= render partial: "brief_issue", locals: { issue: topic_followings_issue } %>
             <% end %>
             <div style="text-align: center">
@@ -105,7 +105,7 @@
         <div class="tab-pane fade" id="following">
           <!-- 關注作者的最新文章 -->
           <% if current_user %>
-            <% @followings_issues.find_each do |followings_issue| %>
+            <% @followings_issues.each do |followings_issue| %>
               <%= render partial: "brief_issue", locals: { issue: followings_issue } %>
             <% end %>
             <div style="text-align: center">
