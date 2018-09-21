@@ -13,7 +13,7 @@
   <div class="row">
     <% @logs.each do |log| %>
       <div class="col-xs-2 col-md-1">
-        <%= "#{log.name}" %>
+        <%= link_to "#{log.name}", topic_path(log.id, :center => log.id, :from => @center.id, :page_num => 0) %>
       </div>
     <% end %>
   </div>
