@@ -41,12 +41,14 @@ class TopicsController < ApplicationController
       @page   = 0
     end
     
+    # JSON for Xmap
     @topics = []
-    @topics.push({name: "#{@center.name}", strength: 2000})
-    @topics.push({name: "#{@link1.name }", strength: 1000})
-    @topics.push({name: "#{@link2.name }", strength: 1000})
-    @topics.push({name: "#{@link3.name }", strength: 1000})
-    @topics.push({name: "#{@link4.name }", strength: 1000})
+    @topics.push({name: "#{@center.name}", base: "#{@center.id}", center: "#{@center.id}", from: @center.id, enter: 1, page: @page ,strength: 2000})
+    @topics.push({name: "#{@link1.name }", base: "#{@base.id}"  , center: "#{@link1.id }", from: @center.id, enter: 0, page: 0     ,strength: 1000})
+    @topics.push({name: "#{@link2.name }", base: "#{@base.id}"  , center: "#{@link2.id }", from: @center.id, enter: 0, page: 0     ,strength: 1000})
+    @topics.push({name: "#{@link3.name }", base: "#{@base.id}"  , center: "#{@link3.id }", from: @center.id, enter: 0, page: 0     ,strength: 1000})
+    @topics.push({name: "#{@link4.name }", base: "#{@base.id}"  , center: "#{@link4.id }", from: @center.id, enter: 0, page: 0     ,strength: 1000})
+    @topics.push({name: "Re-generate"    , base: "#{@base.id}"  , center: "#{@center.id}", from: @center.id, enter: 1, page: @page ,strength: 2000})
 
     @links = []
     @links.push({source: 0, target:1, strength: XplorerMap.where(from_id: @center.id, to_id: @link1.id).first.strength})
@@ -66,9 +68,9 @@ class TopicsController < ApplicationController
 
     @logs = []
     if current_user
-      viewlogs = Ahoy::Event.where(user: current_user, visit: current_visit, name: "XmapViewlog").order(id: :desc).limit(10)
+      viewlogs = Ahoy::Event.where(user: current_user, visit: current_visit, name: "XmapViewlog").order(id: :desc).limit(12)
     else
-      viewlogs = Ahoy::Event.where(visit: current_visit, name: "XmapViewlog").order(id: :desc).limit(10)
+      viewlogs = Ahoy::Event.where(visit: current_visit, name: "XmapViewlog").order(id: :desc).limit(12)
     end
     viewlogs.each do |log|
       @logs.push(Topic.find(log.properties["from"]))

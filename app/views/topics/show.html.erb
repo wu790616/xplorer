@@ -1,5 +1,23 @@
 <div class="container">
   <div class="row">
+    <svg></svg>
+    <script>
+      var width = 960;
+      var height = 600;
+      var svg = d3.select("svg").attr("width", width).attr("height", height)
+      var topics = <%= raw(@topics.to_json) %>
+      var links  = <%= raw(@links.to_json) %>
+      xmap(svg, topics, links, width, height);
+    </script>
+  </div>
+  <div class="row">
+    <% @logs.each do |log| %>
+      <div class="col-xs-2 col-md-1">
+        <%= "#{log.name}" %>
+      </div>
+    <% end %>
+  </div>
+  <div class="row">
     <div class="panel panel-default widget">
       <div class="panel-heading", style="text-align: center;">
         <h3 class="panel-title">
@@ -84,16 +102,6 @@
   由上一步->上兩步->上三步->----
   目前後端提供前10步紀錄，如須增刪可再討論。
 -->
-
-<svg></svg>
-<script>
-  var width = 960;
-  var height = 600;
-  var svg = d3.select("svg").attr("width", width).attr("height", height)
-  var topics = <%= raw(@topics.to_json) %>
-  var links  = <%= raw(@links.to_json) %>
-  xmap(svg, topics, links, width, height);
-</script>
 <h3>Base Topic: <%= @base.name %></h3>
 <% if current_user %>
   <% if current_user.followingtopic?(@base) %>
@@ -116,7 +124,6 @@
 <% @logs.each do |log| %>
   <ul><%= "#{log.name}" %><br></ul>
 <% end %>
-
 
 <!--
   以下註解單純說明目前 fake data 邏輯，可刪除
