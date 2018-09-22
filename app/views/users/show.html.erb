@@ -1,4 +1,3 @@
-
 <div class="container">
   <div class="row">
     <div class="col-md-12 col-lg-12">
@@ -89,175 +88,113 @@
       <div class="tabbable-line">
         <ul class="nav nav-tabs ">
           <li class="active">
-            <a href="#tab_default_1" data-toggle="tab">
+            <a href="#posted_issues" data-toggle="tab">
             已發布議題 </a>
           </li>
           <li>
-            <a href="#tab_default_2" data-toggle="tab">
-           使用紀錄</a>
+            <a href="#bookmarked_issues" data-toggle="tab">
+           已收藏議題 </a>
           </li>
           <li>
-            <a href="#tab_default_3" data-toggle="tab">
+            <a href="#commented_issues" data-toggle="tab">
+           已回覆議題 </a>
+          </li>
+          <li>
+            <a href="#follwers" data-toggle="tab">
            追蹤者 (<%= @user.followers_count %>)</a>
           </li>
           <li>
-            <a href="#tab_default_4" data-toggle="tab">
+            <a href="#followings" data-toggle="tab">
            追隨者</a>
           </li>
           <li>
-            <a href="#tab_default_5" data-toggle="tab">
+            <a href="#xmap" data-toggle="tab">
            X Map</a>
           </li>
           <li>
-            <a href="#tab_default_5" data-toggle="tab">
+            <a href="#draft" data-toggle="tab">
            草稿</a>
           </li>
         </ul>
         <div class="tab-content">
-          <div class="tab-pane active" id="tab_default_1">
+          <div class="tab-pane active" id="posted_issues">
             <!-- 議題文繞圖 -->
             <div class="container">
-              <% @posted_issues.each do |posted_issue| %>
-                <%= render :partial => 'topics/brief_issue', locals: { issue: posted_issue } %>
+              <%= render :partial => 'topics/brief_issue', locals: { issues: @posted_issues } %>
+            </div>
+          </div>
+          <div class="tab-pane" id="bookmarked_issues">
+            <% if @user == current_user %>
+              <% if @user.issue_book_privacy %> 
+                <%= button_to "改為不公開", user_path(@user), method: :patch, params: { :"user[issue_book_privacy]" => false }, class: "btn btn-info btn-xs" %>
+              <% else %>
+                <%= button_to "改為公開", user_path(@user), method: :patch, params: { :"user[issue_book_privacy]" => true }, class: "btn btn-primary btn-xs" %>
               <% end %>
+              <div class="container">
+                <%= render :partial => 'topics/brief_issue', locals: { issues: @marked_issues } %>
+              </div>
+            <!-- 非本人當使用者設定可以看到Bookmark時，顯示Bookmark -->
+            <% elsif @user.issue_book_privacy %>
+              <div class="container">
+                <%= render partial: "topics/brief_issue", locals: {issues: @marked_issues} %>
+              </div>
+            <!-- 非本人當使用者設定不可以看到Bookmark時，顯示使用者不公開 -->
+            <% else %>
+              使用者不公開
+            <% end %>
+          </div>
+          <div class="tab-pane" id="commented_issues">
+            <div class="container">
+              <%= render :partial => 'topics/brief_issue', locals: { issues: @commented_issues } %>
             </div>
           </div>
-          <div class="tab-pane" id="tab_default_2">
-            <p>
-              Education& Career
-            </p>
-            <div class="row">
-            <div class="col-sm-6">
-              <div class="form-group">
-                   <label for="email">Highest Education:</label>
-                    <p> MBA/PGDM</p>
-               </div>
-                <div class="form-group">
-                   <label for="email">Place of Birth:</label>
-                    <p> pune, maharashtra</p>
-               </div>
-                <div class="form-group">
-                   <label for="email">Place of Birth:</label>
-                    <p> pune, maharashtra</p>
-               </div>
-                <div class="form-group">
-                   <label for="email">Place of Birth:</label>
-                    <p> pune, maharashtra</p>
-               </div>
-            </div>
-            <div class="col-sm-6">
-               <div class="form-group">
-                   <label for="email">Place of Birth:</label>
-                    <p> pune, maharashtra</p>
-               </div>
-                <div class="form-group">
-                   <label for="email">Place of Birth:</label>
-                    <p> pune, maharashtra</p>
-               </div>
-                <div class="form-group">
-                   <label for="email">Place of Birth:</label>
-                    <p> pune, maharashtra</p>
-               </div>
-                <div class="form-group">
-                   <label for="email">Place of Birth:</label>
-                    <p> pune, maharashtra</p>
-               </div>
-
-             </div>
-            </div>
+          <div class="tab-pane" id="follwers">
+            <%= render :partial => 'follow_list', locals: { users: @followers } %>
           </div>
-          <div class="tab-pane" id="tab_default_3">
-            <p>
-              Family Details
-            </p>
-            <div class="row">
-            <div class="col-sm-6">
-              <div class="form-group">
-                   <label for="email">Highest Education:</label>
-                    <p> MBA/PGDM</p>
-               </div>
-                <div class="form-group">
-                   <label for="email">Place of Birth:</label>
-                    <p> pune, maharashtra</p>
-               </div>
-                <div class="form-group">
-                   <label for="email">Place of Birth:</label>
-                    <p> pune, maharashtra</p>
-               </div>
-                <div class="form-group">
-                   <label for="email">Place of Birth:</label>
-                    <p> pune, maharashtra</p>
-               </div>
-            </div>
-            <div class="col-sm-6">
-               <div class="form-group">
-                   <label for="email">Place of Birth:</label>
-                    <p> pune, maharashtra</p>
-               </div>
-                <div class="form-group">
-                   <label for="email">Place of Birth:</label>
-                    <p> pune, maharashtra</p>
-               </div>
-                <div class="form-group">
-                   <label for="email">Place of Birth:</label>
-                    <p> pune, maharashtra</p>
-               </div>
-                <div class="form-group">
-                   <label for="email">Place of Birth:</label>
-                    <p> pune, maharashtra</p>
-               </div>
-
-             </div>
-            </div>
+          <div class="tab-pane" id="followings">
+            <%= render :partial => 'follow_list', locals: { users: @followings } %>
           </div>
-           <div class="tab-pane" id="tab_default_4">
-            <p>
-             Lifestyle
-
-            </p>
-             <div class="row">
-            <div class="col-sm-6">
-              <div class="form-group">
-                   <label for="email">Highest Education:</label>
-                    <p> MBA/PGDM</p>
-               </div>
-                <div class="form-group">
-                   <label for="email">Place of Birth:</label>
-                    <p> pune, maharashtra</p>
-               </div>
-                <div class="form-group">
-                   <label for="email">Place of Birth:</label>
-                    <p> pune, maharashtra</p>
-               </div>
-                <div class="form-group">
-                   <label for="email">Place of Birth:</label>
-                    <p> pune, maharashtra</p>
-               </div>
-            </div>
-            <div class="col-sm-6">
-               <div class="form-group">
-                   <label for="email">Place of Birth:</label>
-                    <p> pune, maharashtra</p>
-               </div>
-                <div class="form-group">
-                   <label for="email">Place of Birth:</label>
-                    <p> pune, maharashtra</p>
-               </div>
-                <div class="form-group">
-                   <label for="email">Place of Birth:</label>
-                    <p> pune, maharashtra</p>
-               </div>
-                <div class="form-group">
-                   <label for="email">Place of Birth:</label>
-                    <p> pune, maharashtra</p>
-               </div>
-
-             </div>
+          <div class="tab-pane" id="xmap">
+            <% if @user == current_user %>
+              <% if @user.topic_follow_privacy %> 
+                <%= button_to "改為不公開", user_path(@user), method: :patch, params: { :"user[topic_follow_privacy]" => false }, class: "btn btn-info btn-xs" %>
+              <% else %>
+                <%= button_to "改為公開", user_path(@user), method: :patch, params: { :"user[topic_follow_privacy]" => true }, class: "btn btn-primary btn-xs" %>
+              <% end %>
+              <div class="container">
+                <script>
+                  var width = 960;
+                  var height = 600;
+                  var svg = d3.select("svg").attr("width", width).attr("height", height)
+                  var topics = <%= raw(@map_topics.to_json) %>
+                  var links  = <%= raw(@map_links.to_json) %>
+                  xmap(svg, topics, links, width, height);
+                </script>
+              </div>
+            <!-- 非本人當使用者設定可以看到X MAP時，顯示X MAP -->
+            <% elsif @user.topic_follow_privacy %>
+              <div class="container">
+                <script>
+                  var width = 960;
+                  var height = 600;
+                  var svg = d3.select("svg").attr("width", width).attr("height", height)
+                  var topics = <%= raw(@map_topics.to_json) %>
+                  var links  = <%= raw(@map_links.to_json) %>
+                  xmap(svg, topics, links, width, height);
+                </script>
+              </div>
+            <!-- 非本人當使用者設定不可以看到X MAP時，顯示使用者不公開 -->
+            <% else %>
+              使用者不公開
+            <% end %>
+          </div>
+          <div class="tab-pane" id="draft">
+            <div class="container">
+              <%= render :partial => 'topics/brief_issue', locals: { issues: @unposted_issues } %>
             </div>
           </div>
         </div>
       </div>
-    
     </div>
   </div>
 

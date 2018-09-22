@@ -73,9 +73,7 @@
       <div id="myTabContent" class="tab-content">
         <div class="tab-pane fade active in" id="hotissue">
           <!-- 全站熱門議題 -->
-          <% @hot_issues.each do |hot_issue| %>
-            <%= render partial: "brief_issue", locals: { issue: hot_issue } %>
-          <% end %>
+          <%= render partial: "brief_issue", locals: { issues: @hot_issues } %>
           <div style="text-align: center"> 
             <%= paginate @hot_issues %>
           </div>
@@ -84,9 +82,7 @@
         </div>
         <div class="tab-pane fade" id="hotissue_of_hotauthor">
           <!-- 熱門作者的最新文章 -->
-          <% @hot_users_issues.each do |hot_user_issue| %>
-            <%= render partial: "brief_issue", locals: { issue: hot_user_issue } %>
-          <% end %>
+          <%= render partial: "brief_issue", locals: { issues: @hot_users_issues } %>
           <div style="text-align: center"> 
             <%= paginate @hot_users_issues %>
           </div>
@@ -94,9 +90,7 @@
         <div class="tab-pane fade" id="hottopic">
           <!-- 關注topic的最新文章 -->
           <% if current_user %>
-            <% @topic_followings_issues.each do |topic_followings_issue| %>
-              <%= render partial: "brief_issue", locals: { issue: topic_followings_issue } %>
-            <% end %>
+            <%= render partial: "brief_issue", locals: { issues: @topic_followings_issues } %>
             <div style="text-align: center">
               <%= paginate @topic_followings_issues %>
             </div>
@@ -105,9 +99,7 @@
         <div class="tab-pane fade" id="following">
           <!-- 關注作者的最新文章 -->
           <% if current_user %>
-            <% @followings_issues.each do |followings_issue| %>
-              <%= render partial: "brief_issue", locals: { issue: followings_issue } %>
-            <% end %>
+            <%= render partial: "brief_issue", locals: { issues: @followings_issues } %>
             <div style="text-align: center">
               <%= paginate @followings_issues %>
             </div>

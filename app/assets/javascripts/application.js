@@ -19,3 +19,4 @@
 //= require bootstrap-sprockets
 //= require ahoy
 //= require social-share-button
+//= require user_record
