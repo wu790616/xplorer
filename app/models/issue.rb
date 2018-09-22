@@ -41,4 +41,5 @@ class Issue < ApplicationRecord
     issue.views_count+=1
     issue.save!
   end
+
 end

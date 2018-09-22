@@ -69,6 +69,9 @@ gem 'rubocop', require: false
 
 gem 'kaminari'
 
+# gem for autocomplete
+gem 'selectize-rails'
+
 group :production do
   # for heroku deploy
   # gem 'pg'

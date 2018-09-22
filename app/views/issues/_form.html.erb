@@ -32,7 +32,7 @@
                   <div class="col-md-8">
                     <div class="form-group">
                       <label for="tags">標籤</label><br>
-                      <%= f.collection_check_boxes :taged_topic_ids, Topic.all, :id, :name, class: "form-control" %><br>
+                      <%= f.select :taged_topic_ids, Topic.all.pluck(:name, :id), {}, { multiple: true, class: "selectize" } %>
                     </div>
                   </div>
                   <div class="col-md-4">
