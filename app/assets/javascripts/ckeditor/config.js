@@ -34,7 +34,10 @@ CKEDITOR.editorConfig = function( config )
   config.allowedContent = true;
 
   config.format_tags = 'p;h1;h2;h3'
+
+  config.extraPlugins = 'embed', 'embedbase', 'widget', 'notificationaggregator', 'widgetselection', 'lineutils';
   
+  config.embed_provider = '//ckeditor.iframe.ly/api/oembed?url={url}&callback={callback}'
 
   // Toolbar groups configuration.
   config.toolbar = [
@@ -57,7 +60,7 @@ CKEDITOR.editorConfig = function( config )
     { name: 'links', items: [ 'Link', 'Unlink' ] },
     //{ name: 'colors', items: [ 'TextColor', 'BGColor' ] },
     { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ] },
-    { name: 'insert', items: [ 'Image', 'HorizontalRule', 'SpecialChar' ] },
+    { name: 'insert', items: [ 'Image', 'Embed', 'HorizontalRule', 'SpecialChar' ] },
     { name: 'document', items: [ '-','Source'] }
   ];
   config.toolbar = "mini";
