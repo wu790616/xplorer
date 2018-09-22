@@ -68,6 +68,7 @@ gem 'ffaker'
 gem 'rubocop', require: false
 
 gem 'kaminari'
+gem 'ajax_pagination'
 
 group :production do
   # for heroku deploy
