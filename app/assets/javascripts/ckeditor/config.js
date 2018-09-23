@@ -8,6 +8,10 @@ CKEDITOR.editorConfig = function( config )
   // Define changes to default configuration here. For example:
   // config.language = 'fr';
   // config.uiColor = '#AADC6E';
+  config.autoGrow_onStartup = true;
+  config.autoGrow_minHeight = 300;
+  config.autoGrow_maxHeight = 750;
+
 
   /* Filebrowser routes */
   // The location of an external file browser, that should be launched when "Browse Server" button is pressed.
@@ -35,7 +39,7 @@ CKEDITOR.editorConfig = function( config )
 
   config.format_tags = 'p;h1;h2;h3';
 
-  config.extraPlugins = 'embed,embedbase,widget,lineutils,notificationaggregator,widgetselection,divarea,autolink,autoembed,image2';
+  config.extraPlugins = 'embed,embedbase,widget,lineutils,notificationaggregator,widgetselection,autolink,autoembed,image2,autogrow';
   
   config.embed_provider = '//ckeditor.iframe.ly/api/oembed?url={url}&callback={callback}';
 
