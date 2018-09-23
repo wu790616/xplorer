@@ -16,7 +16,7 @@
           <div class="col-lg-8", style="padding-left: 0px">
             <span class="glyphicon glyphicon-heart" aria-hidden="true"></span> <%= @issue.likes_count %> | 
             <span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span> <%= @issue.bookmarks_count %> | 
-            <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+            <span class="glyphicon glyphicon-share" aria-hidden="true"></span>
             <% link = "http://graph.facebook.com/?id="+request.original_url %>
             <% @issue.update_share_count(@issue, link) %><%= @issue.shares_count %> |
             <span class="glyphicon glyphicon-comment" aria-hidden="true"></span> <%= @issue.comments_count %>

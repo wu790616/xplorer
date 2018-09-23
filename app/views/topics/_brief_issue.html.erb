@@ -1,42 +1,43 @@
-
-<div class="row">
-  <div class="col-lg-12">
-    <h4><strong>
-      <%= link_to issue_path(issue) do %>
-        <%= issue.title %>
-      <% end %>
-    </strong></h4>
-  </div>
-</div>
-<div class="row">
-  <div class="col-lg-2">
-    <a href="#" class="thumbnail">
-        <img src="http://placehold.it/260x180" alt="">
-    </a>
-  </div>
-  <div class="col-lg-9">      
-    <p>
-      <%= truncate(strip_tags(issue.content), length: 100 ) %><%= link_to "瀏覽更多", issue_path(issue)%>
-    </p>
-  </div>
-</div>
-<div class="row">
-  <div class="col-lg-12">
-    <p></p>
-    <p>
-      by
-      <%= link_to user_path(issue.user) do %>
-        <%= issue.user.name %>
-      <% end %> 
-      | <%= issue.edit_time.localtime.to_s(:long) %>
-      | <span class="glyphicon glyphicon-comment"></span> <%= issue.comments_count %> 則留言
-      | <span class="glyphicon glyphicon-eye-open"></span> <%= issue.views_count %> 瀏覽數
-      | <span class="glyphicon glyphicon-bookmark"></span> <%= issue.bookmarks_count %> 人收藏
-      | <span class="glyphicon glyphicon-bookmark"></span> 標籤: 
-        <% issue.taged_topics.each do |topic| %>
-          <span class="label label-info"><%= topic.name %></span>
+<% issues.each do |issue| %>
+  <div class="row">
+    <div class="col-lg-12">
+      <h4><strong>
+        <%= link_to issue_path(issue) do %>
+          <%= issue.title %>
         <% end %>
-    </p>
+      </strong></h4>
+    </div>
   </div>
-</div>
-<hr>
+  <div class="row">
+    <div class="col-lg-2">
+      <a href="#" class="thumbnail">
+          <img src="http://placehold.it/260x180" alt="">
+      </a>
+    </div>
+    <div class="col-lg-9">      
+      <p>
+        <%= truncate(strip_tags(issue.content), length: 100 ) %><%= link_to "瀏覽更多", issue_path(issue)%>
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <p></p>
+      <p>
+        by
+        <%= link_to user_path(issue.user) do %>
+          <%= issue.user.name %>
+        <% end %> 
+        | <%= issue.edit_time.localtime.to_s(:long) %>
+        | <span class="glyphicon glyphicon-comment"></span> <%= issue.comments_count %> 則留言
+        | <span class="glyphicon glyphicon-eye-open"></span> <%= issue.views_count %> 瀏覽數
+        | <span class="glyphicon glyphicon-bookmark"></span> <%= issue.bookmarks_count %> 人收藏
+        | <span class="glyphicon glyphicon-bookmark"></span> 標籤: 
+          <% issue.taged_topics.each do |topic| %>
+            <span class="label label-info"><%= topic.name %></span>
+          <% end %>
+      </p>
+    </div>
+  </div>
+  <hr>
+<% end %>

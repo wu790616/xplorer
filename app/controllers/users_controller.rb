@@ -2,11 +2,12 @@ class UsersController < ApplicationController
    before_action :set_user, only: [:show, :edit, :update]
 
   def show
-    @marked_issues = @user.bookmarked_issues
-    @posted_issues = @user.issues.where( :draft => false ).order(edit_time: :desc)
-    @unposted_issues = @user.issues.where( :draft => true ).order(edit_time: :desc)
+    @marked_issues = @user.bookmarked_issues.page(params[:marked_issues_page]).per(10)
+    @posted_issues = @user.issues.where( :draft => false ).order(edit_time: :desc).page(params[:posted_issues_page]).per(10)
+    @unposted_issues = @user.issues.where( :draft => true ).order(edit_time: :desc).page(params[:unposted_issues_page]).per(10)
     @commented_issues = @user.commented_issues.uniq
-    @followers = @user.followers
+    @commented_issues_results = Kaminari.paginate_array(@commented_issues).page(params[:commented_issues_page]).per(10)
+    @followers = @user.followers.page(params[:followers_page]).per(10)
     @followings = @user.followings
     @likes_total = @posted_issues.sum(:likes_count)
     @views_total = @posted_issues.sum(:views_count)

@@ -1,8 +1,23 @@
-<% users.each do |user| %>
-  <div>
-    <% if user.avatar? %>
-      <%= image_tag user.avatar.url, width: '100px' %>
-    <% end %>
-    <%= link_to user.name.to_s, user_path(user) %>    
-  </div>
-<% end %>
+<div class="table-container">
+  <table class="table-users table" border="0">
+    <tbody>
+      <% users.each do |user| %>
+        <tr>
+          <td width="10" align="center">
+            <% if user.avatar? %>
+              <%= image_tag user.avatar.url, width: '50', class: "pull-left img-circle nav-user-photo"  %>
+            <% else %>
+              <span class="glyphicon glyphicon-user"></span>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to user_path(user) do %>
+              <%= user.name %>
+            <% end %>
+            <br>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
