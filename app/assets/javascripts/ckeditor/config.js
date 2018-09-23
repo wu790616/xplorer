@@ -12,7 +12,6 @@ CKEDITOR.editorConfig = function( config )
   config.autoGrow_minHeight = 300;
   config.autoGrow_maxHeight = 750;
 
-
   /* Filebrowser routes */
   // The location of an external file browser, that should be launched when "Browse Server" button is pressed.
   config.filebrowserBrowseUrl = "/ckeditor/attachment_files";
@@ -43,6 +42,15 @@ CKEDITOR.editorConfig = function( config )
   
   config.embed_provider = '//ckeditor.iframe.ly/api/oembed?url={url}&callback={callback}';
 
+  config.stylesSet = false;
+  config.stylesSet = [
+    { name: '最小 ', type: 'widget', widget: 'embed', attributes: { 'class': 'embed-240p' }, group: 'size' },
+    { name: '小 ', type: 'widget', widget: 'embed', attributes: { 'class': 'embed-360p' }, group: 'size' },
+    { name: '中 ', type: 'widget', widget: 'embed', attributes: { 'class': 'embed-480p' }, group: 'size' },
+    { name: '大 ', type: 'widget', widget: 'embed', attributes: { 'class': 'embed-720p' }, group: 'size' },
+    { name: '最大 ', type: 'widget', widget: 'embed', attributes: { 'class': 'embed-1080p' }, group: 'size' }
+  ];
+
   // Toolbar groups configuration.
   config.toolbar = [
     { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source'] },
@@ -60,7 +68,7 @@ CKEDITOR.editorConfig = function( config )
 
   config.toolbar_mini = [
     { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
-    { name: 'styles', items: [ 'Format' ] },
+    { name: 'styles', items: [ 'Styles', 'Format' ] },
     { name: 'links', items: [ 'Link', 'Unlink' ] },
     //{ name: 'colors', items: [ 'TextColor', 'BGColor' ] },
     { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ] },
