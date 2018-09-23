@@ -19,6 +19,7 @@
 //= require ckeditor/plugins/widget/plugin
 //= require ckeditor/plugins/autoembed/plugin
 //= require ckeditor/plugins/image2/plugin
+//= require ckeditor/plugins/codesnippet/plugin
 //= require ckeditor/config
 //= require_tree .
 //= require bootstrap-sprockets

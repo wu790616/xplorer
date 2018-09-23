@@ -38,7 +38,7 @@ CKEDITOR.editorConfig = function( config )
 
   config.format_tags = 'p;h1;h2;h3';
 
-  config.extraPlugins = 'embed,embedbase,widget,lineutils,notificationaggregator,widgetselection,autolink,autoembed,image2,autogrow';
+  config.extraPlugins = 'embed,embedbase,widget,lineutils,notificationaggregator,widgetselection,autolink,autoembed,image2,autogrow,codesnippet';
   
   config.embed_provider = '//ckeditor.iframe.ly/api/oembed?url={url}&callback={callback}';
 
@@ -72,7 +72,7 @@ CKEDITOR.editorConfig = function( config )
     { name: 'links', items: [ 'Link', 'Unlink' ] },
     //{ name: 'colors', items: [ 'TextColor', 'BGColor' ] },
     { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ] },
-    { name: 'insert', items: [ 'Image', 'SImage', 'Embed', 'HorizontalRule', 'SpecialChar' ] },
+    { name: 'insert', items: [ 'Image', 'Embed', 'CodeSnippet', 'HorizontalRule', 'SpecialChar' ] },
     { name: 'document', items: [ '-','Source'] }
   ];
   config.toolbar = "mini";
