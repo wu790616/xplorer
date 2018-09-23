@@ -18,6 +18,7 @@
 //= require ckeditor/plugins/embedbase/plugin
 //= require ckeditor/plugins/widget/plugin
 //= require ckeditor/plugins/autoembed/plugin
+//= require ckeditor/plugins/image2/plugin
 //= require ckeditor/config
 //= require_tree .
 //= require bootstrap-sprockets
