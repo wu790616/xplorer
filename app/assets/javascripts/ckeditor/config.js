@@ -33,11 +33,11 @@ CKEDITOR.editorConfig = function( config )
 
   config.allowedContent = true;
 
-  config.format_tags = 'p;h1;h2;h3'
+  config.format_tags = 'p;h1;h2;h3';
 
-  config.extraPlugins = 'embed', 'embedbase', 'widget', 'notificationaggregator', 'widgetselection', 'lineutils';
+  config.extraPlugins = 'embed,embedbase,widget,lineutils,notificationaggregator,widgetselection,divarea';
   
-  config.embed_provider = '//ckeditor.iframe.ly/api/oembed?url={url}&callback={callback}'
+  config.embed_provider = '//ckeditor.iframe.ly/api/oembed?url={url}&callback={callback}';
 
   // Toolbar groups configuration.
   config.toolbar = [
