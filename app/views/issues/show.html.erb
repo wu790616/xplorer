@@ -3,14 +3,14 @@
     <div class="container">
       <h2><%= @issue.title %></h2>
       <div class="body-text">
-        <p class='text-muted'>By <%= link_to "#{@issue.user.name}", user_path(@issue.user) %> | <%= @issue.edit_time.localtime.to_s(:long) %></p>
+        <p class='text-muted'>By <%= link_to @issue.user.name, user_path(@issue.user) %> | <%= @issue.edit_time.localtime.to_s(:long) %></p>
         <% if @issue.draft %>
           <h6 class="label label-default">Draft</h6>
         <% else %>
           <h6 class="label label-success">Published</h6>
           <h5>標籤:
             <% @issue.taged_topics.each do |topic| %>
-              <span class="label label-info"><%= topic.name %></span>
+              <%= link_to topic.name, topic_path(topic), class: "label label-info" %>
             <% end %>
           </h5>
           <div class="col-lg-8", style="padding-left: 0px">
@@ -83,7 +83,7 @@
                 <div class="comment-block">
                   <p class="comment-text"><%= comment.content %></p>
                   <div class="bottom-comment">
-                    <div class="comment-date">by <%= link_to "#{comment.user.name}", user_path(comment.user) %> | <%= comment.created_at.localtime.to_s(:long) %></div>
+                    <div class="comment-date">by <%= link_to comment.user.name, user_path(comment.user) %> | <%= comment.created_at.localtime.to_s(:long) %></div>
                   </div>
                   <br>
                   <div class="col-lg-12">
@@ -102,7 +102,7 @@
                           <%= reply.content %>
                         </div>
                         <div class="bottom-comment col-lg-12">
-                          <div class="comment-date">by <%= link_to "#{reply.user.name}", user_path(reply.user) %> | <%= reply.created_at.localtime.to_s(:long) %></div>
+                          <div class="comment-date">by <%= link_to reply.user.name, user_path(reply.user) %> | <%= reply.created_at.localtime.to_s(:long) %></div>
                           <% if reply.user == current_user %>
                               | <%= link_to 'Delete', issue_comment_reply_path(@issue, comment, reply), method: :delete, data: { confirm: "刪除回應?" } %>
                           <% end %>
