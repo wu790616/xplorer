@@ -383,11 +383,14 @@ namespace :dev do
     Rake::Task['dev:fake_topic_tagships'].execute
 
     # Processing for Xmap
-    puts "usermap processing..."
-    Rake::Task['xmap:usermap'].execute
     puts "fullmap processing..."
     Rake::Task['xmap:fullmap'].execute
-
+    puts "topic_strength_follow processing..."
+    Rake::Task['xmap:topic_strength_follow'].execute
+    puts "usermap processing..."
+    Rake::Task['xmap:usermap'].execute
+    puts "update_link processing..."
+    Rake::Task['xmap:update_link'].execute
     #看還有甚麼fake都能放進來
   end
 end
