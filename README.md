@@ -57,6 +57,7 @@ Explorer for learning and find your X
 1. 使用者登入後
     * 可以關注主題
 2. 可點擊議題之主題標籤導向該主題之相關議題瀏覽頁
+3. 根據點擊log，自動產生相關主題，每個主題都有自己的相關主題MAP
     
 #### Landing Page
 1. 可瀏覽top10熱門作者
@@ -90,7 +91,7 @@ Explorer for learning and find your X
 1. 使用者可做全站搜尋
 
 ## Getting Started
-#### install project
+#### Install project
 ```
 $ bundle install
 $ rails db:migrate
@@ -110,4 +111,13 @@ GOOGLE_SECRET: 'YOUR_GOOGLE_APP_SECRET'
 ```
 
 ## Built With
-Rails 5.2.1
+* Rails 5.2.1
+* Authentication and OAuth: Devise, Omniauth-facebook, Omniauth-google-oauth2
+* Topic Analytic: Ahoy
+* Editor: Ckeditor
+* Pagination: Kaminari
+* Uploader: Carrierwave
+* HTTP client and tools: Rest-Client
+* Testing data: Ffaker
+* Social Share: Social-Share-Button
+* Layout: Bootstrap, Bootswatch
