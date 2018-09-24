@@ -8,19 +8,19 @@ class TopicsController < ApplicationController
       @hot_topics = Topic.all.order(topic_tagships_count: :desc).limit(5)
     end
     # issue
-    @hot_issues = Issue.published.order(views_count: :desc).page(params[:page]).per(10)
+    @hot_issues = Issue.published.order(views_count: :desc).page(params[:hot_issues_page]).per(10)
     @hot_users = User.order(followers_count: :desc).limit(10)
     hot_user_ids = Array.new
     @hot_users.each do |user|
       hot_user_ids.push(user.id)
     end
-    @hot_users_issues = Issue.published.where(:user => hot_user_ids).order(edit_time: :desc).page(params[:page]).per(10)
+    @hot_users_issues = Issue.published.where(:user => hot_user_ids).order(edit_time: :desc).page(params[:hot_users_issues_page]).per(10)
     if(current_user)
       @user_followings = current_user.followings
-      @followings_issues = Issue.published.where(:user => @user_followings).order(edit_time: :desc).page(params[:page]).per(10)
+      @followings_issues = Issue.published.where(:user => @user_followings).order(edit_time: :desc).page(params[:followings_issues_page]).per(10)
       @topic_followings = current_user.following_topics
       @tagships = TopicTagship.where(:topic => @topic_followings)
-      @topic_followings_issues = Issue.published.where(:topic_tagships => @tagships).order(edit_time: :desc).page(params[:page]).per(10)
+      @topic_followings_issues = Issue.published.where(:topic_tagships => @tagships).order(edit_time: :desc).page(params[:topic_followings_issues_page]).per(10)
     end
   end
 
