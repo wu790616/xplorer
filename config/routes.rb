@@ -7,7 +7,11 @@ Rails.application.routes.draw do
     resources :notifications, only: [:index]
   end
 
-  resources :topics, only: [:index, :show]
+  resources :topics, only: [:index, :show] do
+    collection do
+      get :fullmap
+    end
+  end
 
   resources :issues, except: [:index] do
     resources :comments, only: [:create, :destroy] do
