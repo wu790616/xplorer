@@ -31,10 +31,14 @@
         | <%= issue.edit_time.localtime.to_s(:long) %>
         | <span class="glyphicon glyphicon-comment"></span> <%= issue.comments_count %> 則留言
         | <span class="glyphicon glyphicon-eye-open"></span> <%= issue.views_count %> 瀏覽數
+        | <span class="glyphicon glyphicon-heart"></span> <%= issue.likes_count %> 讚
         | <span class="glyphicon glyphicon-bookmark"></span> <%= issue.bookmarks_count %> 人收藏
-        | <span class="glyphicon glyphicon-bookmark"></span> 標籤: 
-          <% issue.taged_topics.each do |topic| %>
-            <span class="label label-info"><%= topic.name %></span>
+        | <span class="glyphicon glyphicon-tags"></span> 標籤: 
+          <% issue.taged_topics.take(5).each do |topic| %>
+            <%= link_to "#{topic.name}", topic_path(topic), class: "label label-info" %>
+          <% end %>
+          <% if issue.taged_topics.count > 6 %>
+            ...
           <% end %>
       </p>
     </div>

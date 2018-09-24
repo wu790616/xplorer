@@ -24,19 +24,30 @@
   <div class="row">
     <div class="panel panel-default widget">
       <div class="panel-heading", style="text-align: center;">
-        <h3 class="panel-title">
-            <%= @base.name %></h3>
-        <span class="glyphicon glyphicon-star", style="float: right;"></span>
+        <h3 class="panel-title"><%= @base.name %></h3>
+        <% if current_user %>
+          <% if current_user.followingtopic?(@base) %>
+            <%= link_to topic_followship_path(@base), method: :delete do %>
+              <span class="glyphicon glyphicon-star", style="float: right;"></span>
+            <% end %>
+          <% else %>
+            <%= link_to topic_followships_path(:topic_id => @base), method: :post do %>
+              <span class="glyphicon glyphicon-star-empty", style="float: right;"></span>
+            <% end %>
+          <% end %>
+        <% end %>
       </div>
       <div class="panel-body">
         <ul class="list-group">
           <% @issues.each do |issue| %>
             <li class="list-group-item">
               <div class="row">
-                <div class="col-xs-2 col-md-1">
-                  <img src="http://placehold.it/80" class="img-circle img-responsive" alt="" />
+                <div class="col-lg-2">
+                  <a href="#" class="thumbnail">
+                    <img src="http://placehold.it/260x180" alt="">
+                  </a>
                 </div>
-                <div class="col-xs-10 col-mßd-11">
+                <div class="col-lg-10">
                   <h4><%= link_to "#{issue.title}", issue_path(issue) %></h4>
                   <div class="comment-text">
                     <%= truncate(strip_tags(issue.content), length: 100 ) %>
@@ -52,8 +63,8 @@
                       | <span class="glyphicon glyphicon-heart"></span> <%= "#{issue.likes_count}" %> 讚
                       | <span class="glyphicon glyphicon-bookmark"></span> <%= "#{issue.bookmarks_count}" %> 人收藏
                       | <span class="glyphicon glyphicon-tags"></span> 標籤: 
-                        <% issue.taged_topics.take(5).each do |tagged| %>
-                          <span class="label label-info"><%= "#{tagged.name}" %></span>
+                        <% issue.taged_topics.take(5).each do |topic| %>
+                          <%= link_to "#{topic.name}", topic_path(topic), class: "label label-info" %>
                         <% end %>
                         <% if issue.taged_topics.count > 6 %>
                           ...
@@ -106,6 +117,7 @@
   由上一步->上兩步->上三步->----
   目前後端提供前10步紀錄，如須增刪可再討論。
 -->
+<!--
 <h3>Base Topic: <%= @base.name %></h3>
 <% if current_user %>
   <% if current_user.followingtopic?(@base) %>
@@ -128,6 +140,7 @@
 <% @logs.each do |log| %>
   <ul><%= "#{log.name}" %><br></ul>
 <% end %>
+-->
 
 <!--
   以下註解單純說明目前 fake data 邏輯，可刪除
