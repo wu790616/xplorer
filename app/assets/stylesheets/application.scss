@@ -22,6 +22,9 @@ body { padding-top: 70px; }
 @import "bootswatch/readable/bootswatch";
 @import "custom";
 
+// For issue show embed
+@import "issue_show";
+
 @import "social-share-button";
 $size: 35px;
 
