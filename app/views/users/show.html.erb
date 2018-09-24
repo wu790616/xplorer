@@ -180,27 +180,25 @@
                 <%= button_to "改為公開", user_path(@user), method: :patch, params: { :"user[topic_follow_privacy]" => true }, class: "btn btn-primary btn-xs" %>
               <% end %>
               <div class="container">
-                <svg></svg>
+                <div id="map"></div>
                 <script>
-                  var width = 960;
-                  var height = 600;
-                  var svg = d3.select("svg").attr("width", width).attr("height", height)
+                  var width  = $(window).width()*0.95;
+                  var height = $(window).height()*0.5;// - banner_height;
                   var topics = <%= raw(@map_topics.to_json) %>
                   var links  = <%= raw(@map_links.to_json) %>
-                  xmap(svg, topics, links, width, height, -200);
+                  xmap(topics, links, width, height, -200);
                 </script>
               </div>
             <!-- 非本人當使用者設定可以看到X MAP時，顯示X MAP -->
             <% elsif @user.topic_follow_privacy %>
               <div class="container">
-                <svg></svg>
+                <div id="map"></div>
                 <script>
-                  var width = 960;
-                  var height = 600;
-                  var svg = d3.select("svg").attr("width", width).attr("height", height)
+                  var width  = $(window).width()*0.95;
+                  var height = $(window).height()*0.5;// - banner_height;
                   var topics = <%= raw(@map_topics.to_json) %>
                   var links  = <%= raw(@map_links.to_json) %>
-                  xmap(svg, topics, links, width, height, -200);
+                  xmap(topics, links, width, height, -200);
                 </script>
               </div>
             <!-- 非本人當使用者設定不可以看到X MAP時，顯示使用者不公開 -->

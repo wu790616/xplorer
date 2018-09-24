@@ -2,14 +2,13 @@
   <!-- Draw system Xmap with d3.js -->
   <!-- 為檢視方便暫時搬至此處，請依排版需求調整 （完成後此註解可刪） -->
   <div class="row">
-    <svg></svg>
+    <div id="map"></div>
     <script>
-      var width = 960;
-      var height = 600;
-      var svg = d3.select("svg").attr("width", width).attr("height", height)
+      var width  = $(window).width()*0.95;
+      var height = $(window).height()*0.5;// - banner_height;
       var topics = <%= raw(@topics.to_json) %>
       var links  = <%= raw(@links.to_json) %>
-      xmap(svg, topics, links, width, height);
+      xmap(topics, links, width, height, -200);
     </script>
   </div>
   <!-- Show system Xmap View log -->

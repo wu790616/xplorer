@@ -1,4 +1,4 @@
-function xmap(svg, topics, links, width, height, charge) {
+function xmap(/*svg, */topics, links, width, height, charge) {
 
 	var color = d3.scaleOrdinal()
 	 							.range(d3.schemeCategory20);
@@ -6,6 +6,11 @@ function xmap(svg, topics, links, width, height, charge) {
 										 .force("link", d3.forceLink())
 										 .force("charge", d3.forceManyBody())
 										 .force("center", d3.forceCenter(width / 2, height / 2));
+
+	//Append a SVG to the body of the html page. Assign this SVG as an object to svg
+	var svg = d3.select("#map").append("svg")
+	    				.attr("width", width)
+	    				.attr("height", height);
 
 	var zoom = d3.zoom()
 							 .scaleExtent([1, 10])
@@ -34,7 +39,8 @@ function xmap(svg, topics, links, width, height, charge) {
 								.call(d3.drag()
 								.on("start", dragstarted)
 								.on("drag", dragged)
-								.on("end", dragended));
+								.on("end", dragended))
+								.on('dblclick', releasenode);
 	var text = svg.selectAll("text")
 								.data(topics)
 								.enter()
@@ -72,10 +78,11 @@ function xmap(svg, topics, links, width, height, charge) {
 		svg.attr('transform', 'scale(' + d3.event.transform.k + ')');
 	}
 
-	function dragstarted(d) {
-		if (!d3.event.active) simulation.alphaTarget(0.3).restart();
-			d.fx = d.x;
-			d.fy = d.y;
+	function dragstarted(d, i) {
+		simulation.stop() // stops the force auto positioning before you start dragging
+	//if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+	//	d.fx = d.x;
+	//	d.fy = d.y;
 	};
 
 	function dragged(d) {
@@ -84,10 +91,16 @@ function xmap(svg, topics, links, width, height, charge) {
 	};
 
 	function dragended(d) {
-		if (!d3.event.active) simulation.alphaTarget(0);
-		d.fx = null;
-		d.fy = null;
+		d.fixed = true; // of course set the node to fixed so the force doesn't include the node in its auto positioning stuff
+		simulation.restart();
+	//if (!d3.event.active) simulation.alphaTarget(0);
+	//d.fx = null;
+	//d.fy = null;
 	};
+
+	function releasenode(d) {
+		d.fixed = false; // of course set the node to fixed so the force doesn't include the node in its auto positioning stuff
+	}
 
 	function topic_radius(d) {
 		if(d.strength > 2048) return 40;
