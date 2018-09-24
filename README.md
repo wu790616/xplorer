@@ -3,10 +3,10 @@ Explorer for learning and find your X
 
 ## 目錄
 * [專案目的](#專案目的)
-* [Getting Started](#getting-started)
 * [User Story (Done)](#user-story-done)
 * [User Story (In-Progress)](#user-story-in-progress)
 * [Getting Started](#getting-started)
+* [Built With](#built-with)
 
 ## 專案目的
 #### 解決的問題
