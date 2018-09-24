@@ -1,6 +1,11 @@
 class TopicFollowshipsController < ApplicationController
+  INIT_STRENGTH = 200
+  
   def create
+    
     @followship = current_user.topic_followships.build(topic_id: params[:topic_id])
+    @followship.strength = 200
+    @followship.progress = "processed"
 
     if @followship.save
       redirect_back(fallback_location: root_path)
