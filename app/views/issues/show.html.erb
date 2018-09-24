@@ -6,6 +6,11 @@
         <p class='text-muted'>By <%= link_to @issue.user.name, user_path(@issue.user) %> | <%= @issue.edit_time.localtime.to_s(:long) %></p>
         <% if @issue.draft %>
           <h6 class="label label-default">Draft</h6>
+          <h5>標籤:
+            <% @issue.taged_topics.each do |topic| %>
+              <%= link_to topic.name, topic_path(topic), class: "label label-info" %>
+            <% end %>
+          </h5>
         <% else %>
           <h6 class="label label-success">Published</h6>
           <h5>標籤:
@@ -29,7 +34,7 @@
               <% end %>
           </div>
         <% end %>
-        <div class="col-lg-4 text-right">
+        <div class="col-lg-4 pull-right text-right">
           <% if @issue.user == current_user %>
             <%= link_to "Edit", edit_issue_path(@issue) %> |
             <%= link_to "Delete", issue_path(@issue), method: :delete, data: { confirm: "確認要刪除這篇議題嗎?" } %>
