@@ -1,5 +1,13 @@
 class TopicsController < ApplicationController
 
+  def fullmap
+    # Full map
+    file = File.read('public/full_topic.json')
+    @map_topics = JSON.parse(file)
+    file = File.read('public/full_link.json')
+    @map_links = JSON.parse(file)
+  end
+
   def index
     # hot topics
     if(current_user && (current_user.following_topics.first != nil))

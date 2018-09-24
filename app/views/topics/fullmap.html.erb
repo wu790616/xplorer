@@ -1,0 +1,13 @@
+<div class="container">
+  <svg></svg>
+  <div id="map"></div>
+  <script>
+    var banner_height = 70;
+    var width  = $(window).width()*0.95;
+    var height = $(window).height() - banner_height;
+    var svg = d3.select("svg").attr("width", width).attr("height", height);
+    var topics = <%= raw(@map_topics.to_json) %>
+    var links  = <%= raw(@map_links.to_json) %>
+    xmap(svg, topics, links, width, height, -5);
+  </script>
+</div>

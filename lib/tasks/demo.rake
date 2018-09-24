@@ -342,7 +342,7 @@ namespace :demo do
   #  t.datetime "updated_at", null: false
   #end
   
-  DEFAULT_STRENGTH = 50
+  DEFAULT_STRENGTH = 200
 
   task demo_xmap: :environment do
     XplorerMap.destroy_all
