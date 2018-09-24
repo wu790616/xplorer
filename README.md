@@ -4,7 +4,8 @@ Explorer for learning and find your X
 ## 目錄
 * [專案目的](#專案目的)
 * [Getting Started](#getting-started)
-* [User Story](#user-story)
+* [User Story (Done)](#user-story-done)
+* [User Story (In-Progress)](#user-story-in-progress)
 
 ## 專案目的
 #### 解決的問題
@@ -37,37 +38,36 @@ Explorer for learning and find your X
       * 可自訂標題
       * 可自訂內容 (ckeditor gem, 編輯器支援)
         * Rich Text Editor(富文本編輯器)
-        * 可上傳影片，貼上影片連結時會自動嵌入
+        * 貼上影片連結時會自動嵌入
         * 可插入程式碼
         * 可上傳圖片
-        * 可上傳URL
       * 可自訂主題標籤
         * 標籤欄位可輸入關鍵字搜尋主題
         * 標籤欄位可利用下拉選單直接選擇主題
       * 可定義議題狀態
         * 存成草稿
         * 發佈
-    * 針對議題可以分享/追蹤/按讚
+    * 針對議題可以留言/分享/收藏/按讚
 2. 可點擊議題標題導向議題瀏覽頁
 3. 可點擊議題作者導向作者個人檔案頁
+4. 未登入使用者可瀏覽議題及分享
 
 #### 主題相關功能
 1. 使用者登入後
     * 可以關注主題
 2. 可點擊議題之主題標籤導向該主題之相關議題瀏覽頁
     
-#### Onboarding
-1. 使用者
-    * 首頁
-      * 可瀏覽top10熱門作者
-      * 可瀏覽全網站熱門議題
-      * 可瀏覽全網站熱門作者的議題
-      * 登入前
-        * 可瀏覽全網站關注度top5熱門主題
-      * 登入後
-        * 可瀏覽個人關注主題關注度top5
-        * 可看到追蹤者的新議題
-        * 可看到關注主題的新議題
+#### Landing Page
+1. 可瀏覽top10熱門作者
+2. 可瀏覽全網站熱門議題
+3. 可瀏覽全網站熱門作者的議題
+4. 依使用者登入狀態呈現不同內容
+   *登入前
+      * 可瀏覽全網站關注度top5熱門主題
+   * 登入後
+      * 可瀏覽個人關注主題關注度top5
+      * 可看到追蹤者的新議題
+      * 可看到關注主題的新議題
     
 ## User Story (In-Progress)
 #### 使用者相關
@@ -85,7 +85,7 @@ Explorer for learning and find your X
     * 可自訂主題標籤
         * 標籤欄位未找到欲標籤之主題，可以自行新增
 
-#### Onboarding
+#### Landing Page
 1. 使用者可做全站搜尋
 
 
