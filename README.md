@@ -101,7 +101,7 @@ $ rails db:migrate
 $ rails dev:fake_demo
 ```
 #### Setup environment
-Facebook/Google認證功能，需要取得Facebook/Google App ID和App Secret，並在專案中設定
+Facebook/Google認證功能，需要取得Facebook/Google App ID和App Secret，
 取得專屬App ID和App Secret後請創建`config/local_env.yml`，並在檔案中設定：
 ```
 FB_APP_ID: 'YOUR_FB_APP_ID'
