@@ -199,4 +199,28 @@ namespace :xmap do
 
     puts "have created #{user_count} personal Xmap"
   end
+
+  task fullmap: :environment do
+    require 'json'
+    # Full map
+    topics = Topic.all
+    map_topics = []
+    map_links = []
+    topics.count.times do |i|
+      map_topics.push({name: topics[i].name, base: topics[i].id, center: topics[i].id, from: topics[i].id, page: 0, strength: 200})
+      topics.count.times do |j|
+        link = XplorerMap.where(from_id: topics[i].id, to_id: topics[j].id).first
+        if(link == nil)
+        else
+          map_links.push({source: i, target:j, strength: -20})
+        end
+      end
+    end
+    File.open("public/full_topic.json","w") do |f|
+      f.write(map_topics.to_json)
+    end
+    File.open("public/full_link.json","w") do |f|
+      f.write(map_links.to_json)
+    end
+  end
 end

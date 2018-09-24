@@ -345,4 +345,52 @@ namespace :dev do
 
     #看還有甚麼fake都能放進來
   end
+
+  task fake_demo: :environment do
+    puts "fake_user processing..."
+    Rake::Task['dev:fake_user'].execute
+    puts "demo_topic processing..."
+    Rake::Task['demo:demo_topic'].execute
+    puts "demo_xmap processing..."
+    Rake::Task['demo:demo_xmap'].execute
+    puts "fake_issue processing..."
+    Rake::Task['dev:fake_issue'].execute
+
+    # Relationship between Users
+    puts "fake_user_followship processing..."
+    Rake::Task['dev:fake_user_followship'].execute
+    
+    # Relationship between User and Topic
+    puts "fake_topic_followship processing..."
+    Rake::Task['dev:fake_topic_followship'].execute
+    puts "fake_xmap_viewlogs processing..."
+    Rake::Task['dev:fake_xmap_viewlogs'].execute
+    puts "fake_topic_enterlogs processing..."
+    Rake::Task['dev:fake_topic_enterlogs'].execute
+
+    # Relationship between User and Issue
+    puts "fake_bookmarks processing..."
+    Rake::Task['dev:fake_bookmarks'].execute
+    puts "fake_comments processing..."
+    Rake::Task['dev:fake_comments'].execute
+    puts "fake_likes processing..."
+    Rake::Task['dev:fake_likes'].execute
+    puts "fake_replies processing..."
+    Rake::Task['dev:fake_replies'].execute
+    
+    # Relationship between Topic and Issue
+    puts "fake_topic_tagships processing..."
+    Rake::Task['dev:fake_topic_tagships'].execute
+
+    # Processing for Xmap
+    puts "fullmap processing..."
+    Rake::Task['xmap:fullmap'].execute
+    puts "topic_strength_follow processing..."
+    Rake::Task['xmap:topic_strength_follow'].execute
+    puts "usermap processing..."
+    Rake::Task['xmap:usermap'].execute
+    puts "update_link processing..."
+    Rake::Task['xmap:update_link'].execute
+    #看還有甚麼fake都能放進來
+  end
 end
