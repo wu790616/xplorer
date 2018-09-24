@@ -112,10 +112,12 @@
             <a href="#xmap" data-toggle="tab">
            X Map </a>
           </li>
-          <li>
-            <a href="#draft" data-toggle="tab">
-           草稿 (<%= @unposted_issues.count %>)</a>
-          </li>
+          <% if current_user && current_user == @user %>
+            <li>
+              <a href="#draft" data-toggle="tab">
+             草稿 (<%= @unposted_issues.count %>)</a>
+            </li>
+          <% end %>
         </ul>
         <div class="tab-content">
           <div class="tab-pane active" id="posted_issues">
