@@ -182,7 +182,7 @@
                   var svg = d3.select("svg").attr("width", width).attr("height", height)
                   var topics = <%= raw(@map_topics.to_json) %>
                   var links  = <%= raw(@map_links.to_json) %>
-                  xmap(svg, topics, links, width, height);
+                  xmap(svg, topics, links, width, height, -200);
                 </script>
               </div>
             <!-- 非本人當使用者設定可以看到X MAP時，顯示X MAP -->
@@ -195,7 +195,7 @@
                   var svg = d3.select("svg").attr("width", width).attr("height", height)
                   var topics = <%= raw(@map_topics.to_json) %>
                   var links  = <%= raw(@map_links.to_json) %>
-                  xmap(svg, topics, links, width, height);
+                  xmap(svg, topics, links, width, height, -200);
                 </script>
               </div>
             <!-- 非本人當使用者設定不可以看到X MAP時，顯示使用者不公開 -->
