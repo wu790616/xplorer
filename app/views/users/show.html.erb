@@ -55,7 +55,7 @@
           <hr>
           <div class="col-xs-12 col-sm-4 col-lg-2 emphasis">
             <h4><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 追隨者</h4>
-            <h4><strong> <%= @user.followings_count %> </strong></h4>
+            <h4><strong> <%= @user.followers_count %> </strong></h4>
           </div>
           <div class="col-xs-12 col-sm-4 col-lg-2 emphasis">
             <h4><span class="glyphicon glyphicon-file" aria-hidden="true"></span> 議題數</h4>
@@ -101,12 +101,12 @@
            已回覆議題 </a>
           </li>
           <li>
-            <a href="#follwers" data-toggle="tab">
-           追蹤者 (<%= @user.followers_count %>)</a>
+            <a href="#follwings" data-toggle="tab">
+           追蹤者 (<%= @user.followings_count %>)</a>
           </li>
           <li>
-            <a href="#followings" data-toggle="tab">
-           追隨者 </a>
+            <a href="#followers" data-toggle="tab">
+           追隨者 (<%= @user.followers_count %>) </a>
           </li>
           <li>
             <a href="#xmap" data-toggle="tab">
@@ -158,14 +158,17 @@
               </div>
             </div>
           </div>
-          <div class="tab-pane" id="follwers">
+          <div class="tab-pane" id="follwings">
+            <%= render :partial => 'follow_list', locals: { users: @followings } %>
+            <div style="text-align: center"> 
+              <%= paginate @followings, param_name: "followings_page" %>
+            </div>
+          </div>
+          <div class="tab-pane" id="followers">
             <%= render :partial => 'follow_list', locals: { users: @followers } %>
             <div style="text-align: center"> 
               <%= paginate @followers, param_name: "followers_page" %>
             </div>
-          </div>
-          <div class="tab-pane" id="followings">
-            <%= render :partial => 'follow_list', locals: { users: @followings } %>
           </div>
           <div class="tab-pane" id="xmap">
             <% if @user == current_user %>
