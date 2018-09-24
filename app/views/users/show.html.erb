@@ -101,7 +101,7 @@
            已回覆議題 </a>
           </li>
           <li>
-            <a href="#follwings" data-toggle="tab">
+            <a href="#followings" data-toggle="tab">
            追蹤者 (<%= @user.followings_count %>)</a>
           </li>
           <li>
@@ -160,7 +160,7 @@
               </div>
             </div>
           </div>
-          <div class="tab-pane" id="follwings">
+          <div class="tab-pane" id="followings">
             <%= render :partial => 'follow_list', locals: { users: @followings } %>
             <div style="text-align: center"> 
               <%= paginate @followings, param_name: "followings_page" %>
