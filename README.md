@@ -6,6 +6,7 @@ Explorer for learning and find your X
 * [Getting Started](#getting-started)
 * [User Story (Done)](#user-story-done)
 * [User Story (In-Progress)](#user-story-in-progress)
+* [Getting Started](#getting-started)
 
 ## 專案目的
 #### 解決的問題
@@ -62,7 +63,7 @@ Explorer for learning and find your X
 2. 可瀏覽全網站熱門議題
 3. 可瀏覽全網站熱門作者的議題
 4. 依使用者登入狀態呈現不同內容
-   *登入前
+   * 登入前
       * 可瀏覽全網站關注度top5熱門主題
    * 登入後
       * 可瀏覽個人關注主題關注度top5
@@ -88,16 +89,24 @@ Explorer for learning and find your X
 #### Landing Page
 1. 使用者可做全站搜尋
 
-
 ## Getting Started
-1. install project
+#### install project
 ```
 $ bundle install
 $ rails db:migrate
 ```
-2. Setup fake data for development
+#### Setup data for development
 ```
-$ rails dev:fake_all
+$ rails dev:fake_demo
+```
+#### Setup environment
+Facebook/Google認證功能，需要取得Facebook/Google App ID和App Secret，並在專案中設定
+取得專屬App ID和App Secret後請創建`config/local_env.yml`，並在檔案中設定：
+```
+FB_APP_ID: 'YOUR_FB_APP_ID'
+FB_SECRET: 'YOUR_FB_APP_SECRET'
+GOOGLE_APP_ID: 'YOUR_GOOGLE_APP_ID'
+GOOGLE_SECRET: 'YOUR_GOOGLE_APP_SECRET'
 ```
 
 ## Built With
