@@ -55,7 +55,7 @@
           <hr>
           <div class="col-xs-12 col-sm-4 col-lg-2 emphasis">
             <h4><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 追隨者</h4>
-            <h4><strong> <%= @user.followings_count %> </strong></h4>
+            <h4><strong> <%= @user.followers_count %> </strong></h4>
           </div>
           <div class="col-xs-12 col-sm-4 col-lg-2 emphasis">
             <h4><span class="glyphicon glyphicon-file" aria-hidden="true"></span> 議題數</h4>
@@ -70,12 +70,12 @@
             <h4><strong> <%= @likes_total %> </strong></h4>
           </div>
           <div class="col-xs-12 col-sm-4 col-lg-2 emphasis">      
-            <h4><span class="glyphicon glyphicon-share" aria-hidden="true"></span> 分享數(待補後端)</h4>
-            <h4><strong>43</strong></h4>       
+            <h4><span class="glyphicon glyphicon-share" aria-hidden="true"></span> 分享數</h4>
+            <h4><strong><%= @shares_total %></strong></h4>       
           </div>
           <div class="col-xs-12 col-sm-4 col-lg-2 emphasis">
-            <h4><span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span> 收藏數 (待補後端)</h4>
-            <h4><strong>43</strong></h4>
+            <h4><span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span> 收藏數</h4>
+            <h4><strong><%= @bookmarks_total %></strong></h4>
           </div>
         </div>
       </div>                 
@@ -101,21 +101,23 @@
            已回覆議題 </a>
           </li>
           <li>
-            <a href="#follwers" data-toggle="tab">
-           追蹤者 (<%= @user.followers_count %>)</a>
+            <a href="#followings" data-toggle="tab">
+           追蹤者 (<%= @user.followings_count %>)</a>
           </li>
           <li>
-            <a href="#followings" data-toggle="tab">
-           追隨者 </a>
+            <a href="#followers" data-toggle="tab">
+           追隨者 (<%= @user.followers_count %>) </a>
           </li>
           <li>
             <a href="#xmap" data-toggle="tab">
            X Map </a>
           </li>
-          <li>
-            <a href="#draft" data-toggle="tab">
-           草稿 (<%= @unposted_issues.count %>)</a>
-          </li>
+          <% if current_user && current_user == @user %>
+            <li>
+              <a href="#draft" data-toggle="tab">
+             草稿 (<%= @unposted_issues.count %>)</a>
+            </li>
+          <% end %>
         </ul>
         <div class="tab-content">
           <div class="tab-pane active" id="posted_issues">
@@ -158,14 +160,17 @@
               </div>
             </div>
           </div>
-          <div class="tab-pane" id="follwers">
+          <div class="tab-pane" id="followings">
+            <%= render :partial => 'follow_list', locals: { users: @followings } %>
+            <div style="text-align: center"> 
+              <%= paginate @followings, param_name: "followings_page" %>
+            </div>
+          </div>
+          <div class="tab-pane" id="followers">
             <%= render :partial => 'follow_list', locals: { users: @followers } %>
             <div style="text-align: center"> 
               <%= paginate @followers, param_name: "followers_page" %>
             </div>
-          </div>
-          <div class="tab-pane" id="followings">
-            <%= render :partial => 'follow_list', locals: { users: @followings } %>
           </div>
           <div class="tab-pane" id="xmap">
             <% if @user == current_user %>

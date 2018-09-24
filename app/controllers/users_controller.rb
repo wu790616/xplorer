@@ -8,9 +8,11 @@ class UsersController < ApplicationController
     @commented_issues = @user.commented_issues.uniq
     @commented_issues_results = Kaminari.paginate_array(@commented_issues).page(params[:commented_issues_page]).per(10)
     @followers = @user.followers.page(params[:followers_page]).per(10)
-    @followings = @user.followings
+    @followings = @user.followings.page(params[:followings_page]).per(10)
     @likes_total = @posted_issues.sum(:likes_count)
     @views_total = @posted_issues.sum(:views_count)
+    @shares_total = @posted_issues.sum(:shares_count)
+    @bookmarks_total = @posted_issues.sum(:bookmarks_count)
 
     # Personal map
     following_topics = @user.following_topics
