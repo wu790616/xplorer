@@ -11,6 +11,8 @@ class UsersController < ApplicationController
     @followings = @user.followings
     @likes_total = @posted_issues.sum(:likes_count)
     @views_total = @posted_issues.sum(:views_count)
+    @shares_total = @posted_issues.sum(:shares_count)
+    @bookmarks_total = @posted_issues.sum(:bookmarks_count)
 
     # Personal map
     following_topics = @user.following_topics
