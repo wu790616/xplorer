@@ -112,12 +112,12 @@ GOOGLE_SECRET: 'YOUR_GOOGLE_APP_SECRET'
 
 ## Built With
 * Rails 5.2.1
-* Authentication and OAuth: Devise, Omniauth-facebook, Omniauth-google-oauth2
-* Topic Analytic: Ahoy
-* Editor: Ckeditor
-* Pagination: Kaminari
-* Uploader: Carrierwave
-* HTTP client and tools: Rest-Client
-* Testing data: Ffaker
-* Social Share: Social-Share-Button
-* Layout: Bootstrap, Bootswatch
+* Authentication and OAuth: [Devise](https://github.com/plataformatec/devise), [Omniauth Facebook](https://github.com/mkdynamic/omniauth-facebook), [Omniauth Google Oauth2](https://github.com/zquestz/omniauth-google-oauth2)
+* Topic Analytic: [Ahoy](https://github.com/ankane/ahoy)
+* Editor: [Ckeditor](https://github.com/galetahub/ckeditor)
+* Pagination: [Kaminari](https://github.com/kaminari/kaminari)
+* Uploader: [CarrierWave](https://github.com/carrierwaveuploader/carrierwave)
+* HTTP client and tools: [REST Client](https://github.com/rest-client/rest-client)
+* Testing data: [ffaker](https://github.com/ffaker/ffaker)
+* Social Share: [Social Share Button](https://github.com/huacnlee/social-share-button)
+* Layout: [Bootstrap 3](https://github.com/twbs/bootstrap-sass), [Bootswatch](https://github.com/maxim/bootswatch-rails), [D3.js](https://d3js.org/)
