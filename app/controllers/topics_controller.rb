@@ -56,7 +56,7 @@ class TopicsController < ApplicationController
     @topics.push({name: "#{@link2.name }", base: "#{@base.id}"  , center: "#{@link2.id }", from: @center.id, page: 0     ,strength: 1000}) unless (@link2 == nil)
     @topics.push({name: "#{@link3.name }", base: "#{@base.id}"  , center: "#{@link3.id }", from: @center.id, page: 0     ,strength: 1000}) unless (@link3 == nil)
     @topics.push({name: "#{@link4.name }", base: "#{@base.id}"  , center: "#{@link4.id }", from: @center.id, page: 0     ,strength: 1000}) unless (@link4 == nil)
-    @topics.push({name: "Re-generate"    , base: "#{@base.id}"  , center: "#{@center.id}", from: @center.id, page: @page ,strength: 2000})
+    @topics.push({name: "Re-generate"    , base: "#{@base.id}"  , center: "#{@center.id}", from: @center.id, page: @page ,strength: 2000}) unless (@center.links_count <= 4)
 
     @links = []
     @links.push({source: 0, target:1, strength: XplorerMap.where(from_id: @center.id, to_id: @link1.id).first.strength}) unless (@link1 == nil)
