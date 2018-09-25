@@ -121,3 +121,10 @@ GOOGLE_SECRET: 'YOUR_GOOGLE_APP_SECRET'
 * Testing data: [ffaker](https://github.com/ffaker/ffaker)
 * Social Share: [Social Share Button](https://github.com/huacnlee/social-share-button)
 * Layout: [Bootstrap 3](https://github.com/twbs/bootstrap-sass), [Bootswatch](https://github.com/maxim/bootswatch-rails), [D3.js](https://d3js.org/)
+
+## Authors
+[Miki](https://github.com/miki770420)
+
+[Wendy](https://github.com/wu790616)
+
+[Yedda](https://github.com/yeddachuang)
