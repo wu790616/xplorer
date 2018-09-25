@@ -4,16 +4,19 @@ function xmap(/*svg, */topics, links, width, height, charge) {
 	 							.range(d3.schemeCategory20);
 	var simulation = d3.forceSimulation()
 										 .force("link", d3.forceLink())
+									//.force("collide",d3.forceCollide( function(d){return d.r + 8 }).iterations(16) )
+										 .force("collide", d3.forceCollide() )
 										 .force("charge", d3.forceManyBody())
 										 .force("center", d3.forceCenter(width / 2, height / 2));
 
 	//Append a SVG to the body of the html page. Assign this SVG as an object to svg
 	var svg = d3.select("#map").append("svg")
-	    				.attr("width", width)
-	    				.attr("height", height);
+	    			//.attr("width", width)
+						//.attr("height", height)
+							.attr("viewBox", "0 0 " + width + " " + height);
 
 	var zoom = d3.zoom()
-							 .scaleExtent([1, 10])
+							 .scaleExtent([0.2, 10])
 							 .on("zoom", zoomed);
 		
 	svg.call(zoom);
@@ -49,7 +52,8 @@ function xmap(/*svg, */topics, links, width, height, charge) {
 								.attr("dx", 12)
 								.attr("dy", 5)
 								.text(function(d){return d.name;});
-		
+	
+
 	simulation
 		.nodes(topics)
 		.on("tick", ticked);
@@ -73,16 +77,29 @@ function xmap(/*svg, */topics, links, width, height, charge) {
 			.attr("x", function(d) { return Math.max(20, Math.min(width -50, d.x));})
 			.attr("y", function(d) { return Math.max(20, Math.min(height-20, d.y));});
 	};
+//function ticked() {
+//	link
+//		.attr("x1", function(d) { return d.source.x })
+//		.attr("y1", function(d) { return d.source.y })
+//		.attr("x2", function(d) { return d.target.x })
+//		.attr("y2", function(d) { return d.target.y });
+//	node
+//		.attr("cx", function(d) { return d.x })
+//		.attr("cy", function(d) { return d.y });
+//	text
+//		.attr("x", function(d) { return d.x })
+//		.attr("y", function(d) { return d.y });
+//};
 
 	function zoomed() {
 		svg.attr('transform', 'scale(' + d3.event.transform.k + ')');
 	}
 
 	function dragstarted(d, i) {
-		simulation.stop() // stops the force auto positioning before you start dragging
-	//if (!d3.event.active) simulation.alphaTarget(0.3).restart();
-	//	d.fx = d.x;
-	//	d.fy = d.y;
+	//simulation.stop() // stops the force auto positioning before you start dragging
+		if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+			d.fx = d.x;
+			d.fy = d.y;
 	};
 
 	function dragged(d) {
@@ -91,11 +108,11 @@ function xmap(/*svg, */topics, links, width, height, charge) {
 	};
 
 	function dragended(d) {
-		d.fixed = true; // of course set the node to fixed so the force doesn't include the node in its auto positioning stuff
-		simulation.restart();
-	//if (!d3.event.active) simulation.alphaTarget(0);
-	//d.fx = null;
-	//d.fy = null;
+	//	d.fixed = true; // of course set the node to fixed so the force doesn't include the node in its auto positioning stuff
+	//	simulation.restart();
+		if (!d3.event.active) simulation.alphaTarget(0);
+		d.fx = null;
+		d.fy = null;
 	};
 
 	function releasenode(d) {

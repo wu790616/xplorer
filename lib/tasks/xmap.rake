@@ -212,7 +212,7 @@ namespace :xmap do
         link = XplorerMap.where(from_id: topics[i].id, to_id: topics[j].id).first
         if(link == nil)
         else
-          map_links.push({source: i, target:j, strength: -20})
+          map_links.push({source: i, target:j, strength: -50})
         end
       end
     end
