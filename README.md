@@ -7,6 +7,7 @@ Explorer for learning and find your X
 * [User Story (In-Progress)](#user-story-in-progress)
 * [Getting Started](#getting-started)
 * [Built With](#built-with)
+* [Authors](#authors)
 
 ## 專案目的
 #### 解決的問題
