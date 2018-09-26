@@ -72,6 +72,9 @@ gem 'kaminari'
 # gem for autocomplete
 gem 'selectize-rails'
 
+# fetch image
+gem 'nokogiri'
+
 group :production do
   # for heroku deploy
   # gem 'pg'
