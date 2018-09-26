@@ -64,7 +64,7 @@ class TopicsController < ApplicationController
     @links.push({source: 0, target:3, strength: XplorerMap.where(from_id: @center.id, to_id: @link3.id).first.strength}) unless (@link3 == nil)
     @links.push({source: 0, target:4, strength: XplorerMap.where(from_id: @center.id, to_id: @link4.id).first.strength}) unless (@link4 == nil)
 
-    @issues = @base.taged_issues.page(params[:page]).per(15)
+    @issues = @base.taged_issues.published.order(edit_time: :desc).page(params[:page]).per(15)
 
     if((params[:from].to_i != 0)&(params[:from] != params[:center]))
       ahoy.track "XmapViewlog", {from: params[:from].to_i, to: params[:center].to_i, progress: "init"}
