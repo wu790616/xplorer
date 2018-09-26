@@ -43,5 +43,10 @@
       </p>
     </div>
   </div>
+  <!-- 抓第一張圖 -->
+  <% doc = Nokogiri::HTML(raw issue.content) %>
+  <% if img = doc.xpath('//img').first %>
+    <%= image_tag (img.attr('src')) %>
+  <% end %>
   <hr>
 <% end %>
