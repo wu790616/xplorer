@@ -44,6 +44,11 @@
                 <div class="col-lg-2">
                   <a href="#" class="thumbnail">
                     <img src="http://placehold.it/260x180" alt="">
+                    <!-- 抓第一張圖 -->
+                    <% doc = Nokogiri::HTML(raw issue.content) %>
+                    <% if img = doc.xpath('//img').first %>
+                      <%= image_tag (img.attr('src')) %>
+                    <% end %>
                   </a>
                 </div>
                 <div class="col-lg-10">
