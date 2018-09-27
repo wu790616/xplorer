@@ -17,5 +17,5 @@
 
 <h4>User Result</h4>
 <% @users.each do |user| %>
-  <%= link_to "#{user.name}", user_path(User) %>
+  <%= link_to "#{user.name}", user_path(user) %>
 <% end %>

@@ -135,6 +135,9 @@ class TopicsController < ApplicationController
     @users = User.ransack({:name_cont => @search}).result(distinct: true)
   end
 
+  protected
+
+  # 將\, ', ? 去掉
   def validates_search_key
     @search = params[:search].gsub(/\\|\'|\/|\?/, "") if params[:search].present?
   end
