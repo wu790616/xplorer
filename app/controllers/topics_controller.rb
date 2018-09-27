@@ -1,4 +1,5 @@
 class TopicsController < ApplicationController
+  before_action :validates_search_key, only: [:search]
 
   def fullmap
     topics = []
@@ -128,4 +129,11 @@ class TopicsController < ApplicationController
     end
   end
 
+  def search
+    @topics = Topic.ransack({:name_cont => @search}).result(distinct: true)
+  end
+
+  def validates_search_key
+    @search = params[:search].gsub(/\\|\'|\/|\?/, "") if params[:search].present?
+  end
 end

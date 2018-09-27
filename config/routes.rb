@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :topics, only: [:index, :show] do
     collection do
       get :fullmap
+      get :search
     end
   end
 
@@ -23,8 +24,6 @@ Rails.application.routes.draw do
   resources :topic_followships, only: [:create, :destroy]
   resources :bookmarks, only: [:create, :destroy]
   resources :likes, only: [:create, :destroy]
-
-  resources :search, only: [:index]
 
   root "topics#index"
 end
