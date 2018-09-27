@@ -5,7 +5,7 @@ function xmap(/*svg, */topics, links, width, height, charge) {
 	var simulation = d3.forceSimulation()
 										 .force("link", d3.forceLink())
 									//.force("collide",d3.forceCollide( function(d){return d.r + 8 }).iterations(16) )
-										 .force("collide", d3.forceCollide() )
+										 .force("collide", d3.forceCollide(50) )
 										 .force("charge", d3.forceManyBody())
 										 .force("center", d3.forceCenter(width / 2, height / 2));
 

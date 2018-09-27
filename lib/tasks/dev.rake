@@ -391,6 +391,8 @@ namespace :dev do
     Rake::Task['xmap:usermap'].execute
     puts "update_link processing..."
     Rake::Task['xmap:update_link'].execute
+    puts "fixed_indexmap processing..."
+    Rake::Task['xmap:fixed_indexmap'].execute
     #看還有甚麼fake都能放進來
   end
 end

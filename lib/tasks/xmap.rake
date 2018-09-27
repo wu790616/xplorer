@@ -223,4 +223,73 @@ namespace :xmap do
       f.write(map_links.to_json)
     end
   end
+
+  task indexmap: :environment do
+    require 'json'
+    # Full map
+    topics = Topic.all.order(desc: :link_count).limit(20)
+    map_topics = []
+    map_links = []
+    topics.count.times do |i|
+      map_topics.push({name: topics[i].name, base: topics[i].id, center: topics[i].id, from: topics[i].id, page: 0, strength: 200})
+      topics.count.times do |j|
+        link = XplorerMap.where(from_id: topics[i].id, to_id: topics[j].id).first
+        if(link == nil)
+        else
+          map_links.push({source: i, target:j, strength: -50})
+        end
+      end
+    end
+    File.open("public/index_topic.json","w") do |f|
+      f.write(map_topics.to_json)
+    end
+    File.open("public/index_link.json","w") do |f|
+      f.write(map_links.to_json)
+    end
+  end
+
+  task fixed_indexmap: :environment do
+    require 'json'
+    # Full map
+    topics = []
+    topics.push(Topic.where(name: "電腦").first)
+    topics.push(Topic.where(name: "AI" ).first)
+    topics.push(Topic.where(name: "大數據" ).first)
+    topics.push(Topic.where(name: "藝術" ).first)
+    topics.push(Topic.where(name: "生活" ).first)
+    topics.push(Topic.where(name: "心理" ).first)
+    topics.push(Topic.where(name: "科學" ).first)
+    topics.push(Topic.where(name: "數學" ).first)
+    topics.push(Topic.where(name: "區塊鏈" ).first)
+    topics.push(Topic.where(name: "生物學" ).first)
+    topics.push(Topic.where(name: "化學" ).first)
+    topics.push(Topic.where(name: "物理" ).first)
+    topics.push(Topic.where(name: "語言" ).first)
+    topics.push(Topic.where(name: "文學" ).first)
+    topics.push(Topic.where(name: "行銷" ).first)
+    topics.push(Topic.where(name: "經濟" ).first)
+    topics.push(Topic.where(name: "市場" ).first)
+    topics.push(Topic.where(name: "設計" ).first)
+    topics.push(Topic.where(name: "運動學" ).first)
+    topics.push(Topic.where(name: "藝術" ).first)
+
+    map_topics = []
+    map_links = []
+    topics.count.times do |i|
+      map_topics.push({name: topics[i].name, base: topics[i].id, center: topics[i].id, from: topics[i].id, page: 0, strength: 200})
+      topics.count.times do |j|
+        link = XplorerMap.where(from_id: topics[i].id, to_id: topics[j].id).first
+        if(link == nil)
+        else
+          map_links.push({source: i, target:j, strength: -200})
+        end
+      end
+    end
+    File.open("public/fixed_topic.json","w") do |f|
+      f.write(map_topics.to_json)
+    end
+    File.open("public/fixed_link.json","w") do |f|
+      f.write(map_links.to_json)
+    end
+  end
 end

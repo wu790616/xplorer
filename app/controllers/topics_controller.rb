@@ -1,11 +1,54 @@
 class TopicsController < ApplicationController
 
   def fullmap
-    # Full map
-    file = File.read('public/full_topic.json')
-    @map_topics = JSON.parse(file)
-    file = File.read('public/full_link.json')
-    @map_links = JSON.parse(file)
+    topics = []
+    topics.push(Topic.where(name: "電腦").first)
+    topics.push(Topic.where(name: "AI" ).first)
+    topics.push(Topic.where(name: "大數據" ).first)
+    topics.push(Topic.where(name: "藝術" ).first)
+    topics.push(Topic.where(name: "生活" ).first)
+    topics.push(Topic.where(name: "心理" ).first)
+    topics.push(Topic.where(name: "科學" ).first)
+    topics.push(Topic.where(name: "數學" ).first)
+    topics.push(Topic.where(name: "區塊鏈" ).first)
+    topics.push(Topic.where(name: "生物學" ).first)
+    topics.push(Topic.where(name: "化學" ).first)
+    topics.push(Topic.where(name: "物理" ).first)
+    topics.push(Topic.where(name: "語言" ).first)
+    topics.push(Topic.where(name: "文學" ).first)
+    topics.push(Topic.where(name: "行銷" ).first)
+    topics.push(Topic.where(name: "經濟" ).first)
+    topics.push(Topic.where(name: "市場" ).first)
+    topics.push(Topic.where(name: "設計" ).first)
+    topics.push(Topic.where(name: "運動學" ).first)
+    topics.push(Topic.where(name: "藝術" ).first)
+
+    @map_topics = []
+    @map_links = []
+    topics.count.times do |i|
+      if current_user
+        if current_user.followingtopic?(topics[i])
+          @map_topics.push({name: topics[i].name, base: topics[i].id, center: topics[i].id, from: topics[i].id, page: 0, strength: 200, status: 10})
+        else
+          @map_topics.push({name: topics[i].name, base: topics[i].id, center: topics[i].id, from: topics[i].id, page: 0, strength: 200, status: 4})
+        end
+      else
+        @map_topics.push({name: topics[i].name, base: topics[i].id, center: topics[i].id, from: topics[i].id, page: 0, strength: 200, status: 8})
+      end
+      topics.count.times do |j|
+        link = XplorerMap.where(from_id: topics[i].id, to_id: topics[j].id).first
+        if(link == nil)
+        else
+          @map_links.push({source: i, target:j, strength: -200})
+        end
+      end
+    end
+
+  # # Full map
+  # file = File.read('public/fixed_topic.json')
+  # @map_topics = JSON.parse(file)
+  # file = File.read('public/fixed_link.json')
+  # @map_links = JSON.parse(file)
   end
 
   def index

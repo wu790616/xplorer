@@ -329,7 +329,12 @@ namespace :demo do
     Topic.create(name: "建築工程")
     Topic.create(name: "稅收")
 
-    puts "have created fake topics"
+    Topic.create(name: "藝術")
+    Topic.create(name: "設計")
+    Topic.create(name: "心理")
+    Topic.create(name: "文學")
+
+    puts "have created real topics"
     puts "now you have #{Topic.count} topics data (#{Topic.first.id}..#{Topic.last.id})"
   end
 
@@ -1273,7 +1278,57 @@ namespace :demo do
     XplorerMap.create(from_id: Topic.all.where(name: "臨床心理學").first.id, to_id: Topic.all.where(name: "心理學").first.id, strength: DEFAULT_STRENGTH)
     XplorerMap.create(from_id: Topic.all.where(name: "海洋生物學").first.id, to_id: Topic.all.where(name: "生物學").first.id, strength: DEFAULT_STRENGTH)
     XplorerMap.create(from_id: Topic.all.where(name: "淡水生物學" ).first.id, to_id: Topic.all.where(name: "生物學").first.id, strength: DEFAULT_STRENGTH)
-    
+
+    XplorerMap.create(from_id: Topic.all.where(name: "藝術" ).first.id, to_id: Topic.all.where(name: "運動學").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "藝術" ).first.id, to_id: Topic.all.where(name: "生活").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "藝術" ).first.id, to_id: Topic.all.where(name: "設計").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "藝術" ).first.id, to_id: Topic.all.where(name: "文學").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "運動學" ).first.id, to_id: Topic.all.where(name: "藝術").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "運動學" ).first.id, to_id: Topic.all.where(name: "生活").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "生活" ).first.id, to_id: Topic.all.where(name: "經濟").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "生活" ).first.id, to_id: Topic.all.where(name: "語言").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "生活" ).first.id, to_id: Topic.all.where(name: "心理").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "生活" ).first.id, to_id: Topic.all.where(name: "藝術").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "生活" ).first.id, to_id: Topic.all.where(name: "運動學").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "心理" ).first.id, to_id: Topic.all.where(name: "生活").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "心理" ).first.id, to_id: Topic.all.where(name: "科學").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "設計" ).first.id, to_id: Topic.all.where(name: "藝術").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "設計" ).first.id, to_id: Topic.all.where(name: "商業").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "市場" ).first.id, to_id: Topic.all.where(name: "商業").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "市場" ).first.id, to_id: Topic.all.where(name: "經濟").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "市場" ).first.id, to_id: Topic.all.where(name: "行銷").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "商業" ).first.id, to_id: Topic.all.where(name: "市場").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "商業" ).first.id, to_id: Topic.all.where(name: "經濟").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "經濟" ).first.id, to_id: Topic.all.where(name: "市場").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "經濟" ).first.id, to_id: Topic.all.where(name: "商業").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "經濟" ).first.id, to_id: Topic.all.where(name: "行銷").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "經濟" ).first.id, to_id: Topic.all.where(name: "數學").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "行銷" ).first.id, to_id: Topic.all.where(name: "市場").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "行銷" ).first.id, to_id: Topic.all.where(name: "商業").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "行銷" ).first.id, to_id: Topic.all.where(name: "經濟").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "文學" ).first.id, to_id: Topic.all.where(name: "語言").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "文學" ).first.id, to_id: Topic.all.where(name: "藝術").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "語言" ).first.id, to_id: Topic.all.where(name: "文學").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "語言" ).first.id, to_id: Topic.all.where(name: "生活").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "電腦" ).first.id, to_id: Topic.all.where(name: "AI").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "電腦" ).first.id, to_id: Topic.all.where(name: "科學").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "科學" ).first.id, to_id: Topic.all.where(name: "電腦").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "科學" ).first.id, to_id: Topic.all.where(name: "AI").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "科學" ).first.id, to_id: Topic.all.where(name: "生物學").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "科學" ).first.id, to_id: Topic.all.where(name: "化學").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "科學" ).first.id, to_id: Topic.all.where(name: "物理").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "科學" ).first.id, to_id: Topic.all.where(name: "心理").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "科學" ).first.id, to_id: Topic.all.where(name: "數學").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "AI" ).first.id, to_id: Topic.all.where(name: "電腦").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "AI" ).first.id, to_id: Topic.all.where(name: "大數據").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "AI" ).first.id, to_id: Topic.all.where(name: "科學").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "AI" ).first.id, to_id: Topic.all.where(name: "電腦").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "大數據" ).first.id, to_id: Topic.all.where(name: "數學").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "大數據" ).first.id, to_id: Topic.all.where(name: "AI").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "區塊鏈" ).first.id, to_id: Topic.all.where(name: "數學").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "生物學" ).first.id, to_id: Topic.all.where(name: "科學").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "化學" ).first.id, to_id: Topic.all.where(name: "科學").first.id, strength: DEFAULT_STRENGTH)
+    XplorerMap.create(from_id: Topic.all.where(name: "物理" ).first.id, to_id: Topic.all.where(name: "科學").first.id, strength: DEFAULT_STRENGTH)
   end
 
   task xmap_all: :environment do
