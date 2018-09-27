@@ -6,3 +6,16 @@
 <% @topics.each do |topic| %>
   <%= link_to "#{topic.name}", topic_path(topic), class: "label label-info" %>
 <% end %>
+
+<h4>Issue Result</h4>
+<% @issues.each do |issue| %>
+  <%= link_to "#{issue.title}", issue_path(issue) %>
+  <p>
+    <%= truncate(strip_tags(issue.content), length: 100 ) %><%= link_to "瀏覽更多", issue_path(issue)%>
+  </p>
+<% end %>
+
+<h4>User Result</h4>
+<% @users.each do |user| %>
+  <%= link_to "#{user.name}", user_path(User) %>
+<% end %>
