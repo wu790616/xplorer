@@ -75,6 +75,9 @@ gem 'selectize-rails'
 # fetch image
 gem 'nokogiri'
 
+# gem for search
+gem 'ransack', github: 'activerecord-hackery/ransack'
+
 group :production do
   # for heroku deploy
   # gem 'pg'

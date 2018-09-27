@@ -1,3 +1,13 @@
+GIT
+  remote: https://github.com/activerecord-hackery/ransack.git
+  revision: c36d8b62f50a9aeef01426955870b379e76d74c4
+  specs:
+    ransack (2.0.1)
+      actionpack (>= 5.0)
+      activerecord (>= 5.0)
+      activesupport (>= 5.0)
+      i18n
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -371,6 +381,7 @@ DEPENDENCIES
   omniauth-google-oauth2
   puma (~> 3.11)
   rails (~> 5.2.1)
+  ransack!
   rest-client
   rubocop
   sass-rails (~> 5.0)
