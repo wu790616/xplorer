@@ -112,7 +112,7 @@ class TopicsController < ApplicationController
 
   def search
     @topics = Topic.ransack({:name_cont => @search}).result(distinct: true)
-    @issues = Issue.published.ransack({:title_or_content_cont => @search}).result(distinct: true)
+    @issues = Issue.published.ransack({:title_or_content_cont => @search}).result(distinct: true).page(params[:search_issue_page]).per(10)
     @users = User.ransack({:name_cont => @search}).result(distinct: true)
   end
 
