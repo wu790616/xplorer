@@ -20,6 +20,10 @@
 
 <%- if devise_mapping.omniauthable? %>
   <%- resource_class.omniauth_providers.each do |provider| %>
-    <%= link_to "#{OmniAuth::Utils.camelize(provider)} 登入", omniauth_authorize_path(resource_name, provider), class: "btn btn-primary btn-block" %><br />
+    <% if "#{OmniAuth::Utils.camelize(provider)}" == "Facebook" %>
+      <%= link_to "Facebook 登入", omniauth_authorize_path(resource_name, provider), class: "btn btn-primary btn-block" %>
+    <% else %>
+      <%= link_to "Google 登入", omniauth_authorize_path(resource_name, provider), class: "btn btn-warning btn-block" %>
+    <% end %>
   <% end -%>
 <% end -%>
