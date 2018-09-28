@@ -76,6 +76,7 @@ class TopicsController < ApplicationController
   end
 
   def show
+    @hot_topics = Topic.all.order(topic_tagships_count: :desc).limit(5)
     @base = Topic.find(params[:id])
     @center = (params[:center].to_i == 0) ? @base : Topic.find(params[:center].to_i)
     if(params[:page_num].to_i == 0)                # first X map

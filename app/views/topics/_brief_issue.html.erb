@@ -1,55 +1,50 @@
-<% issues.each do |issue| %>
-  <div class="row">
-    <div class="col-md-12">
-      <h3><strong>
-        <%= link_to issue_path(issue) do %>
-          <%= issue.title %>
-        <% end %>
-      </strong></h3>
-    </div>
+<div class="row">
+  <div class="col-md-12">
+    <h3><strong>
+      <%= link_to issue.title, issue_path(issue) %>
+    </strong></h3>
   </div>
-  <div class="row">
-    <div class="col-md-2">
-      <!-- 抓第一張圖 -->
-      <% doc = Nokogiri::HTML(raw issue.content) %>
-      <% if img = doc.xpath('//img').first %>
-        <%= image_tag (img.attr('src')), class: "img-responsive img-rounded" %>
+</div>
+<div class="row">
+  <div class="col-md-2">
+    <% doc = Nokogiri::HTML(raw issue.content) %>
+    <% if img = doc.xpath('//img').first %>
+      <%= image_tag (img.attr('src')), class: "img-responsive img-rounded" %>
+    <% else %>
+      <img src="http://placehold.it/260x180" alt="" class="img-responsive img-rounded">
+    <% end %>
+  </div>
+  <div class="col-md-10">      
+    <p>
+      <% if strip_tags(issue.content).length > 300 %>
+      <%= truncate(strip_tags(issue.content), length: 300 ) %><%= link_to "瀏覽更多", issue_path(issue)%>
       <% else %>
-        <img src="http://placehold.it/260x180" alt=""  class="img-responsive img-rounded">
+      <%= strip_tags(issue.content) %>
       <% end %>
-    </div>
-    <div class="col-md-10">      
-      <p>
-        <% if strip_tags(issue.content).length > 300 %>
-        <%= truncate(strip_tags(issue.content), length: 300 ) %><%= link_to "瀏覽更多", issue_path(issue)%>
-        <% else %>
-        <%= strip_tags(issue.content) %>
+    </p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12 text-muted">
+    <p></p>
+    <p>
+      by
+      <%= link_to user_path(issue.user) do %>
+        <%= issue.user.name %>
+      <% end %> 
+      | <%= issue.edit_time.localtime.to_s(:long) %>
+      | <span class="glyphicon glyphicon-comment"></span> <%= issue.comments_count %> 則留言
+      | <span class="glyphicon glyphicon-eye-open"></span> <%= issue.views_count %> 瀏覽數
+      | <span class="glyphicon glyphicon-heart"></span> <%= issue.likes_count %> 讚
+      | <span class="glyphicon glyphicon-bookmark"></span> <%= issue.bookmarks_count %> 人收藏
+      <P></P>
+      <span class="glyphicon glyphicon-tags"></span> 標籤: 
+        <% issue.taged_topics.take(5).each do |topic| %>
+          <%= link_to "#{topic.name}", topic_path(topic), class: "label label-info" %>
         <% end %>
-      </p>
-    </div>
+        <% if issue.taged_topics.count > 6 %>
+          <span class="label label-info">...</span>
+        <% end %>
+    </p>
   </div>
-  <div class="row">
-    <div class="col-md-12 text-muted">
-      <p></p>
-      <p>
-        by
-        <%= link_to user_path(issue.user) do %>
-          <%= issue.user.name %>
-        <% end %> 
-        | <%= issue.edit_time.localtime.to_s(:long) %>
-        | <span class="glyphicon glyphicon-comment"></span> <%= issue.comments_count %> 則留言
-        | <span class="glyphicon glyphicon-eye-open"></span> <%= issue.views_count %> 瀏覽數
-        | <span class="glyphicon glyphicon-heart"></span> <%= issue.likes_count %> 讚
-        | <span class="glyphicon glyphicon-bookmark"></span> <%= issue.bookmarks_count %> 人收藏
-        <P></P>
-        <span class="glyphicon glyphicon-tags"></span> 標籤: 
-          <% issue.taged_topics.take(5).each do |topic| %>
-            <%= link_to "#{topic.name}", topic_path(topic), class: "label label-info" %>
-          <% end %>
-          <% if issue.taged_topics.count > 6 %>
-            <span class="label label-info">...</span>
-          <% end %>
-      </p>
-    </div>
-  </div>
-<% end %>
+</div>

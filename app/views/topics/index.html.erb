@@ -73,16 +73,18 @@
       <div id="myTabContent" class="tab-content">
         <div class="tab-pane fade active in" id="hotissue">
           <!-- 全站熱門議題 -->
-          <%= render partial: "brief_issue", locals: { issues: @hot_issues } %>
+          <% @hot_issues.each do |issue| %>
+            <%= render partial: "brief_issue", locals: {issue: issue} %>
+          <% end %>
           <div style="text-align: center"> 
             <%= paginate @hot_issues, param_name: "hot_issues_page" %>
           </div>
-          <!--<div style="text-align: center">
-          </div>-->
         </div>
         <div class="tab-pane fade" id="hotissue_of_hotauthor">
           <!-- 熱門作者的最新文章 -->
-          <%= render partial: "brief_issue", locals: { issues: @hot_users_issues } %>
+          <% @hot_users_issues.each do |issue| %>
+            <%= render partial: "brief_issue", locals: {issue: issue}  %>
+          <% end %>
           <div style="text-align: center"> 
             <%= paginate @hot_users_issues, param_name: "hot_users_issues_page" %>
           </div>
@@ -90,7 +92,9 @@
         <div class="tab-pane fade" id="hottopic">
           <!-- 關注topic的最新文章 -->
           <% if current_user %>
-            <%= render partial: "brief_issue", locals: { issues: @topic_followings_issues } %>
+            <% @topic_followings_issues.each do |issue| %>
+              <%= render partial: "brief_issue", locals: {issue: issue} %>
+            <% end %>
             <div style="text-align: center">
               <%= paginate @topic_followings_issues, param_name: "topic_followings_issues_page" %>
             </div>
@@ -99,7 +103,9 @@
         <div class="tab-pane fade" id="following">
           <!-- 關注作者的最新文章 -->
           <% if current_user %>
-            <%= render partial: "brief_issue", locals: { issues: @followings_issues } %>
+            <% @followings_issues.each do |issue| %>
+              <%= render partial: "brief_issue", locals: {issue: issue} %>
+            <% end %>
             <div style="text-align: center">
               <%= paginate @followings_issues, param_name: "followings_issues_page" %>
             </div>
