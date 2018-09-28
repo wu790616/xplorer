@@ -26,5 +26,9 @@ Rails.application.routes.draw do
 
   resources :search, only: [:index]
 
+  authenticated :user do
+    root 'topics#index', as: :authenticated_root
+  end
+
   root "topics#intro"
 end
