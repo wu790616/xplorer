@@ -37,7 +37,7 @@
             <div class="container">
               <% if @topics.any? %>
                 <% @topics.each do |topic| %>
-                  <%= link_to "#{topic.name}", topic_path(topic), class: "label label-info" %>
+                  <%= link_to "#{topic.name}", topic_path(topic), class: "btn btn-info", style: "margin-bottom: 5px" %>
                 <% end %>
               <% else %>
                 <%= @topics.size %>筆搜尋結果
@@ -47,9 +47,7 @@
           <div class="tab-pane" id="related_author">
             <div class="container">
               <% if @users.any? %>
-                <% @users.each do |user| %>
-                  <%= link_to "#{user.name}", user_path(user) %>
-                <% end %>
+                <%= render :partial => 'users/follow_list', locals: { users: @users } %>
               <% else %>
                 <%= @users.size %>筆搜尋結果
               <% end %>
