@@ -114,25 +114,21 @@
         </div>
         <div class="panel-body">
           <div class="table-container">
-            <table class="table-users table" border="0">
+            <table class="table-users table" border="0" style="margin-bottom: 0px;>
               <tbody>
                 <% @hot_users.each do |hot_user| %>
                   <tr>
                     <td width="10" align="center">
                       <% if hot_user.avatar? %>
-                        <%= image_tag hot_user.avatar.url, width: '50', class: "img-circle nav-user-photo"  %>
+                        <%= link_to image_tag(hot_user.avatar.url, width: '100', class: "img-rounded nav-user-photo"), user_path(hot_user)  %>
                       <% else %>
                         <span class="glyphicon glyphicon-user"></span>
                       <% end %>
                       <br>
-                      <%= link_to hot_user.name, user_path(hot_user) %>
-                    </td>
-                    <td>
-                      <span class="glyphicon glyphicon-user"></span><%= hot_user.followers.count %>
+                      <%= link_to hot_user.name, user_path(hot_user) %> |
+                      <span class="glyphicon glyphicon-user"></span> <%= hot_user.followers.count %>
                       <% if hot_user.skill_list.count >0 %>
-                        <br>
-                        Skill
-                        <% hot_user.skill_list.take(2).each do |skill|%>
+                        | <% hot_user.skill_list.take(2).each do |skill|%>
                           <span class="label label-success"><%= skill %></span>
                         <% end %>
                       <% end %>
