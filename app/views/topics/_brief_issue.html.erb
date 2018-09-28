@@ -16,12 +16,16 @@
     </div>
     <div class="col-md-10">      
       <p>
+        <% if strip_tags(issue.content).length > 300 %>
         <%= truncate(strip_tags(issue.content), length: 300 ) %><%= link_to "瀏覽更多", issue_path(issue)%>
+        <% else %>
+        <%= strip_tags(issue.content) %>
+        <% end %>
       </p>
     </div>
   </div>
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 text-muted">
       <p></p>
       <p>
         by
