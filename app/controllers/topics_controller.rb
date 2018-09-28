@@ -78,7 +78,7 @@ class TopicsController < ApplicationController
   def show
     @base = Topic.find(params[:id])
     @center = (params[:center].to_i == 0) ? @base : Topic.find(params[:center].to_i)
-    xmap = @center.system_map(@base, params[:scale].to_i, params[:page].to_i)
+    xmap = @center.system_map(@base, params[:scale].to_i, params[:page].to_i, current_user)
     @topics = xmap[0][:topics]
     @links  = xmap[1][:links]
 

@@ -42,25 +42,53 @@ class Topic < ApplicationRecord
       links.push({source: 0, target:2}) unless (link2 == nil)
       links.push({source: 0, target:3}) unless (link3 == nil)
       links.push({source: 0, target:4}) unless (link4 == nil)
-   #end
-    elsif (scale == 1) # one layer
+    elsif (scale >= 1) # one layer
+      index = 0
       layer1 = XplorerMap.where(from_id: self.id)
 
-      topics.push({name: self.name, base: self.id, center: self.id, from: self.id, page: 0, strength: 50})
+      topics.push({name: self.name, base: self.id, center: self.id, from: self.id, page: 0, strength: 50, index: index})
 
       layer1.count.times do |i|
+        index = index + 1
         if current_user
           if current_user.followingtopic?(layer1[i])
-            topics.push({name: Topic.find(layer1[i].to_id).name, base: layer1[i].to_id, center: layer1[i].to_id, from: layer1[i].to_id, page: 0, strength: 200})
+            topics.push({name: Topic.find(layer1[i].to_id).name, base: layer1[i].to_id, center: layer1[i].to_id, from: layer1[i].to_id, page: 0, strength: 200, index: index})
           else
-            topics.push({name: Topic.find(layer1[i].to_id).name, base: layer1[i].to_id, center: layer1[i].to_id, from: layer1[i].to_id, page: 0, strength: 50})
+            topics.push({name: Topic.find(layer2[j].to_id).name, base: layer2[j].to_id, center: layer2[j].to_id, from: layer2[j].to_id, page: 0, strength: 50, index: index})
           end
         else
-          topics.push({name: Topic.find(layer1[i].to_id).name, base: layer1[i].to_id, center: layer1[i].to_id, from: layer1[i].to_id, page: 0, strength: 50})
+          topics.push({name: Topic.find(layer1[i].to_id).name, base: layer1[i].to_id, center: layer1[i].to_id, from: layer1[i].to_id, page: 0, strength: 50, index: index})
         end
-        links.push({source: 0, target:i+1})
+        links.push({source: 0, target:index})
+      end
+
+      if(scale >= 2)
+        layer1.count.times do |i|
+          from_idx = topics.index {|t| t[:name] == Topic.find(layer1[i].to_id).name}
+          layer2 = XplorerMap.where(from_id: self.id)
+          layer2.count.times do |j|
+            to_idx = topics.index {|t| t[:name] == Topic.find(layer2[j].to_id).name}
+            if to_idx == nil
+              index = index + 1
+              if current_user
+                if current_user.followingtopic?(layer2[j])
+                  topics.push({name: Topic.find(layer2[j].to_id).name, base: layer2[j].to_id, center: layer2[j].to_id, from: layer2[j].to_id, page: 0, strength: 200, index: index})
+                else
+                  topics.push({name: Topic.find(layer2[j].to_id).name, base: layer2[j].to_id, center: layer2[j].to_id, from: layer2[j].to_id, page: 0, strength: 50, index: index})
+                end
+              else
+                topics.push({name: Topic.find(layer2[j].to_id).name, base: layer2[j].to_id, center: layer2[j].to_id, from: layer2[j].to_id, page: 0, strength: 50, index: index})
+              end
+            end
+            
+           #to_idx = topics.index {|t| t[:name] == Topic.find(layer2[j].to_id).name}
+            links.push({source: from_idx, target: to_idx})
+          end
+        end
+        
       end
     end
+
     xmap.push({topics: topics})
     xmap.push({links: links})
   end
