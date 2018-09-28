@@ -132,16 +132,17 @@ function xmap(/*svg, */topics, links, width, height, charge) {
 	};
 
 	function link_distance(d) {
-		if(d.strength > 2048) return  30*3;
-		if(d.strength > 1024) return  40*3;
-		if(d.strength >  512) return  50*3;
-		if(d.strength >  256) return  60*3;
-		if(d.strength >  128) return  70*3;
-		if(d.strength >   64) return  80*3;
-		if(d.strength >   32) return  90*3;
-		if(d.strength >   16) return 100*3;
-		if(d.strength >    8) return 110*3;
-		if(d.strength >    0) return 120*3;
-		else                  return (d.strength)*-1;
+		return 10;
+	//	if(d.strength > 2048) return  30*3;
+	//	if(d.strength > 1024) return  40*3;
+	//	if(d.strength >  512) return  50*3;
+	//	if(d.strength >  256) return  60*3;
+	//	if(d.strength >  128) return  70*3;
+	//	if(d.strength >   64) return  80*3;
+	//	if(d.strength >   32) return  90*3;
+	//	if(d.strength >   16) return 100*3;
+	//	if(d.strength >    8) return 110*3;
+	//	if(d.strength >    0) return 120*3;
+	//	else                  return (d.strength)*-1;
 	};
 }

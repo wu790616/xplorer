@@ -1,5 +1,8 @@
 class TopicsController < ApplicationController
 
+  def intro
+    @intro_topics = Topic.all.order(topic_tagships_count: :desc).limit(5)
+  end
   def fullmap
     topics = []
     topics.push(Topic.where(name: "電腦").first)
@@ -78,34 +81,12 @@ class TopicsController < ApplicationController
   def show
     @base = Topic.find(params[:id])
     @center = (params[:center].to_i == 0) ? @base : Topic.find(params[:center].to_i)
-    if(params[:page_num].to_i == 0)                # first X map
-      @link1  = (@center.topic_link1_id == nil) ? nil : Topic.find(@center.topic_link1_id)
-      @link2  = (@center.topic_link2_id == nil) ? nil : Topic.find(@center.topic_link2_id)
-      @link3  = (@center.topic_link3_id == nil) ? nil : Topic.find(@center.topic_link3_id)
-      @link4  = (@center.topic_link4_id == nil) ? nil : Topic.find(@center.topic_link4_id)
-      @page   = 1
-    else                                           # second X map
-      @link1  = (@center.topic_link5_id == nil) ? nil : Topic.find(@center.topic_link5_id)
-      @link2  = (@center.topic_link6_id == nil) ? nil : Topic.find(@center.topic_link6_id)
-      @link3  = (@center.topic_link7_id == nil) ? nil : Topic.find(@center.topic_link7_id)
-      @link4  = (@center.topic_link8_id == nil) ? nil : Topic.find(@center.topic_link8_id)
-      @page   = 0
-    end
-    
-    # JSON for Xmap
-    @topics = []
-    @topics.push({name: "#{@center.name}", base: "#{@center.id}", center: "#{@center.id}", from: @center.id, page: @page ,strength: 2000})
-    @topics.push({name: "#{@link1.name }", base: "#{@base.id}"  , center: "#{@link1.id }", from: @center.id, page: 0     ,strength: 1000}) unless (@link1 == nil)
-    @topics.push({name: "#{@link2.name }", base: "#{@base.id}"  , center: "#{@link2.id }", from: @center.id, page: 0     ,strength: 1000}) unless (@link2 == nil)
-    @topics.push({name: "#{@link3.name }", base: "#{@base.id}"  , center: "#{@link3.id }", from: @center.id, page: 0     ,strength: 1000}) unless (@link3 == nil)
-    @topics.push({name: "#{@link4.name }", base: "#{@base.id}"  , center: "#{@link4.id }", from: @center.id, page: 0     ,strength: 1000}) unless (@link4 == nil)
-    @topics.push({name: "Re-generate"    , base: "#{@base.id}"  , center: "#{@center.id}", from: @center.id, page: @page ,strength: 2000}) unless (@center.links_count <= 4)
 
-    @links = []
-    @links.push({source: 0, target:1, strength: XplorerMap.where(from_id: @center.id, to_id: @link1.id).first.strength}) unless (@link1 == nil)
-    @links.push({source: 0, target:2, strength: XplorerMap.where(from_id: @center.id, to_id: @link2.id).first.strength}) unless (@link2 == nil)
-    @links.push({source: 0, target:3, strength: XplorerMap.where(from_id: @center.id, to_id: @link3.id).first.strength}) unless (@link3 == nil)
-    @links.push({source: 0, target:4, strength: XplorerMap.where(from_id: @center.id, to_id: @link4.id).first.strength}) unless (@link4 == nil)
+    @w_ratio = 0.95
+    @h_ratio = (params[:scale].to_i >2) ? 0.85 : 0.5
+    xmap = @center.system_map(@base, params[:scale].to_i, params[:page].to_i, current_user)
+    @topics = xmap[0][:topics]
+    @links  = xmap[1][:links]
 
     @issues = @base.taged_issues.published.order(edit_time: :desc).page(params[:page]).per(15)
 
