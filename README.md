@@ -72,6 +72,7 @@ Explorer for learning and find your X
       * 可瀏覽個人關注主題關注度top5
       * 可看到追蹤者的新議題
       * 可看到關注主題的新議題
+5. 可在導覽列使用全站搜尋，結果依議題、主題、使用者分類
     
 ## User Story (In-Progress)
 #### 使用者相關
@@ -88,9 +89,6 @@ Explorer for learning and find your X
 1. 使用者登入後
     * 可自訂主題標籤
         * 標籤欄位未找到欲標籤之主題，可以自行新增
-
-#### Landing Page
-1. 使用者可做全站搜尋(功能完成待介面優化）
 
 #### Onboarding
 1. 未登入使用者進入首頁的引導頁面(功能完成待介面優化）
