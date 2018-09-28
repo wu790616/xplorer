@@ -89,7 +89,10 @@ Explorer for learning and find your X
         * 標籤欄位未找到欲標籤之主題，可以自行新增
 
 #### Landing Page
-1. 使用者可做全站搜尋
+1. 使用者可做全站搜尋(功能完成待介面優化）
+
+#### Onboarding
+1. 未登入使用者進入首頁的引導頁面(功能完成待介面優化）
 
 ## Getting Started
 #### Install project
