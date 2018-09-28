@@ -1,4 +1,5 @@
 class TopicsController < ApplicationController
+  before_action :validates_search_key, only: [:search]
 
   def intro
     @intro_topics = Topic.all.order(topic_tagships_count: :desc).limit(5)
@@ -109,4 +110,16 @@ class TopicsController < ApplicationController
     end
   end
 
+  def search
+    @topics = Topic.ransack({:name_cont => @search}).result(distinct: true)
+    @issues = Issue.published.ransack({:title_or_content_cont => @search}).result(distinct: true)
+    @users = User.ransack({:name_cont => @search}).result(distinct: true)
+  end
+
+  protected
+
+  # 將\, ', ? 去掉
+  def validates_search_key
+    @search = params[:search].gsub(/\\|\'|\/|\?/, "") if params[:search].present?
+  end
 end

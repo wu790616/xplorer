@@ -1,0 +1,36 @@
+<h1>Search (UI待前端更新)</h1>
+
+<p><%= @search %>的搜尋結果：</p>
+
+<h4>Topic Result</h4>
+<% if @topics.any? %> 
+  <p>有<%= @topics.size %>筆搜尋結果：</p> 
+  <% @topics.each do |topic| %>
+    <%= link_to "#{topic.name}", topic_path(topic), class: "label label-info" %>
+  <% end %>
+<% else %>
+  <p>沒有相關結果...</p>
+<% end %>
+
+<h4>Issue Result</h4>
+<% if @issues.any? %>
+  <p>有<%= @issues.size %>筆搜尋結果：</p>
+  <% @issues.each do |issue| %>
+    <%= link_to "#{issue.title}", issue_path(issue) %>
+    <p>
+      <%= truncate(strip_tags(issue.content), length: 100 ) %><%= link_to "瀏覽更多", issue_path(issue)%>
+    </p>
+  <% end %>
+<% else %>
+  <p>沒有相關結果...</p>
+<% end %>
+
+<h4>User Result</h4>
+<% if @users.any? %>
+  <p>有<%= @users.size %>筆搜尋結果：</p>
+  <% @users.each do |user| %>
+    <%= link_to "#{user.name}", user_path(user) %>
+  <% end %>
+<% else %>
+  <p>沒有相關結果...</p>
+<% end %>

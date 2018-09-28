@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :topics, only: [:index, :show] do
     collection do
       get :fullmap
+      get :search
     end
   end
 
@@ -24,11 +25,10 @@ Rails.application.routes.draw do
   resources :bookmarks, only: [:create, :destroy]
   resources :likes, only: [:create, :destroy]
 
-  resources :search, only: [:index]
-
   authenticated :user do
     root 'topics#index', as: :authenticated_root
   end
 
   root "topics#intro"
+
 end
