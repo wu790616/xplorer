@@ -29,11 +29,11 @@
     <div class="col-md-12 text-muted">
       <p></p>
       <p>
-        by
+        作者
         <%= link_to user_path(issue.user) do %>
           <%= issue.user.name %>
         <% end %> 
-        | <%= issue.edit_time.localtime.to_s(:long) %>
+        | <%= issue.edit_time.localtime.to_s(:db) %>
         | <span class="glyphicon glyphicon-comment"></span> <%= issue.comments_count %> 則留言
         | <span class="glyphicon glyphicon-eye-open"></span> <%= issue.views_count %> 瀏覽數
         | <span class="glyphicon glyphicon-heart"></span> <%= issue.likes_count %> 讚
