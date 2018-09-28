@@ -1,5 +1,8 @@
 class TopicsController < ApplicationController
 
+  def intro
+    @intro_topics = Topic.all.order(topic_tagships_count: :desc).limit(5)
+  end
   def fullmap
     topics = []
     topics.push(Topic.where(name: "電腦").first)
@@ -78,6 +81,9 @@ class TopicsController < ApplicationController
   def show
     @base = Topic.find(params[:id])
     @center = (params[:center].to_i == 0) ? @base : Topic.find(params[:center].to_i)
+
+    @w_ratio = 0.95
+    @h_ratio = (params[:scale].to_i >2) ? 0.85 : 0.5
     xmap = @center.system_map(@base, params[:scale].to_i, params[:page].to_i, current_user)
     @topics = xmap[0][:topics]
     @links  = xmap[1][:links]

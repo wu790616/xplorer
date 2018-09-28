@@ -4,14 +4,14 @@
   <div class="row">
     <div id="map"></div>
     <script>
-      var width  = $(window).width()*0.95;
-      var height = $(window).height()*0.5;// - banner_height;
+      var width  = $(window).width();
+      var height = $(window).height();// - banner_height;
       var topics = <%= raw(@topics.to_json) %>
       var links  = <%= raw(@links.to_json) %>
       xmap(topics, links, width, height, -200);
     </script>
   </div>
-  <!-- Show system Xmap View log -->
+  <!-- Select system Xmap scale -->
   <!-- 為檢視方便暫時搬至此處，請依排版需求調整 （完成後此註解可刪）-->
   <div class="row">
     <%= link_to "scale 0", topic_path(@base.id, :center => @center.id, :from => @center.id, :page_num => 0, :scale => 0) %>
@@ -24,6 +24,8 @@
     <%= link_to "scale 7", topic_path(@base.id, :center => @center.id, :from => @center.id, :page_num => 0, :scale => 7) %>
     <%= link_to "scale 8", topic_path(@base.id, :center => @center.id, :from => @center.id, :page_num => 0, :scale => 8) %>
   </div>
+  <!-- Show system Xmap View log -->
+  <!-- 為檢視方便暫時搬至此處，請依排版需求調整 （完成後此註解可刪）-->
   <div class="row">
     <% @logs.each do |log| %>
       <div class="col-xs-2 col-md-1">

@@ -26,5 +26,5 @@ Rails.application.routes.draw do
 
   resources :search, only: [:index]
 
-  root "topics#index"
+  root "topics#intro"
 end

@@ -1,0 +1,8 @@
+<div class="container">
+  <!-- 引導據需再斟酌 -->
+  <h1>今天想從哪個知識領域開始探索</h1>
+
+  <% @intro_topics.each do |topic| %>
+    <li><%= link_to "#{topic.name}", topic_path(topic.id, :center => topic.id, :page_num => 0, :scale => 3) %></li>
+  <% end %> 
+</div>
