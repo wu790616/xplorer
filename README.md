@@ -55,12 +55,22 @@ Explorer for learning and find your X
 3. 可點擊議題作者導向作者個人檔案頁
 4. 未登入使用者可瀏覽議題及分享
 
-#### 主題相關功能
-1. 使用者登入後
-    * 可以關注主題
-2. 可點擊議題之主題標籤導向該主題之相關議題瀏覽頁
-3. 根據點擊log，自動產生相關主題，每個主題都有自己的相關主題MAP
-    
+#### 主題相關功能(系統)
+1. 預設主題與主題間連結關係
+2. 依據主題間連結關係產生Xplorer Map
+   * 使用者能夠在 Xplorer Map 探索不同主題與了解學習領域關聯性
+      * 提供不同擴展度的 Xplorer Map（Scale 1~N，擴展度越高，系統所需運算時間越長）
+      * 為加速探索，提供熱門關聯主題推薦（Scale 0）
+   * 點擊中心主題，進入主題頁與觀看相關議題
+   * 點擊分支主題，改以該主題為中心繼續探索
+   * 提供本次拜訪的探索履歷，讓使用者可以快速連結回前幾步的主題
+3. 使用者登入後可以關注主題，建立個人的 X MAP
+4. 為每位使用者繪製個人 X MAP，將個人關注的知識領域視覺化，以利使用者管理、調整個人的知識領域
+5. 後台程式分析主題關聯度，以此微調與修正系統資訊
+   * 紀錄使用者的 Xplorer Map 探索履歷
+   * 分析使用者發布議題時加上的主題標籤
+   * 依據使用者關注主題與進入主題頁次數，建立使用者對不同主題的關注度
+
 #### Landing Page
 1. 可瀏覽top10熱門作者
 2. 可瀏覽全網站熱門議題
@@ -89,6 +99,9 @@ Explorer for learning and find your X
 1. 使用者登入後
     * 可自訂主題標籤
         * 標籤欄位未找到欲標籤之主題，可以自行新增
+
+#### 後台程式分析
+1. 自動排程，定時分析
 
 #### Onboarding
 1. 未登入使用者進入首頁的引導頁面(功能完成待介面優化）
@@ -122,7 +135,7 @@ IFRAMELY_LINK: '//iframe.ly/api/oembed?url={url}&callback={callback}&api_key=YOU
 ## Built With
 * Rails 5.2.1
 * Authentication and OAuth: [Devise](https://github.com/plataformatec/devise), [Omniauth Facebook](https://github.com/mkdynamic/omniauth-facebook), [Omniauth Google Oauth2](https://github.com/zquestz/omniauth-google-oauth2)
-* Topic Analytic: [Ahoy](https://github.com/ankane/ahoy)
+* User Activity: [Ahoy](https://github.com/ankane/ahoy)
 * Editor: [Ckeditor](https://github.com/galetahub/ckeditor)
 * Pagination: [Kaminari](https://github.com/kaminari/kaminari)
 * Uploader: [CarrierWave](https://github.com/carrierwaveuploader/carrierwave)
