@@ -114,6 +114,12 @@ FB_SECRET: 'YOUR_FB_APP_SECRET'
 GOOGLE_APP_ID: 'YOUR_GOOGLE_APP_ID'
 GOOGLE_SECRET: 'YOUR_GOOGLE_APP_SECRET'
 ```
+CKeditor的embed功能搭配[iframely](https://iframely.com/)的服務，需要申請自己的API KEY，
+否則embed的媒體大小會有所限制，在iframely網址申請後，請至`config/local_env.yml`，並在檔案中設定：
+```
+IFRAMELY_LINK: '//iframe.ly/api/oembed?url={url}&callback={callback}&api_key=YOUR_API_KEY_HERE'
+```
+將YOUR_API_KEY_HERE換成自己的API KEY。
 
 ## Built With
 * Rails 5.2.1
