@@ -42,6 +42,10 @@ gem 'devise'
 gem 'omniauth-facebook'
 gem "omniauth-google-oauth2"
 
+# JavaScript runtime
+gem 'execjs'
+gem 'therubyracer'
+
 # add ahoy gem
 gem 'ahoy_matey'
 
