@@ -10,9 +10,13 @@
   </div>
   <div class="row">
     <div class="col-md-2">
-      <a href="#">
-          <img src="http://placehold.it/260x180" alt=""  class="img-responsive img-rounded">
-      </a>
+      <!-- 抓第一張圖 -->
+      <% doc = Nokogiri::HTML(raw issue.content) %>
+      <% if img = doc.xpath('//img').first %>
+        <%= image_tag (img.attr('src')), class: "img-responsive img-rounded" %>
+      <% else %>
+        <img src="http://placehold.it/260x180" alt=""  class="img-responsive img-rounded">
+      <% end %>
     </div>
     <div class="col-md-10">      
       <p>
@@ -48,10 +52,4 @@
       </p>
     </div>
   </div>
-  <!-- 抓第一張圖 -->
-  <% doc = Nokogiri::HTML(raw issue.content) %>
-  <% if img = doc.xpath('//img').first %>
-    <%= image_tag (img.attr('src')) %>
-  <% end %>
-  <hr>
 <% end %>
