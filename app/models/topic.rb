@@ -71,12 +71,12 @@ class Topic < ApplicationRecord
                 if to_idx == nil
                   if current_user
                     if current_user.followingtopic?(layer2[j])
-                      topics.push({name: Topic.find(layer2[j].to_id).name, base: layer2[j].to_id, center: layer2[j].to_id, from: layer2[j].to_id, page: 0,type: "branch", layer: l})
+                      topics.push({name: Topic.find(layer2[j].to_id).name, base: base.id, center: layer2[j].to_id, from: self.id, page: 0,type: "branch", layer: l})
                     else
-                      topics.push({name: Topic.find(layer2[j].to_id).name, base: layer2[j].to_id, center: layer2[j].to_id, from: layer2[j].to_id, page: 0,type: "branch", layer: l})
+                      topics.push({name: Topic.find(layer2[j].to_id).name, base: base.id, center: layer2[j].to_id, from: self.id, page: 0,type: "branch", layer: l})
                     end
                   else
-                    topics.push({name: Topic.find(layer2[j].to_id).name, base: layer2[j].to_id, center: layer2[j].to_id, from: layer2[j].to_id, page: 0,type: "branch", layer: l})
+                    topics.push({name: Topic.find(layer2[j].to_id).name, base: base.id, center: layer2[j].to_id, from: self.id, page: 0,type: "branch", layer: l})
                   end
                   to_idx = topics.index {|t| t[:name] == to_topic.name}
                 end
