@@ -1,12 +1,5 @@
 <% issues.each do |issue| %>
-  <div class="row">
-    <div class="col-md-12">
-      <h3><strong>
-        <%= link_to issue.title, issue_path(issue) %>
-      </strong></h3>
-    </div>
-  </div>
-  <div class="row">
+  <div class="row", style="padding-top: 15px;">
     <div class="col-md-2">
       <% doc = Nokogiri::HTML(raw issue.content) %>
       <% if img = doc.xpath('//img').first %>
@@ -15,18 +8,18 @@
         <%= image_tag "xplorer-logo.png", class: "img-responsive img-rounded" %>
       <% end %>
     </div>
-    <div class="col-md-10">      
+    <div class="col-md-10">
+      <h3 style="margin-top: 0px"><strong>
+        <%= link_to issue.title, issue_path(issue) %>
+      </strong></h3>   
       <p>
-        <% if strip_tags(issue.content).length > 300 %>
-        <%= truncate(strip_tags(issue.content), length: 300 ) %><%= link_to "瀏覽更多", issue_path(issue)%>
+        <% if strip_tags(issue.content).length > 150 %>
+        <%= truncate(strip_tags(issue.content), length: 150 ) %><%= link_to "瀏覽更多", issue_path(issue)%>
         <% else %>
         <%= strip_tags(issue.content) %>
         <% end %>
       </p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12 text-muted">
+      <div class="text-muted", style="font-size: 14px">
       <p></p>
       <p>
         作者
@@ -48,5 +41,7 @@
           <% end %>
       </p>
     </div>
+    </div>
   </div>
+<hr style="margin-top: 0px; margin-bottom: 0px;">
 <% end %>
