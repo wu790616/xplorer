@@ -35,7 +35,7 @@ function xmap(/*svg, */topics, links, width, height, charge) {
 								.attr("xlink:href", function(d) { return "http://"+window.location.host+"/topics/"+d.base+"?center="+d.center+"&from="+d.from+"&page_num="+d.page })
 								.attr("class", "nodes")
 								.append("circle")
-								.attr("r", topic_radius)
+								.attr("r", function(d) {return d.strength})
 								.attr("fill", function(d,i) { return color(i); })
 								.attr('stroke','white')
 								.attr('stroke-width',2)
