@@ -31,12 +31,12 @@ class Topic < ApplicationRecord
       end
 
       next_page = (page == 0) ? 1 : 0
-      topics.push({name: "#{ self.name}", base: "#{self.id}", center: "#{ self.id}", from: self.id, page: page      ,strength: 20})
-      topics.push({name: "#{link1.name}", base: "#{base.id}", center: "#{link1.id}", from: self.id, page: 0         ,strength: 10}) unless (link1 == nil)
-      topics.push({name: "#{link2.name}", base: "#{base.id}", center: "#{link2.id}", from: self.id, page: 0         ,strength: 10}) unless (link2 == nil)
-      topics.push({name: "#{link3.name}", base: "#{base.id}", center: "#{link3.id}", from: self.id, page: 0         ,strength: 10}) unless (link3 == nil)
-      topics.push({name: "#{link4.name}", base: "#{base.id}", center: "#{link4.id}", from: self.id, page: 0         ,strength: 10}) unless (link4 == nil)
-      topics.push({name: "Re-generate"  , base: "#{base.id}", center: "#{ self.id}", from: self.id, page: next_page ,strength: 20}) unless (self.links_count <= 4)
+      topics.push({name: "#{ self.name}", base: "#{self.id}", center: "#{ self.id}", from: self.id, page: page      ,type: "center"})
+      topics.push({name: "#{link1.name}", base: "#{base.id}", center: "#{link1.id}", from: self.id, page: 0         ,type: "branch"}) unless (link1 == nil)
+      topics.push({name: "#{link2.name}", base: "#{base.id}", center: "#{link2.id}", from: self.id, page: 0         ,type: "branch"}) unless (link2 == nil)
+      topics.push({name: "#{link3.name}", base: "#{base.id}", center: "#{link3.id}", from: self.id, page: 0         ,type: "branch"}) unless (link3 == nil)
+      topics.push({name: "#{link4.name}", base: "#{base.id}", center: "#{link4.id}", from: self.id, page: 0         ,type: "branch"}) unless (link4 == nil)
+      topics.push({name: "Re-generate"  , base: "#{base.id}", center: "#{ self.id}", from: self.id, page: next_page ,type: "button"}) unless (self.links_count <= 4)
 
       links.push({source: 0, target:1}) unless (link1 == nil)
       links.push({source: 0, target:2}) unless (link2 == nil)
@@ -48,7 +48,7 @@ class Topic < ApplicationRecord
       layern = []
 
       # Center Topic
-      topics.push({name: self.name, base: self.id, center: self.id, from: self.id, page: 0, strength: 20})
+      topics.push({name: self.name, base: self.id, center: self.id, from: self.id, page: 0,type: "center"})
 
       layer1 = XplorerMap.where(to_id: self.id).limit(1)
 
@@ -65,12 +65,12 @@ class Topic < ApplicationRecord
             if to_idx == nil
               if current_user
                 if current_user.followingtopic?(layer2[j])
-                  topics.push({name: Topic.find(layer2[j].to_id).name, base: layer2[j].to_id, center: layer2[j].to_id, from: layer2[j].to_id, page: 0, strength: 20})
+                  topics.push({name: Topic.find(layer2[j].to_id).name, base: layer2[j].to_id, center: layer2[j].to_id, from: layer2[j].to_id, page: 0,type: "branch"})
                 else
-                  topics.push({name: Topic.find(layer2[j].to_id).name, base: layer2[j].to_id, center: layer2[j].to_id, from: layer2[j].to_id, page: 0, strength: 10})
+                  topics.push({name: Topic.find(layer2[j].to_id).name, base: layer2[j].to_id, center: layer2[j].to_id, from: layer2[j].to_id, page: 0,type: "branch"})
                 end
               else
-                topics.push({name: Topic.find(layer2[j].to_id).name, base: layer2[j].to_id, center: layer2[j].to_id, from: layer2[j].to_id, page: 0, strength: 10})
+                topics.push({name: Topic.find(layer2[j].to_id).name, base: layer2[j].to_id, center: layer2[j].to_id, from: layer2[j].to_id, page: 0,type: "branch"})
               end
               to_idx = topics.index {|t| t[:name] == to_topic.name}
             end
