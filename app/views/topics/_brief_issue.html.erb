@@ -1,52 +1,47 @@
 <% issues.each do |issue| %>
-  <div class="row">
-    <div class="col-lg-12">
-      <h4><strong>
-        <%= link_to issue_path(issue) do %>
-          <%= issue.title %>
-        <% end %>
-      </strong></h4>
+  <div class="row", style="padding-top: 15px;">
+    <div class="col-md-2">
+      <% doc = Nokogiri::HTML(raw issue.content) %>
+      <% if img = doc.xpath('//img').first %>
+        <%= image_tag (img.attr('src')), class: "img-responsive img-rounded" %>
+      <% else %>
+        <%= image_tag "xplorer-logo.png", class: "img-responsive img-rounded" %>
+      <% end %>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-lg-2">
-      <a href="#" class="thumbnail">
-          <img src="http://placehold.it/260x180" alt="">
-      </a>
-    </div>
-    <div class="col-lg-9">      
+    <div class="col-md-10">
+      <h3 style="margin-top: 0px"><strong>
+        <%= link_to issue.title, issue_path(issue) %>
+      </strong></h3>   
       <p>
-        <%= truncate(strip_tags(issue.content), length: 100 ) %><%= link_to "瀏覽更多", issue_path(issue)%>
+        <% if strip_tags(issue.content).length > 150 %>
+        <%= truncate(strip_tags(issue.content), length: 150 ) %><%= link_to "瀏覽更多", issue_path(issue)%>
+        <% else %>
+        <%= strip_tags(issue.content) %>
+        <% end %>
       </p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-lg-12">
+      <div class="text-muted", style="font-size: 14px">
       <p></p>
       <p>
-        by
+        作者
         <%= link_to user_path(issue.user) do %>
           <%= issue.user.name %>
         <% end %> 
-        | <%= issue.edit_time.localtime.to_s(:long) %>
+        | <%= issue.edit_time.localtime.to_s(:db) %>
         | <span class="glyphicon glyphicon-comment"></span> <%= issue.comments_count %> 則留言
         | <span class="glyphicon glyphicon-eye-open"></span> <%= issue.views_count %> 瀏覽數
         | <span class="glyphicon glyphicon-heart"></span> <%= issue.likes_count %> 讚
         | <span class="glyphicon glyphicon-bookmark"></span> <%= issue.bookmarks_count %> 人收藏
-        | <span class="glyphicon glyphicon-tags"></span> 標籤: 
+        <P></P>
+        <span class="glyphicon glyphicon-tags"></span> 標籤: 
           <% issue.taged_topics.take(5).each do |topic| %>
-            <%= link_to "#{topic.name}", topic_path(topic), class: "label label-info" %>
+            <%= link_to "#{topic.name}", topic_path(topic), class: "label label-info label-custom" %>
           <% end %>
           <% if issue.taged_topics.count > 6 %>
-            ...
+            <span class="label label-info label-custom">...</span>
           <% end %>
       </p>
     </div>
+    </div>
   </div>
-  <!-- 抓第一張圖 -->
-  <% doc = Nokogiri::HTML(raw issue.content) %>
-  <% if img = doc.xpath('//img').first %>
-    <%= image_tag (img.attr('src')) %>
-  <% end %>
-  <hr>
+<hr style="margin-top: 0px; margin-bottom: 0px;">
 <% end %>

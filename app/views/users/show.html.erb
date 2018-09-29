@@ -83,7 +83,7 @@
   </div>
 </div>
 
-<div class="container">
+<div class="container" style="padding-bottom: 10px">
   <div class="row">
     <div data-spy="scroll" class="tabbable-panel">
       <div class="tabbable-line">
@@ -125,7 +125,7 @@
             <div class="container">
               <%= render :partial => 'topics/brief_issue', locals: { issues: @posted_issues } %>
               <div class="paginator", style="text-align: center"> 
-                <%= paginate @posted_issues, param_name: "posted_issues_pag" %>
+                <%= paginate @posted_issues, param_name: "posted_issues_page" %>
               </div>
             </div>
           </div>
@@ -145,7 +145,7 @@
             <!-- 非本人當使用者設定可以看到Bookmark時，顯示Bookmark -->
             <% elsif @user.issue_book_privacy %>
               <div class="container">
-                <%= render partial: "topics/brief_issue", locals: {issues: @marked_issues} %>
+                <%= render :partial => 'topics/brief_issue', locals: { issues: @marked_issues } %>
               </div>
             <!-- 非本人當使用者設定不可以看到Bookmark時，顯示使用者不公開 -->
             <% else %>

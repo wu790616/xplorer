@@ -200,7 +200,7 @@
  }
 
 .widget .mic-info {
- color: #666666;
+ color: #b3b3b3;
  font-size: 14px; 
  }
 
@@ -209,7 +209,7 @@
  }
 
 .widget .comment-text {
- font-size: 12px; 
+ font-size: 16px; 
  }
 
 .widget .btn-block {
@@ -345,3 +345,16 @@
   height: 100%;
 }
 
+/* CUSTOMIZE GLYPHICON COLOR
+-------------------------------------------------- */
+.red {
+  color: #ff461f;
+}
+
+.blue {
+  color: #003472;
+}
+
+.label-custom {
+  background-color: #a1afc9;
+}
