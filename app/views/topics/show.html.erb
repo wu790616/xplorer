@@ -14,11 +14,11 @@
     </div>
     <div class="col-md-10" id="map"></div>
     <script>
-      var width  = $(window).width();
-      var height = $(window).height();// - banner_height;
+      var width  = $(window).width()/12*10;
+      var height = $(window).height()*0.8;// - banner_height;
       var topics = <%= raw(@topics.to_json) %>
       var links  = <%= raw(@links.to_json) %>
-      xmap(topics, links, width, height, -200);
+      xmap(topics, links, 3);
     </script> 
   </div>
   <!-- Select system Xmap scale -->
@@ -29,10 +29,6 @@
     <%= link_to "scale 2", topic_path(@base.id, :center => @center.id, :from => @center.id, :page_num => 0, :scale => 2) %>
     <%= link_to "scale 3", topic_path(@base.id, :center => @center.id, :from => @center.id, :page_num => 0, :scale => 3) %>
     <%= link_to "scale 4", topic_path(@base.id, :center => @center.id, :from => @center.id, :page_num => 0, :scale => 4) %>
-    <%= link_to "scale 5", topic_path(@base.id, :center => @center.id, :from => @center.id, :page_num => 0, :scale => 5) %>
-    <%= link_to "scale 6", topic_path(@base.id, :center => @center.id, :from => @center.id, :page_num => 0, :scale => 6) %>
-    <%= link_to "scale 7", topic_path(@base.id, :center => @center.id, :from => @center.id, :page_num => 0, :scale => 7) %>
-    <%= link_to "scale 8", topic_path(@base.id, :center => @center.id, :from => @center.id, :page_num => 0, :scale => 8) %>
   </div>
   <!-- Show system Xmap View log -->
   <!-- 為檢視方便暫時搬至此處，請依排版需求調整 （完成後此註解可刪）-->
