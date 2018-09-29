@@ -117,6 +117,10 @@
               <a href="#draft" data-toggle="tab">
              草稿 (<%= @unposted_issues.count %>)</a>
             </li>
+            <li>
+              <a href="#notifications" data-toggle="tab">
+             通知 (12)</a>
+            </li>
           <% end %>
         </ul>
         <div class="tab-content">
@@ -213,6 +217,10 @@
                 <%= paginate @unposted_issues, param_name: "unposted_issues_page" %>
               </div>
             </div>
+          </div>
+          <!-- 通知 -->
+          <div class="tab-pane" id="notifications">
+            施工中...
           </div>
         </div>
       </div>
