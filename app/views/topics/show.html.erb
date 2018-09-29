@@ -83,10 +83,10 @@
                       <p></p>
                       <span class="glyphicon glyphicon-tags"></span> 標籤: 
                         <% issue.taged_topics.take(5).each do |topic| %>
-                          <%= link_to "#{topic.name}", topic_path(topic), class: "label label-info" %>
+                          <%= link_to "#{topic.name}", topic_path(topic), class: "label label-info label-custom" %>
                         <% end %>
                         <% if issue.taged_topics.count > 6 %>
-                          <span class="label label-info">...</span>
+                          <span class="label label-info label-custom">...</span>
                         <% end %>
                     </p>
                   </div>
