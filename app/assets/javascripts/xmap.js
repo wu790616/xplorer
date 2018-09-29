@@ -1,11 +1,13 @@
 function xmap(/*svg, */topics, links, width, height, charge) {
 
+	var base_r = width/50;
+
 	var color = d3.scaleOrdinal()
 	 							.range(d3.schemeCategory20);
 	var simulation = d3.forceSimulation()
 										 .force("link", d3.forceLink())
 									//.force("collide",d3.forceCollide( function(d){return d.r + 8 }).iterations(16) )
-										 .force("collide", d3.forceCollide(50) )
+									   .force("collide", d3.forceCollide( function(d) {return base_r*2;}) )
 										 .force("charge", d3.forceManyBody())
 										 .force("center", d3.forceCenter(width / 2, height / 2));
 
@@ -19,7 +21,7 @@ function xmap(/*svg, */topics, links, width, height, charge) {
 							 .scaleExtent([0.2, 10])
 							 .on("zoom", zoomed);
 		
-	svg.call(zoom);
+//svg.call(zoom);
 
 	var link = svg.append("g")
 								.attr("class", "links")
@@ -35,7 +37,7 @@ function xmap(/*svg, */topics, links, width, height, charge) {
 								.attr("xlink:href", function(d) { return "http://"+window.location.host+"/topics/"+d.base+"?center="+d.center+"&from="+d.from+"&page_num="+d.page })
 								.attr("class", "nodes")
 								.append("circle")
-								.attr("r", function(d) {return (d.type === "center") ? 20 : 10} )
+								.attr("r", function(d) {return (d.type === "center") ? base_r*2 : base_r} )
 								.attr("fill", function(d) { return (d.type === "center") ? color(0) : color(1); })
 								.attr('stroke','white')
 								.attr('stroke-width',2)
@@ -62,7 +64,8 @@ function xmap(/*svg, */topics, links, width, height, charge) {
 	  .links(links)
 		.distance(link_distance);
 
-	simulation.force("charge").strength(charge);
+//simulation.force("charge").strength(charge);
+	simulation.force("charge").strength(0);
 
 	function ticked() {
 		link
@@ -118,18 +121,6 @@ function xmap(/*svg, */topics, links, width, height, charge) {
 	function releasenode(d) {
 		d.fixed = false; // of course set the node to fixed so the force doesn't include the node in its auto positioning stuff
 	}
-
-	function topic_radius(d) {
-		if(d.strength > 2048) return 40;
-		if(d.strength > 1024) return 35;
-		if(d.strength >  512) return 30;
-		if(d.strength >  256) return 25;
-		if(d.strength >  128) return 20;
-		if(d.strength >   64) return 15;
-		if(d.strength >   32) return 10;
-		if(d.strength >   16) return  5;
-		if(d.strength >    8) return  1;
-	};
 
 	function link_distance(d) {
 		return 10;
