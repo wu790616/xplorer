@@ -6,6 +6,7 @@ function xmap(topics, links, max_layer) {
 	var base_r = width/80;
 	var branch_color = "blue";
 	var center_color = "orange";
+	var from_color = "red";
 	var text_color   = "blue";
 	var line_width   = 2;
 	var layer_width  = width / (max_layer+1) / 2;
@@ -76,7 +77,7 @@ function xmap(topics, links, max_layer) {
 								.attr("class", "nodes")
 								.append("circle")
 								.attr("r", function(d) {return (d.type === "center") ? base_r*2.5 : base_r;} )
-								.attr("fill", function(d) { return (d.type === "center") ? center_color : branch_color; })
+								.attr("fill", function(d) { return (d.type === "center") ? center_color : (d.type === "from") ? from_color : branch_color; })
 								.attr('stroke','white')
 								.attr('stroke-width',line_width)
 								.call(d3.drag()

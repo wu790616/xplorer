@@ -12,7 +12,7 @@ class Topic < ApplicationRecord
     self.taged_issues.include?(issue)
   end
 
-  def system_map(base, scale, page, current_user)
+  def system_map(base, from, scale, page, current_user)
     topics = []
     links = []
     xmap = []
@@ -67,16 +67,17 @@ class Topic < ApplicationRecord
             layer2.count.times do |j|
               to_topic = Topic.find(layer2[j].to_id)
               to_idx = topics.index {|t| t[:name] == to_topic.name}
+              type = (from == to_topic) ? "from" : "branch"
               if not (to_idx == 0)
                 if to_idx == nil
                   if current_user
                     if current_user.followingtopic?(layer2[j])
-                      topics.push({name: Topic.find(layer2[j].to_id).name, base: base.id, center: layer2[j].to_id, from: self.id, page: 0,type: "branch", layer: l})
+                      topics.push({name: Topic.find(layer2[j].to_id).name, base: base.id, center: layer2[j].to_id, from: self.id, page: 0, type: type, layer: l})
                     else
-                      topics.push({name: Topic.find(layer2[j].to_id).name, base: base.id, center: layer2[j].to_id, from: self.id, page: 0,type: "branch", layer: l})
+                      topics.push({name: Topic.find(layer2[j].to_id).name, base: base.id, center: layer2[j].to_id, from: self.id, page: 0, type: type, layer: l})
                     end
                   else
-                    topics.push({name: Topic.find(layer2[j].to_id).name, base: base.id, center: layer2[j].to_id, from: self.id, page: 0,type: "branch", layer: l})
+                    topics.push({name: Topic.find(layer2[j].to_id).name, base: base.id, center: layer2[j].to_id, from: self.id, page: 0, type: type, layer: l})
                   end
                   to_idx = topics.index {|t| t[:name] == to_topic.name}
                 end
