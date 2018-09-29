@@ -67,7 +67,7 @@ class Topic < ApplicationRecord
             layer2.count.times do |j|
               to_topic = Topic.find(layer2[j].to_id)
               to_idx = topics.index {|t| t[:name] == to_topic.name}
-              if not (l == 1) & (to_idx == 0)
+              if not (to_idx == 0)
                 if to_idx == nil
                   if current_user
                     if current_user.followingtopic?(layer2[j])

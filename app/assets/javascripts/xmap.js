@@ -13,7 +13,7 @@ function xmap(topics, links, max_layer) {
 	// Style setting
 
 	var charge        = 0;
-	var collide       = (layer_height > layer_width) ? layer_width *0.25 : layer_height*0.25;;
+	var collide       = (layer_height > layer_width) ? layer_width *0.35 : layer_height*0.35;
 	var link_distance = 0;
 	
 	var simulation = d3.forceSimulation()
@@ -29,7 +29,7 @@ function xmap(topics, links, max_layer) {
 
 	// Append arrow ar line end
 			 svg.append("defs").selectAll("marker")
-					.data(["arrow_barnch"])
+					.data(["arrow_branch"])
 					.enter().append("marker")
 					.attr("id", function(d) { return d; })
 					.attr("viewBox", "0 -5 10 10")
@@ -42,7 +42,7 @@ function xmap(topics, links, max_layer) {
 					.attr("d", "M0,-5L10,0L0,5 L10,0 L0, -5")
 					.attr("stroke-width", line_width)
 					.style("stroke", branch_color)
-					.style("opacity", "0.6");
+					.style("opacity", "0.5");
 			 svg.append("defs").selectAll("marker")
 					.data(["arrow_center"])
 					.enter().append("marker")
@@ -66,7 +66,7 @@ function xmap(topics, links, max_layer) {
 								.enter().append("line")
 								.attr("stroke-width", line_width)
 								.attr("stroke", function(d) { return (d.source == 0) ? center_color : branch_color;})
-								.style("marker-end", function(d) { return (d.source == 0) ? "url(#arrow_center)" : "url(#arrow_barnch)";});
+								.style("marker-end", function(d) { return (d.source == 0) ? "url(#arrow_center)" : "url(#arrow_branch)";});
 	var node = svg.append("g")
 								.selectAll("a")
 								.data(topics)
@@ -82,8 +82,7 @@ function xmap(topics, links, max_layer) {
 								.call(d3.drag()
 								.on("start", dragstarted)
 								.on("drag", dragged)
-								.on("end", dragended))
-								.on('dblclick', releasenode);
+								.on("end", dragended));
 	var text = svg.selectAll("text")
 								.data(topics)
 								.enter()
@@ -118,22 +117,17 @@ function xmap(topics, links, max_layer) {
 	};
 
 	function dragstarted(d, i) {
-		simulation.stop()
+		d.fixed = false;
 	};
 
 	function dragged(d, i) {
-		d.px += d3.event.dx;
-		d.py += d3.event.dy;
-		d.x += d3.event.dx;
-		d.y += d3.event.dy; 
-}
+		d.fx = d3.event.x;
+		d.fy = d3.event.y;
+	}
 
 	function dragended(d) {
 		d.fixed = true; // of course set the node to fixed so the force doesn't include the node in its auto positioning stuff
-		simulation.restart();
+		simulation.alphaTarget(0.2).restart();
 	};
 
-	function releasenode(d) {
-		d.fixed = false; // of course set the node to fixed so the force doesn't include the node in its auto positioning stuff
-	}
 }

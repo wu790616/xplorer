@@ -14,11 +14,10 @@
     </div>
     <div class="col-md-10" id="map"></div>
     <script>
-      var width  = $(window).width()/12*10;
-      var height = $(window).height()*0.8;// - banner_height;
       var topics = <%= raw(@topics.to_json) %>
       var links  = <%= raw(@links.to_json) %>
-      xmap(topics, links, 3);
+      var max_layer = <%= @scale %>
+      xmap(topics, links, max_layer);
     </script> 
   </div>
   <!-- Select system Xmap scale -->
