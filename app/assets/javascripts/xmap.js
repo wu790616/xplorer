@@ -13,7 +13,7 @@ function xmap(topics, links, max_layer) {
 	var layer_height = width / (max_layer+1) / 2;
 	// Style setting
 
-	var charge        = 0;
+	var charge        = -10;
 	var collide       = (layer_height > layer_width) ? layer_width *0.35 : layer_height*0.35;
 	var link_distance = 0;
 	
@@ -118,17 +118,23 @@ function xmap(topics, links, max_layer) {
 	};
 
 	function dragstarted(d, i) {
-		d.fixed = false;
+	//d.fixed = false;
+	  simulation.stop();
 	};
 
 	function dragged(d, i) {
-		d.fx = d3.event.x;
-		d.fy = d3.event.y;
+	//	d.fx = d3.event.x;
+	//	d.fy = d3.event.y;
+		d.px += d3.event.dx;
+		d.py += d3.event.dy;
+		d.x += d3.event.dx;
+		d.y += d3.event.dy; 
+		ticked(); // this is the key to make it work together with updating both px,py,x,y on d !
 	}
 
 	function dragended(d) {
 		d.fixed = true; // of course set the node to fixed so the force doesn't include the node in its auto positioning stuff
-		simulation.alphaTarget(0.2).restart();
+	//simulation.alphaTarget(0.05).restart();
 	};
 
 }
