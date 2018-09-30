@@ -10,6 +10,7 @@ class Comment < ApplicationRecord
   private
 
   def notify
-    Notification.create( recipient: self.issue.user, user: self.user,  action: "commented", notifiable: self.issue, content: self.issue.title )
+    Notification.create( recipient: self.issue.user, user: self.user,  action: "commented", notifiable: self.issue, content: self.issue.title, 
+    link: Rails.application.routes.url_helpers.issue_path(self.issue) )
   end
 end
