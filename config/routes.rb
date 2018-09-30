@@ -32,4 +32,6 @@ Rails.application.routes.draw do
 
   root "topics#intro"
 
+  # Websockets resemble this URL
+  mount ActionCable.server => '/cable'
 end
