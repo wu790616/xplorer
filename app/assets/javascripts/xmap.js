@@ -49,8 +49,8 @@ function xmap(/*svg, */topics, links, width, height, charge) {
 								.enter()
 								.append("text")
 								.style("fill", "black")
-								.attr("dx", 12)
-								.attr("dy", 5)
+								.attr("dx", -25)
+								.attr("dy", 0)
 								.text(function(d){return d.name;});
 	
 
