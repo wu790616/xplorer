@@ -1,4 +1,10 @@
-<h1>所有通知</h1>
-<%@notifications.each do  |notification| %>
-  <%=render partial: "notifications/#{notification.notifiable_type.underscore.pluralize}/#{notification.action}", locals: {notification: notification} %>
-<%end%>
+<div class="page-header">
+  <h2>通知</h2>
+</div>
+<div class="notifications">
+  <ul class="notification-list">
+    <%@notifications.each do  |notification| %>
+      <%=render partial: "notifications/#{notification.notifiable_type.underscore.pluralize}/#{notification.action}", locals: {notification: notification} %>
+    <%end%>
+  </ul>
+</div>
