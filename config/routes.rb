@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   resources :topic_followships, only: [:create, :destroy]
   resources :bookmarks, only: [:create, :destroy]
   resources :likes, only: [:create, :destroy]
+  resources :notifications, only: [:index]
 
   authenticated :user do
     root 'topics#index', as: :authenticated_root
@@ -31,4 +32,6 @@ Rails.application.routes.draw do
 
   root "topics#intro"
 
+  # Websockets resemble this URL
+  mount ActionCable.server => '/cable'
 end
