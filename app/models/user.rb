@@ -41,7 +41,7 @@ class User < ApplicationRecord
   has_many :followers, through: :inverse_user_followships, source: :user
 
   # 通知
-  has_many :notifications, as: :recipient
+  has_many :notifications, as: :recipient, dependent: :destroy
 
   # 檢查是否有追蹤紀錄
   def following?(user)
