@@ -17,15 +17,16 @@
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
             <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="/topics"><%= image_tag "xplorer-logo-2.png", style: "max-width: 5%" %> XPLORER</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <%= form_tag search_topics_path, method: :get, class: "navbar-form navbar-right", role: "search" do %>
+            <%= text_field_tag :search, params[:search], placeholder: "搜尋", class: "form-control" %>
+            <%= submit_tag "送出", name: nil, class: "btn btn-default" %>
+          <% end %>
           <ul class="nav navbar-nav navbar-right">
             <% if current_user %>
               <li class="active"><%= link_to('新增議題', new_issue_path) %> <span class="sr-only">(current)</span></li>
@@ -47,10 +48,7 @@
             <% end %>
           </ul>
           <!-- 搜尋 -->
-          <%= form_tag search_topics_path, method: :get, class: "navbar-form navbar-right", role: "search" do %>
-              <%= text_field_tag :search, params[:search], placeholder: "搜尋", class: "form-control" %>
-              <%= submit_tag "送出", name: nil, class: "btn btn-default" %>
-          <% end %>
+          
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
