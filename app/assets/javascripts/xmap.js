@@ -1,7 +1,7 @@
 function xmap(topics, links, max_layer) {
 	//----------------------------------------
 	// Size setting
-	var width        = document.getElementById("map").clientWidth;
+	var width        = $(window).width()*0.9;//
 	var height       = $(window).height()*0.8;
 	var layer_width  =  width / (max_layer+1) / 2; // 中心 X size
 	var layer_height = height / (max_layer+1) / 2;
