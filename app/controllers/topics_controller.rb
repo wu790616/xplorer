@@ -82,10 +82,12 @@ class TopicsController < ApplicationController
   def show
     @hot_topics = Topic.all.order(topic_tagships_count: :desc).limit(5)
 
+    # URL analysis
+    # topiics/base_id?center=center_id&from=from_id&page_num=page_num&scale=max_layer
     @base   = Topic.find(params[:id])
-    from   = Topic.find(params[:from].to_i)
+    from    = (params[:from].to_i == 0) ? @base : Topic.find(params[:from].to_i)
     @center = (params[:center].to_i == 0) ? @base : Topic.find(params[:center].to_i)
-    @scale  = (params[:scale].to_i == 0) ? 0 : params[:scale].to_i
+    @scale  =  params[:scale].to_i
 
     # Xplorer map
     xmap = @center.system_map(@base, from, params[:scale].to_i, params[:page].to_i, current_user)
