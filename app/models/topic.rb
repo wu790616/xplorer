@@ -12,7 +12,7 @@ class Topic < ApplicationRecord
     self.taged_issues.include?(issue)
   end
 
-  def system_map(base, scale, page, current_user)
+  def system_map(base, from, scale, page, current_user)
     topics = []
     links = []
     xmap = []
@@ -31,24 +31,24 @@ class Topic < ApplicationRecord
       end
 
       next_page = (page == 0) ? 1 : 0
-      topics.push({name: "#{ self.name}", base: "#{self.id}", center: "#{ self.id}", from: self.id, page: page      ,strength: 2000})
-      topics.push({name: "#{link1.name}", base: "#{base.id}", center: "#{link1.id}", from: self.id, page: 0         ,strength: 1000}) unless (link1 == nil)
-      topics.push({name: "#{link2.name}", base: "#{base.id}", center: "#{link2.id}", from: self.id, page: 0         ,strength: 1000}) unless (link2 == nil)
-      topics.push({name: "#{link3.name}", base: "#{base.id}", center: "#{link3.id}", from: self.id, page: 0         ,strength: 1000}) unless (link3 == nil)
-      topics.push({name: "#{link4.name}", base: "#{base.id}", center: "#{link4.id}", from: self.id, page: 0         ,strength: 1000}) unless (link4 == nil)
-      topics.push({name: "Re-generate"  , base: "#{base.id}", center: "#{ self.id}", from: self.id, page: next_page ,strength: 2000}) unless (self.links_count <= 4)
+      topics.push({name: "#{ self.name}", base: "#{self.id}", center: "#{ self.id}", from: self.id, page: page      ,type: "center"})
+      topics.push({name: "#{link1.name}", base: "#{base.id}", center: "#{link1.id}", from: self.id, page: 0         ,type: "branch"}) unless (link1 == nil)
+      topics.push({name: "#{link2.name}", base: "#{base.id}", center: "#{link2.id}", from: self.id, page: 0         ,type: "branch"}) unless (link2 == nil)
+      topics.push({name: "#{link3.name}", base: "#{base.id}", center: "#{link3.id}", from: self.id, page: 0         ,type: "branch"}) unless (link3 == nil)
+      topics.push({name: "#{link4.name}", base: "#{base.id}", center: "#{link4.id}", from: self.id, page: 0         ,type: "branch"}) unless (link4 == nil)
+      topics.push({name: "Re-generate"  , base: "#{base.id}", center: "#{ self.id}", from: self.id, page: next_page ,type: "button"}) unless (self.links_count <= 4)
 
-      links.push({source: 0, target:1}) unless (link1 == nil)
-      links.push({source: 0, target:2}) unless (link2 == nil)
-      links.push({source: 0, target:3}) unless (link3 == nil)
-      links.push({source: 0, target:4}) unless (link4 == nil)
+      links.push({source: 0, target:1, layer: 0}) unless (link1 == nil)
+      links.push({source: 0, target:2, layer: 0}) unless (link2 == nil)
+      links.push({source: 0, target:3, layer: 0}) unless (link3 == nil)
+      links.push({source: 0, target:4, layer: 0}) unless (link4 == nil)
     else # any layer
       layer1 = nil
       layer2 = nil
       layern = []
 
       # Center Topic
-      topics.push({name: self.name, base: self.id, center: self.id, from: self.id, page: 0, strength: 500})
+      topics.push({name: self.name, base: self.id, center: self.id, from: self.id, page: 0,type: "center", layer: 0})
 
       layer1 = XplorerMap.where(to_id: self.id).limit(1)
 
@@ -56,26 +56,35 @@ class Topic < ApplicationRecord
         layer1.count.times do |i|
           from_topic = Topic.find(layer1[i].to_id)
           from_idx = topics.index {|t| t[:name] == from_topic.name}
-          
+
           layer2 = XplorerMap.where(from_id: from_topic.id)
 
-          layer2.count.times do |j|
-            to_topic = Topic.find(layer2[j].to_id)
-            to_idx = topics.index {|t| t[:name] == to_topic.name}
-            if to_idx == nil
-              if current_user
-                if current_user.followingtopic?(layer2[j])
-                  topics.push({name: Topic.find(layer2[j].to_id).name, base: layer2[j].to_id, center: layer2[j].to_id, from: layer2[j].to_id, page: 0, strength: 200})
-                else
-                  topics.push({name: Topic.find(layer2[j].to_id).name, base: layer2[j].to_id, center: layer2[j].to_id, from: layer2[j].to_id, page: 0, strength: 50})
-                end
-              else
-                topics.push({name: Topic.find(layer2[j].to_id).name, base: layer2[j].to_id, center: layer2[j].to_id, from: layer2[j].to_id, page: 0, strength: 50})
-              end
+          if (topics.count + layer2.count) > 50
+            break
+          end
+
+          if (l == 0) || ((l > 0) & (from_idx != 0))
+            layer2.count.times do |j|
+              to_topic = Topic.find(layer2[j].to_id)
               to_idx = topics.index {|t| t[:name] == to_topic.name}
+              type = (from == to_topic) ? "from" : "branch"
+              if not (to_idx == 0)
+                if to_idx == nil
+                  if current_user
+                    if current_user.followingtopic?(layer2[j])
+                      topics.push({name: Topic.find(layer2[j].to_id).name, base: base.id, center: layer2[j].to_id, from: self.id, page: 0, type: type, layer: l})
+                    else
+                      topics.push({name: Topic.find(layer2[j].to_id).name, base: base.id, center: layer2[j].to_id, from: self.id, page: 0, type: type, layer: l})
+                    end
+                  else
+                    topics.push({name: Topic.find(layer2[j].to_id).name, base: base.id, center: layer2[j].to_id, from: self.id, page: 0, type: type, layer: l})
+                  end
+                  to_idx = topics.index {|t| t[:name] == to_topic.name}
+                end
+
+                links.push({source: from_idx, target: to_idx, layer: l})
+              end
             end
-            
-            links.push({source: from_idx, target: to_idx})
           end
           layern = layern+layer2
         end
@@ -83,55 +92,7 @@ class Topic < ApplicationRecord
         layern = []
       end
     end  
-    #elsif (scale >= 1) # one layer
-    #  layer1 = XplorerMap.where(from_id: self.id)
-#
-    #  topics.push({name: self.name, base: self.id, center: self.id, from: self.id, page: 0, strength: 500})
-#
-    #  layer1.count.times do |i|
-    #    to_topic = Topic.find(layer1[i].to_id)
-    #    if current_user
-    #      if current_user.followingtopic?(layer1[i])
-    #        topics.push({name: Topic.find(layer1[i].to_id).name, base: layer1[i].to_id, center: layer1[i].to_id, from: layer1[i].to_id, page: 0, strength: 200})
-    #      else
-    #        topics.push({name: Topic.find(layer2[j].to_id).name, base: layer2[j].to_id, center: layer2[j].to_id, from: layer2[j].to_id, page: 0, strength: 50})
-    #      end
-    #    else
-    #      topics.push({name: Topic.find(layer1[i].to_id).name, base: layer1[i].to_id, center: layer1[i].to_id, from: layer1[i].to_id, page: 0, strength: 50})
-    #    end
-    #    to_idx = topics.index {|t| t[:name] == to_topic.name}
-    #    links.push({source: 0, target:to_idx})
-    #  end
-#
-    #  if(scale >= 2)
-    #    layer1.count.times do |i|
-    #      from_topic = Topic.find(layer1[i].to_id)
-    #      from_idx = topics.index {|t| t[:name] == from_topic.name}
-    #      
-    #      layer2 = XplorerMap.where(from_id: from_topic.id)
-#
-    #      layer2.count.times do |j|
-    #        to_topic = Topic.find(layer2[j].to_id)
-    #        to_idx = topics.index {|t| t[:name] == to_topic.name}
-    #        if to_idx == nil
-    #          if current_user
-    #            if current_user.followingtopic?(layer2[j])
-    #              topics.push({name: Topic.find(layer2[j].to_id).name, base: layer2[j].to_id, center: layer2[j].to_id, from: layer2[j].to_id, page: 0, strength: 200})
-    #            else
-    #              topics.push({name: Topic.find(layer2[j].to_id).name, base: layer2[j].to_id, center: layer2[j].to_id, from: layer2[j].to_id, page: 0, strength: 50})
-    #            end
-    #          else
-    #            topics.push({name: Topic.find(layer2[j].to_id).name, base: layer2[j].to_id, center: layer2[j].to_id, from: layer2[j].to_id, page: 0, strength: 50})
-    #          end
-    #          to_idx = topics.index {|t| t[:name] == to_topic.name}
-    #        end
-    #        
-    #        links.push({source: from_idx, target: to_idx})
-    #      end
-    #    end
-    #  end
-    #end
-
+    
     xmap.push({topics: topics})
     xmap.push({links: links})
   end

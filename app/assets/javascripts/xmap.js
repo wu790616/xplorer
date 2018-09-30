@@ -1,58 +1,97 @@
-function xmap(/*svg, */topics, links, width, height, charge) {
+function xmap(topics, links, max_layer) {
+	var width = document.getElementById("map").clientWidth;
+	var height = $(window).height()*0.8;
 
-	var color = d3.scaleOrdinal()
-	 							.range(d3.schemeCategory20);
+	// Style setting
+	var base_r = width/80;
+	var branch_color = "blue";
+	var center_color = "orange";
+	var from_color = "red";
+	var text_color   = "blue";
+	var line_width   = 2;
+	var layer_width  = width / (max_layer+1) / 2;
+	var layer_height = width / (max_layer+1) / 2;
+	// Style setting
+
+	var charge        = -10;
+	var collide       = (layer_height > layer_width) ? layer_width *0.35 : layer_height*0.35;
+	var link_distance = 0;
+	
 	var simulation = d3.forceSimulation()
 										 .force("link", d3.forceLink())
-									//.force("collide",d3.forceCollide( function(d){return d.r + 8 }).iterations(16) )
-										 .force("collide", d3.forceCollide(50) )
+									   .force("collide", d3.forceCollide( collide ) )
 										 .force("charge", d3.forceManyBody())
 										 .force("center", d3.forceCenter(width / 2, height / 2));
 
 	//Append a SVG to the body of the html page. Assign this SVG as an object to svg
 	var svg = d3.select("#map").append("svg")
-	    			//.attr("width", width)
-						//.attr("height", height)
-							.attr("viewBox", "0 0 " + width + " " + height);
+	    				.attr("width", width)
+							.attr("height", height);
 
-	var zoom = d3.zoom()
-							 .scaleExtent([0.2, 10])
-							 .on("zoom", zoomed);
-		
-	svg.call(zoom);
+	// Append arrow ar line end
+			 svg.append("defs").selectAll("marker")
+					.data(["arrow_branch"])
+					.enter().append("marker")
+					.attr("id", function(d) { return d; })
+					.attr("viewBox", "0 -5 10 10")
+					.attr("refX", 25)
+					.attr("refY", 0)
+					.attr("markerWidth", 6)
+					.attr("markerHeight", 6)
+					.attr("orient", "auto")
+					.append("path")
+					.attr("d", "M0,-5L10,0L0,5 L10,0 L0, -5")
+					.attr("stroke-width", line_width)
+					.style("stroke", branch_color)
+					.style("opacity", "0.5");
+			 svg.append("defs").selectAll("marker")
+					.data(["arrow_center"])
+					.enter().append("marker")
+					.attr("id", function(d) { return d; })
+					.attr("viewBox", "0 -5 10 10")
+					.attr("refX", 25)
+					.attr("refY", 0)
+					.attr("markerWidth", 6)
+					.attr("markerHeight", 6)
+					.attr("orient", "auto")
+					.append("path")
+					.attr("d", "M0,-5L10,0L0,5 L10,0 L0, -5")
+					.attr("stroke-width", line_width)
+					.style("stroke", center_color)
+					.style("opacity", "0.6");
 
 	var link = svg.append("g")
 								.attr("class", "links")
 								.selectAll("line")
 								.data(links)
 								.enter().append("line")
-								.attr("stroke-width", 2)
-								.attr("stroke","black");
+								.attr("stroke-width", line_width)
+								.attr("stroke", function(d) { return (d.source == 0) ? center_color : branch_color;})
+								.style("marker-end", function(d) { return (d.source == 0) ? "url(#arrow_center)" : "url(#arrow_branch)";});
 	var node = svg.append("g")
-								.selectAll("a").data(topics)
+								.selectAll("a")
+								.data(topics)
 								.enter()
 								.append("a")
-								.attr("xlink:href", function(d) { return "http://"+window.location.host+"/topics/"+d.base+"?center="+d.center+"&from="+d.from+"&page_num="+d.page })
+								.attr("xlink:href", function(d) { return "http://"+window.location.host+"/topics/"+d.base+"?center="+d.center+"&from="+d.from+"&page_num="+d.page+"&scale="+max_layer })
 								.attr("class", "nodes")
 								.append("circle")
-								.attr("r", topic_radius)
-								.attr("fill", function(d,i) { return color(i); })
+								.attr("r", function(d) {return (d.type === "center") ? base_r*2.5 : base_r;} )
+								.attr("fill", function(d) { return (d.type === "center") ? center_color : (d.type === "from") ? from_color : branch_color; })
 								.attr('stroke','white')
-								.attr('stroke-width',2)
+								.attr('stroke-width',line_width)
 								.call(d3.drag()
 								.on("start", dragstarted)
 								.on("drag", dragged)
-								.on("end", dragended))
-								.on('dblclick', releasenode);
+								.on("end", dragended));
 	var text = svg.selectAll("text")
 								.data(topics)
 								.enter()
 								.append("text")
-								.style("fill", "black")
-								.attr("dx", 12)
-								.attr("dy", 5)
+								.style("fill", text_color)
+								.attr("dx", base_r)
+								.attr("dy", base_r)
 								.text(function(d){return d.name;});
-	
 
 	simulation
 		.nodes(topics)
@@ -60,89 +99,42 @@ function xmap(/*svg, */topics, links, width, height, charge) {
 
 	simulation.force("link")
 	  .links(links)
-		.distance(link_distance);
+		.distance(function(d) {return link_distance;});
 
 	simulation.force("charge").strength(charge);
-
+	
 	function ticked() {
 		link
-			.attr("x1", function(d) { return Math.max(20, Math.min(width -50, d.source.x)); })
-			.attr("y1", function(d) { return Math.max(20, Math.min(height-20, d.source.y)); })
-			.attr("x2", function(d) { return Math.max(20, Math.min(width -50, d.target.x)); })
-			.attr("y2", function(d) { return Math.max(20, Math.min(height-20, d.target.y)); });
+			.attr("x1", function(d) { return (d.layer  == 0) ?  width/2 : Math.max(20, Math.min(width -(base_r*2), d.source.x)); })
+			.attr("y1", function(d) { return (d.layer  == 0) ? height/2 : Math.max(20, Math.min(height-(base_r*2), d.source.y)); })
+			.attr("x2", function(d) { return (d.target == 0) ?  width/2 : Math.max(20, Math.min(width -(base_r*2), d.target.x)); })
+			.attr("y2", function(d) { return (d.target == 0) ? height/2 : Math.max(20, Math.min(height-(base_r*2), d.target.y)); });
 		node
-			.attr("cx", function(d) { return Math.max(20, Math.min(width -50, d.x)); })
-			.attr("cy", function(d) { return Math.max(20, Math.min(height-20, d.y)); });
+			.attr("cx", function(d) { return (d.type === "center") ?  width/2 : Math.max(20, Math.min(width -(base_r*2), d.x)); })
+			.attr("cy", function(d) { return (d.type === "center") ? height/2 : Math.max(20, Math.min(height-(base_r*2), d.y)); });
 		text
-			.attr("x", function(d) { return Math.max(20, Math.min(width -50, d.x));})
-			.attr("y", function(d) { return Math.max(20, Math.min(height-20, d.y));});
+			.attr("x", function(d) { return (d.type === "center") ?  width/2 : Math.max(20, Math.min(width -(base_r*2), d.x));})
+			.attr("y", function(d) { return (d.type === "center") ? height/2 : Math.max(20, Math.min(height-(base_r*2), d.y));});
 	};
-//function ticked() {
-//	link
-//		.attr("x1", function(d) { return d.source.x })
-//		.attr("y1", function(d) { return d.source.y })
-//		.attr("x2", function(d) { return d.target.x })
-//		.attr("y2", function(d) { return d.target.y });
-//	node
-//		.attr("cx", function(d) { return d.x })
-//		.attr("cy", function(d) { return d.y });
-//	text
-//		.attr("x", function(d) { return d.x })
-//		.attr("y", function(d) { return d.y });
-//};
-
-	function zoomed() {
-		svg.attr('transform', 'scale(' + d3.event.transform.k + ')');
-	}
 
 	function dragstarted(d, i) {
-	//simulation.stop() // stops the force auto positioning before you start dragging
-		if (!d3.event.active) simulation.alphaTarget(0.3).restart();
-			d.fx = d.x;
-			d.fy = d.y;
+	//d.fixed = false;
+	  simulation.stop();
 	};
 
-	function dragged(d) {
-		d.fx = d3.event.x;
-		d.fy = d3.event.y;
-	};
-
-	function dragended(d) {
-	//	d.fixed = true; // of course set the node to fixed so the force doesn't include the node in its auto positioning stuff
-	//	simulation.restart();
-		if (!d3.event.active) simulation.alphaTarget(0);
-		d.fx = null;
-		d.fy = null;
-	};
-
-	function releasenode(d) {
-		d.fixed = false; // of course set the node to fixed so the force doesn't include the node in its auto positioning stuff
+	function dragged(d, i) {
+	//	d.fx = d3.event.x;
+	//	d.fy = d3.event.y;
+		d.px += d3.event.dx;
+		d.py += d3.event.dy;
+		d.x += d3.event.dx;
+		d.y += d3.event.dy; 
+		ticked(); // this is the key to make it work together with updating both px,py,x,y on d !
 	}
 
-	function topic_radius(d) {
-		if(d.strength > 2048) return 40;
-		if(d.strength > 1024) return 35;
-		if(d.strength >  512) return 30;
-		if(d.strength >  256) return 25;
-		if(d.strength >  128) return 20;
-		if(d.strength >   64) return 15;
-		if(d.strength >   32) return 10;
-		if(d.strength >   16) return  5;
-		if(d.strength >    8) return  1;
+	function dragended(d) {
+		d.fixed = true; // of course set the node to fixed so the force doesn't include the node in its auto positioning stuff
+	//simulation.alphaTarget(0.05).restart();
 	};
 
-	function link_distance(d) {
-		return 10;
-	//	if(d.strength > 2048) return  30*3;
-	//	if(d.strength > 1024) return  40*3;
-	//	if(d.strength >  512) return  50*3;
-	//	if(d.strength >  256) return  60*3;
-	//	if(d.strength >  128) return  70*3;
-	//	if(d.strength >   64) return  80*3;
-	//	if(d.strength >   32) return  90*3;
-	//	if(d.strength >   16) return 100*3;
-	//	if(d.strength >    8) return 110*3;
-	//	if(d.strength >    0) return 120*3;
-	//	else                  return (d.strength)*-1;
-	};
 }

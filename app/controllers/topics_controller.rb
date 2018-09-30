@@ -81,25 +81,32 @@ class TopicsController < ApplicationController
 
   def show
     @hot_topics = Topic.all.order(topic_tagships_count: :desc).limit(5)
-    @base = Topic.find(params[:id])
-    @center = (params[:center].to_i == 0) ? @base : Topic.find(params[:center].to_i)
 
-    @w_ratio = 0.95
-    @h_ratio = (params[:scale].to_i >2) ? 0.85 : 0.5
-    xmap = @center.system_map(@base, params[:scale].to_i, params[:page].to_i, current_user)
+    # URL analysis
+    # topiics/base_id?center=center_id&from=from_id&page_num=page_num&scale=max_layer
+    @base   = Topic.find(params[:id])
+    from    = (params[:from].to_i == 0) ? @base : Topic.find(params[:from].to_i)
+    @center = (params[:center].to_i == 0) ? @base : Topic.find(params[:center].to_i)
+    @scale  =  params[:scale].to_i
+
+    # Xplorer map
+    xmap = @center.system_map(@base, from, params[:scale].to_i, params[:page].to_i, current_user)
     @topics = xmap[0][:topics]
     @links  = xmap[1][:links]
 
+    # Topic issues
     @issues = @base.taged_issues.published.order(edit_time: :desc).page(params[:page]).per(15)
 
+    # User activity
     if((params[:from].to_i != 0)&(params[:from] != params[:center]))
-      ahoy.track "XmapViewlog", {from: params[:from].to_i, to: params[:center].to_i, progress: "init"}
+      ahoy.track "XmapViewlog", {from: params[:from].to_i, to: params[:center].to_i, layer: @scale, progress: "init"}
     end
 
     if((current_user) && (params[:id] == params[:center]))
       ahoy.track "TopicEnterlog", {topic: params[:id].to_i, progress: "init"}
     end
 
+    # Logs for display
     @logs = []
     if current_user
       viewlogs = Ahoy::Event.where(user: current_user, visit: current_visit, name: "XmapViewlog").order(id: :desc).limit(12)
