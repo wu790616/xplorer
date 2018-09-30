@@ -1,7 +1,7 @@
 function xmap(/*svg, */topics, links, width, height, charge) {
 
 	var color = d3.scaleOrdinal()
-	 							.range(d3.schemeCategory20);
+	 							.range(d3.schemePastel2);
 	var simulation = d3.forceSimulation()
 										 .force("link", d3.forceLink())
 									//.force("collide",d3.forceCollide( function(d){return d.r + 8 }).iterations(16) )
@@ -26,8 +26,8 @@ function xmap(/*svg, */topics, links, width, height, charge) {
 								.selectAll("line")
 								.data(links)
 								.enter().append("line")
-								.attr("stroke-width", 2)
-								.attr("stroke","black");
+								.attr("stroke-width", 1)
+								.attr("stroke","#e9e7ef");
 	var node = svg.append("g")
 								.selectAll("a").data(topics)
 								.enter()
@@ -37,8 +37,6 @@ function xmap(/*svg, */topics, links, width, height, charge) {
 								.append("circle")
 								.attr("r", topic_radius)
 								.attr("fill", function(d,i) { return color(i); })
-								.attr('stroke','white')
-								.attr('stroke-width',2)
 								.call(d3.drag()
 								.on("start", dragstarted)
 								.on("drag", dragged)
@@ -49,8 +47,8 @@ function xmap(/*svg, */topics, links, width, height, charge) {
 								.enter()
 								.append("text")
 								.style("fill", "black")
-								.attr("dx", -25)
-								.attr("dy", 0)
+								.attr("dx", -25 )
+								.attr("dy", 0 )
 								.text(function(d){return d.name;});
 	
 
@@ -120,15 +118,15 @@ function xmap(/*svg, */topics, links, width, height, charge) {
 	}
 
 	function topic_radius(d) {
-		if(d.strength > 2048) return 40;
-		if(d.strength > 1024) return 35;
-		if(d.strength >  512) return 30;
-		if(d.strength >  256) return 25;
-		if(d.strength >  128) return 20;
-		if(d.strength >   64) return 15;
-		if(d.strength >   32) return 10;
-		if(d.strength >   16) return  5;
-		if(d.strength >    8) return  1;
+		// if(d.strength > 2048) return 80;
+		// if(d.strength > 1024) return 75;
+		// if(d.strength >  512) return 60;
+		if(d.strength >  256) return 60;
+		// if(d.strength >  128) return 40;
+		// if(d.strength >   64) return 35;
+		if(d.strength >   32) return 30;
+		// if(d.strength >   16) return 15;
+		// if(d.strength >    8) return  5;
 	};
 
 	function link_distance(d) {
