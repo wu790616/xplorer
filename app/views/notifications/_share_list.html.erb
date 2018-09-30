@@ -1,0 +1,35 @@
+<% case notification.action %>
+  <% when "followed" %>
+    <% notification_avatar = "https://cdn4.iconfinder.com/data/icons/mayssam/512/user-128.png" %>
+    <% notification_content = "追蹤了你!" %>
+  <% when "liked" %>
+    <% notification_avatar = "https://cdn4.iconfinder.com/data/icons/mayssam/512/heart-128.png" %>
+    <% notification_content = "喜歡你的議題: #{notification.content}" %>
+    
+  <% when "bookmarked" %>
+    <% notification_avatar = "https://cdn4.iconfinder.com/data/icons/mayssam/512/star-128.png" %>
+    <% notification_content = "收藏你的議題: #{notification.content}" %>
+  <% when "replied" %>
+    <% notification_avatar = "https://cdn4.iconfinder.com/data/icons/mayssam/512/pen-128.png" %>
+    <% notification_content = "回覆了你在 #{notification.content} 下的留言" %>
+  <% when "commented" %>
+    <% notification_avatar = "https://cdn4.iconfinder.com/data/icons/mayssam/512/pen-128.png" %>
+    <% notification_content = "在你的議題 #{notification.content} 下留言" %>
+<% end %>
+
+<li>
+  <div class="media">
+    <div class="media-left">
+      <a href="#">
+        <img src=<%= notification_avatar %> class="media-object cat-icon rounded-circle" alt="...">
+      </a>
+    </div>
+    <div class="media-body">
+      <ul class="n-user-list">
+         <li><a href="#"><img src=<%= notification.user.avatar.url %> class="avatar rounded" alt="..."></a></li>
+      </ul>
+      <p class="media-heading"><b><%= notification.user.name %></b> <%= notification_content %></p>
+      <span><%= notification.created_at.localtime.to_s(:long) %></span>
+    </div>
+  </div>
+</li>

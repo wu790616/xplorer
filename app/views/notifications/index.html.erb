@@ -4,7 +4,7 @@
 <div class="notifications">
   <ul class="notification-list" id="notification-data">
     <%@notifications.each do  |notification| %>
-      <%=render partial: "notifications/#{notification.notifiable_type.underscore.pluralize}/#{notification.action}", locals: {notification: notification} %>
+      <%=render partial: "notifications/share_list", locals: {notification: notification} %>
     <%end%>
   </ul>
 </div>
