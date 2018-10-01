@@ -10,5 +10,17 @@ App.notifications = App.cable.subscriptions.create("NotificationsChannel", {
   received: function(data) {
     // Called when there's incoming data on the websocket for this channel
     $("#notification-data").prepend(data.html);
+    this.update_counter(data.counter);
+  },
+
+  update_counter: function(counter) {
+    $counter = $("#notification-counter");
+    val = parseInt($counter.text());
+    val++;
+    $counter.css({opacity: 0});
+    $counter.text(val);
+    $counter.css({top: '-10px'});
+    $counter.css({top: '-2px', opacity: 1});
   }
+
 });
