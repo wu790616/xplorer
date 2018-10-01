@@ -1,5 +1,6 @@
 class Notification < ApplicationRecord
-  after_commit -> { NotificationRelayJob.perform_later(self, Notification.count) }
+  after_commit -> { NotificationRelayJob.perform_later(self, Notification.unread.count) }
+
   scope :unread, -> { where( :read => false ) }
   scope :read, -> { where( :read => true ) }
 

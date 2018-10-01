@@ -3,9 +3,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
-  resources :users, only: [:show, :edit, :update] do
-    resources :notifications, only: [:index]
-  end
+  resources :users, only: [:show, :edit, :update]
 
   resources :topics, only: [:index, :show] do
     collection do
@@ -24,7 +22,12 @@ Rails.application.routes.draw do
   resources :topic_followships, only: [:create, :destroy]
   resources :bookmarks, only: [:create, :destroy]
   resources :likes, only: [:create, :destroy]
-  resources :notifications, only: [:index]
+  
+  resources :notifications, only: [:index] do
+    collection do 
+        post :mark_all_read
+    end 
+  end
 
   authenticated :user do
     root 'topics#index', as: :authenticated_root

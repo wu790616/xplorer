@@ -1,9 +1,12 @@
 <ul class="notificator">
   <a href="#" id="open_notification">
-    <%= render 'notifications/counter', counter: notifications.count %>
+    <%= render 'notifications/counter', counter: notifications.unread.count %>
   </a>
   <div id="notificationContainer">
-    <div id="notificationTitle">通知</div>
+    <div id="notificationTitle">
+      通知
+      <%= link_to "全部標為已讀", mark_all_read_notifications_path, method: :POST %>
+    </div>
     <div id="notificationsBody" class="notifications">
       <ul class="notification-list" id="notificationList">
         <% notifications.each do |notification| %>
