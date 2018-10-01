@@ -59,8 +59,8 @@ Explorer for learning and find your X
 1. 預設主題與主題間連結關係
 2. 依據主題間連結關係產生Xplorer Map
    * 使用者能夠在 Xplorer Map 探索不同主題與了解學習領域關聯性
-      * 提供不同擴展度的 Xplorer Map（Scale 1~N，擴展度越高，系統所需運算時間越長）
-      * 為加速探索，提供熱門關聯主題推薦（Scale 0）
+      * 提供不同擴展度的 Xplorer Map（一層擴展至三層擴展）
+      * 為加速探索，提供熱門關聯主題推薦（同一時間最多提供四個關聯主題）
    * 點擊中心主題，進入主題頁與觀看相關議題
    * 點擊分支主題，改以該主題為中心繼續探索
    * 提供本次拜訪的探索履歷，讓使用者可以快速連結回前幾步的主題
@@ -70,6 +70,9 @@ Explorer for learning and find your X
    * 紀錄使用者的 Xplorer Map 探索履歷
    * 分析使用者發布議題時加上的主題標籤
    * 依據使用者關注主題與進入主題頁次數，建立使用者對不同主題的關注度
+   
+#### 後台數據分析
+1. 使用 Whenever 以 crontab 自動排程，定時分析
 
 #### Landing Page
 1. 可瀏覽top10熱門作者
@@ -98,9 +101,6 @@ Explorer for learning and find your X
     * 可自訂主題標籤
         * 標籤欄位未找到欲標籤之主題，可以自行新增
 
-#### 後台程式分析
-1. 自動排程，定時分析
-
 #### Onboarding
 1. 未登入使用者進入首頁的引導頁面(功能完成待介面優化）
 
@@ -112,7 +112,7 @@ $ rails db:migrate
 ```
 #### Setup data for development
 ```
-$ rails dev:fake_demo
+$ rails demo:demo_all
 ```
 #### Setup environment
 Facebook/Google認證功能，需要取得Facebook/Google App ID和App Secret，
@@ -130,6 +130,16 @@ IFRAMELY_LINK: '//iframe.ly/api/oembed?url={url}&callback={callback}&api_key=YOU
 ```
 將YOUR_API_KEY_HERE換成自己的API KEY。
 
+## Setup whenever
+```
+$ whenever --update-crontab
+```
+
+## Install Nokogirl
+```
+$ gem install nokogiri
+```
+
 ## Built With
 * Rails 5.2.1
 * Authentication and OAuth: [Devise](https://github.com/plataformatec/devise), [Omniauth Facebook](https://github.com/mkdynamic/omniauth-facebook), [Omniauth Google Oauth2](https://github.com/zquestz/omniauth-google-oauth2)
@@ -142,6 +152,8 @@ IFRAMELY_LINK: '//iframe.ly/api/oembed?url={url}&callback={callback}&api_key=YOU
 * Social Share: [Social Share Button](https://github.com/huacnlee/social-share-button)
 * Layout: [Bootstrap 3](https://github.com/twbs/bootstrap-sass), [Bootswatch](https://github.com/maxim/bootswatch-rails), [D3.js](https://d3js.org/)
 * Search: [Ransack](https://github.com/activerecord-hackery/ransack)
+* Schedule: [Whenever](https://github.com/javan/whenever)
+* HTML parser: [Nokogirl](http://www.nokogiri.org/)
 
 ## Authors
 [Miki](https://github.com/miki770420)
