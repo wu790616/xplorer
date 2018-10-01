@@ -49,20 +49,21 @@ namespace :xmap do
   #end
 
   task :create_link, [:from_topic, :to_topic] => [:environment] do |t, args|
-    puts "Inside xmap:create_link"
+   #puts "Inside xmap:create_link"
     link = XplorerMap.all.where(from_id: args[:from_topic], to_id: args[:to_topic]).first
     if(link == nil)
       link = XplorerMap.create(from_id: args[:from_topic], to_id: args[:to_topic])
-      puts "New link from #{args[:from_topic]} to #{args[:to_topic]}"
-    else
-      puts "Link from #{args[:from_topic]} to #{args[:to_topic]}"
+     #puts "New link from #{args[:from_topic]} to #{args[:to_topic]}"
+   #else
+     #puts "Link from #{args[:from_topic]} to #{args[:to_topic]}"
     end
     link.strength = link.strength + 1
     link.save
-    puts "link save"    
+   #puts "link save"    
   end
 
   task viewlog: :environment do
+    puts "[Start] - viewlog"
     link_count = 0
 
     while 1 do
@@ -87,9 +88,11 @@ namespace :xmap do
         log.save
       end
     end
+    puts "[End] - viewlog"
   end
 
   task issuetag: :environment do
+    puts "[Start] - issuetag"
     issue_cnt = 0
     link_count = 0
     
@@ -116,9 +119,11 @@ namespace :xmap do
       issue_cnt = issue_cnt + 1
     end
     puts "have created #{link_count} links from #{issue_cnt} issues"
+    puts "[End] - issuetag"
   end
 
   task topic_strength_enter: :environment do
+    puts "[Start] - topic_strength_enter"
     enter_count = 0
     
     while 1 do
@@ -146,23 +151,24 @@ namespace :xmap do
       enter_count = enter_count + 1
     end
     puts "have created #{enter_count} followship"
+    puts "[End] - topic_strength_enter"
   end
 
 
-  task topic_strength_follow: :environment do
-    BASIC_STRENGTH = 200
-    follow_count = 0
-    
-    topic_followships = TopicFollowship.all.where(progress: "init")
-    topic_followships.each do |follow|
-      follow.strength = follow.strength + BASIC_STRENGTH
-      follow.progress = "procressed"
-      follow.save
-      follow_count = follow_count + 1
-    end
-
-    puts "have created #{follow_count} followship"
-  end
+  #task topic_strength_follow: :environment do
+  #  BASIC_STRENGTH = 200
+  #  follow_count = 0
+  #  
+  #  topic_followships = TopicFollowship.all.where(progress: "init")
+  #  topic_followships.each do |follow|
+  #    follow.strength = follow.strength + BASIC_STRENGTH
+  #    follow.progress = "procressed"
+  #    follow.save
+  #    follow_count = follow_count + 1
+  #  end
+  #
+  #  puts "have created #{follow_count} followship"
+  #end
 
   #create_table "user_x_maps", force: :cascade do |t|
   #  t.integer "user_id"
@@ -174,6 +180,7 @@ namespace :xmap do
   #end
   
   task usermap: :environment do
+    puts "[Start] - usermap"
     user_count = 0
     
     users = User.all
@@ -198,98 +205,99 @@ namespace :xmap do
     end
 
     puts "have created #{user_count} personal Xmap"
+    puts "[End] - usermap"
   end
 
-  task fullmap: :environment do
-    require 'json'
-    # Full map
-    topics = Topic.all
-    map_topics = []
-    map_links = []
-    topics.count.times do |i|
-      map_topics.push({name: topics[i].name, base: topics[i].id, center: topics[i].id, from: topics[i].id, page: 0, strength: 200})
-      topics.count.times do |j|
-        link = XplorerMap.where(from_id: topics[i].id, to_id: topics[j].id).first
-        if(link == nil)
-        else
-          map_links.push({source: i, target:j, strength: -50})
-        end
-      end
-    end
-    File.open("public/full_topic.json","w") do |f|
-      f.write(map_topics.to_json)
-    end
-    File.open("public/full_link.json","w") do |f|
-      f.write(map_links.to_json)
-    end
-  end
+  #task fullmap: :environment do
+  #  require 'json'
+  #  # Full map
+  #  topics = Topic.all
+  #  map_topics = []
+  #  map_links = []
+  #  topics.count.times do |i|
+  #    map_topics.push({name: topics[i].name, base: topics[i].id, center: topics[i].id, from: topics[i].id, page: 0, strength: 200})
+  #    topics.count.times do |j|
+  #      link = XplorerMap.where(from_id: topics[i].id, to_id: topics[j].id).first
+  #      if(link == nil)
+  #      else
+  #        map_links.push({source: i, target:j, strength: -50})
+  #      end
+  #    end
+  #  end
+  #  File.open("public/full_topic.json","w") do |f|
+  #    f.write(map_topics.to_json)
+  #  end
+  #  File.open("public/full_link.json","w") do |f|
+  #    f.write(map_links.to_json)
+  #  end
+  #end
 
-  task indexmap: :environment do
-    require 'json'
-    # Full map
-    topics = Topic.all.order(desc: :link_count).limit(20)
-    map_topics = []
-    map_links = []
-    topics.count.times do |i|
-      map_topics.push({name: topics[i].name, base: topics[i].id, center: topics[i].id, from: topics[i].id, page: 0, strength: 200})
-      topics.count.times do |j|
-        link = XplorerMap.where(from_id: topics[i].id, to_id: topics[j].id).first
-        if(link == nil)
-        else
-          map_links.push({source: i, target:j, strength: -50})
-        end
-      end
-    end
-    File.open("public/index_topic.json","w") do |f|
-      f.write(map_topics.to_json)
-    end
-    File.open("public/index_link.json","w") do |f|
-      f.write(map_links.to_json)
-    end
-  end
+  #task indexmap: :environment do
+  #  require 'json'
+  #  # Full map
+  #  topics = Topic.all.order(desc: :link_count).limit(20)
+  #  map_topics = []
+  #  map_links = []
+  #  topics.count.times do |i|
+  #    map_topics.push({name: topics[i].name, base: topics[i].id, center: topics[i].id, from: topics[i].id, page: 0, strength: 200})
+  #    topics.count.times do |j|
+  #      link = XplorerMap.where(from_id: topics[i].id, to_id: topics[j].id).first
+  #      if(link == nil)
+  #      else
+  #        map_links.push({source: i, target:j, strength: -50})
+  #      end
+  #    end
+  #  end
+  #  File.open("public/index_topic.json","w") do |f|
+  #    f.write(map_topics.to_json)
+  #  end
+  #  File.open("public/index_link.json","w") do |f|
+  #    f.write(map_links.to_json)
+  #  end
+  #end
 
-  task fixed_indexmap: :environment do
-    require 'json'
-    # Full map
-    topics = []
-    topics.push(Topic.where(name: "電腦").first)
-    topics.push(Topic.where(name: "AI" ).first)
-    topics.push(Topic.where(name: "大數據" ).first)
-    topics.push(Topic.where(name: "藝術" ).first)
-    topics.push(Topic.where(name: "生活" ).first)
-    topics.push(Topic.where(name: "心理" ).first)
-    topics.push(Topic.where(name: "科學" ).first)
-    topics.push(Topic.where(name: "數學" ).first)
-    topics.push(Topic.where(name: "區塊鏈" ).first)
-    topics.push(Topic.where(name: "生物學" ).first)
-    topics.push(Topic.where(name: "化學" ).first)
-    topics.push(Topic.where(name: "物理" ).first)
-    topics.push(Topic.where(name: "語言" ).first)
-    topics.push(Topic.where(name: "文學" ).first)
-    topics.push(Topic.where(name: "行銷" ).first)
-    topics.push(Topic.where(name: "經濟" ).first)
-    topics.push(Topic.where(name: "市場" ).first)
-    topics.push(Topic.where(name: "設計" ).first)
-    topics.push(Topic.where(name: "運動學" ).first)
-    topics.push(Topic.where(name: "藝術" ).first)
-
-    map_topics = []
-    map_links = []
-    topics.count.times do |i|
-      map_topics.push({name: topics[i].name, base: topics[i].id, center: topics[i].id, from: topics[i].id, page: 0, strength: 200})
-      topics.count.times do |j|
-        link = XplorerMap.where(from_id: topics[i].id, to_id: topics[j].id).first
-        if(link == nil)
-        else
-          map_links.push({source: i, target:j, strength: -200})
-        end
-      end
-    end
-    File.open("public/fixed_topic.json","w") do |f|
-      f.write(map_topics.to_json)
-    end
-    File.open("public/fixed_link.json","w") do |f|
-      f.write(map_links.to_json)
-    end
-  end
+  #task fixed_indexmap: :environment do
+  #  require 'json'
+  #  # Full map
+  #  topics = []
+  #  topics.push(Topic.where(name: "電腦").first)
+  #  topics.push(Topic.where(name: "AI" ).first)
+  #  topics.push(Topic.where(name: "大數據" ).first)
+  #  topics.push(Topic.where(name: "藝術" ).first)
+  #  topics.push(Topic.where(name: "生活" ).first)
+  #  topics.push(Topic.where(name: "心理" ).first)
+  #  topics.push(Topic.where(name: "科學" ).first)
+  #  topics.push(Topic.where(name: "數學" ).first)
+  #  topics.push(Topic.where(name: "區塊鏈" ).first)
+  #  topics.push(Topic.where(name: "生物學" ).first)
+  #  topics.push(Topic.where(name: "化學" ).first)
+  #  topics.push(Topic.where(name: "物理" ).first)
+  #  topics.push(Topic.where(name: "語言" ).first)
+  #  topics.push(Topic.where(name: "文學" ).first)
+  #  topics.push(Topic.where(name: "行銷" ).first)
+  #  topics.push(Topic.where(name: "經濟" ).first)
+  #  topics.push(Topic.where(name: "市場" ).first)
+  #  topics.push(Topic.where(name: "設計" ).first)
+  #  topics.push(Topic.where(name: "運動學" ).first)
+  #  topics.push(Topic.where(name: "藝術" ).first)
+  #
+  #  map_topics = []
+  #  map_links = []
+  #  topics.count.times do |i|
+  #    map_topics.push({name: topics[i].name, base: topics[i].id, center: topics[i].id, from: topics[i].id, page: 0, strength: 200})
+  #    topics.count.times do |j|
+  #      link = XplorerMap.where(from_id: topics[i].id, to_id: topics[j].id).first
+  #      if(link == nil)
+  #      else
+  #        map_links.push({source: i, target:j, strength: -200})
+  #      end
+  #    end
+  #  end
+  #  File.open("public/fixed_topic.json","w") do |f|
+  #    f.write(map_topics.to_json)
+  #  end
+  #  File.open("public/fixed_link.json","w") do |f|
+  #    f.write(map_links.to_json)
+  #  end
+  #end
 end
