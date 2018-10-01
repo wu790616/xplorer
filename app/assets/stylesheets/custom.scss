@@ -292,12 +292,13 @@
 -------------------------------------------------- */
 
 #start-page-bg {
-  position: fixed; 
-  top: -50%; 
-  left: -50%; 
-  width: 200%; 
-  height: 200%;
+  background-image: url("start-page-bg3.jpg");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
+
 #start-page-bg img {
   position: absolute; 
   top: 0; 
@@ -307,6 +308,7 @@
   margin: auto; 
   min-width: 50%;
   min-height: 50%;
+  margin: o auto
 }
 
 .image-wrap {
