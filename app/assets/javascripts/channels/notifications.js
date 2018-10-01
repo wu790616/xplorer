@@ -18,7 +18,6 @@ App.notifications = App.cable.subscriptions.create("NotificationsChannel", {
     $counter = $("#notification-counter");
     val = parseInt($counter.text());
     val++;
-    console.log("test_counter");
     $counter.css({opacity: 0});
     $counter.text(val);
     $counter.css({top: '-10px'});

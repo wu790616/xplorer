@@ -10,6 +10,6 @@ class ApplicationController < ActionController::Base
   end
 
   def configure_notifications
-    @notifications = Notification.where(recipient: current_user).order(created_at: :desc)
+    @notifications = Notification.where(recipient: current_user).unread.order(created_at: :desc)
   end
 end

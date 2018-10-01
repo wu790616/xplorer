@@ -3,7 +3,7 @@
 </div>
 <div class="notifications">
   <ul class="notification-list" id="notification-data">
-    <% @notifications.each do |notification| %>
+    <% @all_notifications.each do |notification| %>
       <%=render partial: "notifications/share_list", locals: {notification: notification} %>
     <% end %>
   </ul>

@@ -5,7 +5,7 @@
   <div id="notificationContainer">
     <div id="notificationTitle">
       通知
-      <%= link_to "全部標為已讀", mark_all_read_notifications_path, method: :POST %>
+      <%= link_to "全部標為已讀", mark_all_read_notifications_path, method: :POST, remote: true %>
     </div>
     <div id="notificationsBody" class="notifications">
       <ul class="notification-list" id="notificationList">
@@ -14,6 +14,8 @@
         <% end %>
       </ul>
     </div>
-    <div id="notificationFooter"></div>
+    <div id="notificationFooter">
+      <%= link_to "所有通知", notifications_path %>
+    </div>
   </div>
 </ul>
