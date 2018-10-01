@@ -82,6 +82,9 @@ gem 'nokogiri'
 # gem for search
 gem 'ransack', github: 'activerecord-hackery/ransack'
 
+# gem for task schedule
+gem 'whenever', require: false
+
 group :production do
   # for heroku deploy
   # gem 'pg'
