@@ -3,8 +3,8 @@
 </div>
 <div class="notifications">
   <ul class="notification-list" id="notification-data">
-    <%@notifications.each do  |notification| %>
+    <% @notifications.each do |notification| %>
       <%=render partial: "notifications/share_list", locals: {notification: notification} %>
-    <%end%>
+    <% end %>
   </ul>
 </div>

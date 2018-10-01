@@ -387,6 +387,12 @@
 .n-user-list li + li{margin-left:3px;}
 .n-user-list li a, .n-user-list li a:hober{text-decoration:none;}
 
+span.notification-date
+{
+  color: #989494;
+  font-size: 9px;
+}
+
 /* CUSTOMIZE NOTIFICATION NAVBAR
 -------------------------------------------------- */
 .bell {
@@ -421,20 +427,6 @@ ul.notificator {
   font: 8px Verdana;
 }
 
-ul #notificationList
-{
-  li
-  {
-    position:relative;
-    border-bottom: #dddddd 1px solid;
-  }
-  span
-  {
-    color: #989494;
-    font-size: 8px;
-  }
- 
-}
 
 #notificationsBody  ul
 {
