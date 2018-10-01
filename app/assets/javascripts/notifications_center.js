@@ -14,10 +14,5 @@ $(document).on("turbolinks:load", function()
         $("#notificationContainer").hide();
     });
  
- 
-    $("#notificationContainer").click(function()
-    {
-        return false;
-    });
- 
+  
 });

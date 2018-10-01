@@ -26,7 +26,7 @@
       <%= link_to user_path(notification.user) do %>
         <img src=<%= notification.user.avatar.url %> class="avatar rounded" alt="...">
       <% end %>
-      <a href=<%= notification.link %> style="display:block;">
+      <a href=<%= notification.link %> >
       <div>
         <p class="media-heading"><b><%= notification.user.name %></b> <%= notification_content %></p>
         <span><%= notification.created_at.localtime.to_s(:long) %></span>

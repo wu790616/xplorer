@@ -6,9 +6,9 @@
     <div id="notificationTitle">通知</div>
     <div id="notificationsBody" class="notifications">
       <ul class="notification-list" id="notificationList">
-        <%notifications.each do |notification| %>
+        <% notifications.each do |notification| %>
           <%=render partial: "notifications/share_list", locals: {notification: notification} %>
-        <%end%>
+        <% end %>
       </ul>
     </div>
     <div id="notificationFooter"></div>
