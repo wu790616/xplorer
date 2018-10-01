@@ -112,7 +112,7 @@ $ rails db:migrate
 ```
 #### Setup data for development
 ```
-$ rails demo:demo_all
+$ rails dev:fake_demo
 ```
 #### Setup environment
 Facebook/Google認證功能，需要取得Facebook/Google App ID和App Secret，
