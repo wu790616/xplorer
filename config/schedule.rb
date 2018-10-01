@@ -18,3 +18,20 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
+
+set :environment, :development
+
+env :PATH, ENV['PATH']
+
+set :output, 'log/cron.log' #設定log的路徑
+
+every 1.day, :at => '2:00 am' do
+ # ActiveRecord::Base.connection.execute("BEGIN TRANSACTION; END;")
+
+  rake "xmap:update_link"
+  rake "xmap:viewlog"
+  rake "xmap:issuetag"
+  rake "xmap:topic_strength_enter"
+  rake "xmap:usermap"
+  command "echo 'Update system Xplorer map @ #{Time.now}'"
+end
