@@ -153,6 +153,7 @@ $ cd redis-stable
 $ make
 $ redis-server
 ```
+設定好redis server後，需要在`config/cable.yml`修改相應的設定
 
 ## Built With
 * Rails 5.2.1
