@@ -389,3 +389,21 @@
 .n-user-list li + li{margin-left:3px;}
 .n-user-list li a, .n-user-list li a:hober{text-decoration:none;}
 
+
+.btn-custom {
+  background-color: #ffffff;
+  color: #161823;
+}
+
+.btn-custom:hover {
+  color: #fff;
+  background-color: #003371;
+  border-color: #1045a1;
+}
+
+/* CUSTOMIZE NAVBRAND IMG
+-------------------------------------------------- */
+.navbar-brand > img {
+  display: inline;
+}
+

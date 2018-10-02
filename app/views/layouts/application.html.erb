@@ -21,7 +21,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/topics">XPLORER</a>
+          <a class="navbar-brand" href="/topics"><%= image_tag "xplorer-logo-2.png", style: "max-width: 40px" %> XPLORER</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -46,11 +46,12 @@
             </ol>
             <% end %>
           </ul>
-          <!-- 搜尋 -->
-          <%= form_tag search_topics_path, method: :get, class: "navbar-form navbar-right", role: "search" do %>
+          <div class="nav navbar-nav navbar-right">
+            <%= form_tag search_topics_path, method: :get, class: "navbar-form navbar-right", role: "search" do %>
               <%= text_field_tag :search, params[:search], placeholder: "搜尋", class: "form-control" %>
               <%= submit_tag "送出", name: nil, class: "btn btn-default" %>
-          <% end %>
+            <% end %>
+          </div>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>

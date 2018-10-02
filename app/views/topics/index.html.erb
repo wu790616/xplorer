@@ -12,21 +12,22 @@
       </ol>
       <div class="carousel-inner" role="listbox">
         <div class="item active">
+          <%= image_tag "carousel-bg2.jpg" %>
           <div class="container">
             <div class="carousel-caption">
-              <h1>Explore for learing <br> 
-                   and find your "X" !</h1>
+              <h1 style="margin-bottom: 70px">Explore for learing 
+                   and find your "X"</h1>
             </div>
           </div>
         </div>
         <% @hot_issues.limit(3).each do |hot_issue| %>
         <div class="item">
-          <img class="second-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Second slide">
+          <%= image_tag "carousel-bg2.jpg" %>
           <div class="container">
             <div class="carousel-caption">
               <h1><%= hot_issue.title %></h1>
               <h4><%= truncate(strip_tags(hot_issue.content), length: 100, ommission: '...' ) %></h4>
-              <p><%= link_to "瀏覽更多", issue_path(hot_issue), class: "btn btn-lg btn-primary" %></p>
+              <p><%= link_to "瀏覽更多", issue_path(hot_issue), class: "btn btn-primary btn-custom" %></p>
             </div>
           </div>
         </div>
@@ -116,17 +117,20 @@
               <tbody>
                 <% @hot_users.each do |hot_user| %>
                   <tr>
-                    <td width="10" align="center">
+                    <td class="col-xs-1" align="center">
                       <% if hot_user.avatar? %>
-                        <%= link_to image_tag(hot_user.avatar.url, width: '100', class: "img-rounded nav-user-photo"), user_path(hot_user)  %>
+                        <%= link_to image_tag(hot_user.avatar.url, width: '80', class: "img-circle nav-user-photo"), user_path(hot_user)  %>
                       <% else %>
                         <span class="glyphicon glyphicon-user"></span>
                       <% end %>
                       <br>
-                      <%= link_to hot_user.name, user_path(hot_user) %> |
-                      <span class="glyphicon glyphicon-user"></span> <%= hot_user.followers.count %>
+                      <%= link_to hot_user.name, user_path(hot_user) %>
+                    </td>
+                    <td class="col-xs-2" align="center">
+                      <%= hot_user.followers.count %> 追隨者
                       <% if hot_user.skill_list.count >0 %>
-                        | <% hot_user.skill_list.take(2).each do |skill|%>
+                        <p></p>
+                        <% hot_user.skill_list.take(2).each do |skill|%>
                           <span class="label label-success"><%= skill %></span>
                         <% end %>
                       <% end %>
