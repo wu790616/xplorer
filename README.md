@@ -130,14 +130,28 @@ IFRAMELY_LINK: '//iframe.ly/api/oembed?url={url}&callback={callback}&api_key=YOU
 ```
 將YOUR_API_KEY_HERE換成自己的API KEY。
 
-## Setup whenever
+#### Setup whenever
 ```
 $ whenever --update-crontab
 ```
 
-## Install Nokogirl
+#### Install Nokogiri
 ```
 $ gem install nokogiri
+```
+#### Setup Redis server
+MAC:
+```
+$ brew install redis
+$ redis-server /usr/local/etc/redis.conf
+```
+Linux:
+```
+$ wget http://download.redis.io/redis-stable.tar.gz
+$ tar xvzf redis-stable.tar.gz
+$ cd redis-stable
+$ make
+$ redis-server
 ```
 
 ## Built With
@@ -153,7 +167,7 @@ $ gem install nokogiri
 * Layout: [Bootstrap 3](https://github.com/twbs/bootstrap-sass), [Bootswatch](https://github.com/maxim/bootswatch-rails), [D3.js](https://d3js.org/)
 * Search: [Ransack](https://github.com/activerecord-hackery/ransack)
 * Schedule: [Whenever](https://github.com/javan/whenever)
-* HTML parser: [Nokogirl](http://www.nokogiri.org/)
+* HTML parser: [Nokogiri](http://www.nokogiri.org/)
 
 ## Authors
 [Miki](https://github.com/miki770420)
