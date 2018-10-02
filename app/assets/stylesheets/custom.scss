@@ -393,6 +393,14 @@ span.notification-date
   font-size: 9px;
 }
 
+.notification-link:link {
+  text-decoration: none;
+}
+
+div.notification-main:hover {
+  background-color: #E8E8E8;
+}
+
 /* CUSTOMIZE NOTIFICATION NAVBAR
 -------------------------------------------------- */
 .bell {

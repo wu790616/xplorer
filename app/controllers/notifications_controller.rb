@@ -1,6 +1,6 @@
 class NotificationsController < ApplicationController
   def index
-    @all_notifications = Notification.where(recipient: current_user).order(created_at: :desc)
+    @all_notifications = Notification.where(recipient: current_user).order(created_at: :desc).page(params[:page]).per(15)
   end
 
   def mark_all_read

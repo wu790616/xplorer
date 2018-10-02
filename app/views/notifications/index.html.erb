@@ -6,5 +6,6 @@
     <% @all_notifications.each do |notification| %>
       <%=render partial: "notifications/share_list", locals: {notification: notification} %>
     <% end %>
+    <%= paginate @all_notifications %>
   </ul>
 </div>
