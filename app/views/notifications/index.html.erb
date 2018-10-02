@@ -1,10 +1,11 @@
 <div class="page-header">
   <h2>通知</h2>
 </div>
-<div class="notifications">
+<div class="notifications" id="notificationsIndex">
   <ul class="notification-list" id="notification-data">
-    <%@notifications.each do  |notification| %>
+    <% @all_notifications.each do |notification| %>
       <%=render partial: "notifications/share_list", locals: {notification: notification} %>
-    <%end%>
+    <% end %>
+    <%= paginate @all_notifications %>
   </ul>
 </div>

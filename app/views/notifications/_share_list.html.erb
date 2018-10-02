@@ -23,13 +23,17 @@
       <img src=<%= notification_avatar %> class="media-object cat-icon rounded-circle" alt="...">
     </div>
     <div class="media-body">
-      <%= link_to user_path(notification.user) do %>
+      <%= link_to user_path(notification.user), { :class=>"notification-link" } do  %>
         <img src=<%= notification.user.avatar.url %> class="avatar rounded" alt="...">
       <% end %>
-      <a href=<%= notification.link %> style="display:block;">
-      <div>
+      <% if notification.read == false %>
+        <span class="label label-danger">NEW</span>
+        <span class="label label-default"><%= link_to "標為已讀", mark_as_read_notification_path(notification), method: :POST, remote: true %></span>
+      <% end %>
+      <a class="notification-link" href=<%= notification.link %>>
+      <div class="notification-main">
         <p class="media-heading"><b><%= notification.user.name %></b> <%= notification_content %></p>
-        <span><%= notification.created_at.localtime.to_s(:long) %></span>
+        <span class="notification-date"><%= notification.created_at.localtime.to_s(:long) %></span>
       </div>
       </a>
     </div>
