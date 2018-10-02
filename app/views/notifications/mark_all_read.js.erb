@@ -1,6 +1,11 @@
 //clean all notification in navbar
 $('#notificationList').empty();
 
+// reload notifications index if in notifications index page
+if (location.pathname == "/notifications"){
+   $("#notificationsIndex").load(" #notificationsIndex > *"); 
+};  
+
 //update counter
 $counter = $("#notification-counter");
 $counter.css({opacity: 0});

@@ -1,4 +1,6 @@
 class NotificationsController < ApplicationController
+  before_action :authenticate_user!
+  
   def index
     @all_notifications = Notification.where(recipient: current_user).order(created_at: :desc).page(params[:page]).per(15)
   end
