@@ -19,12 +19,12 @@ class UsersController < ApplicationController
     @map_topics = []
     @map_links = []
     following_topics.count.times do |i|
-      @map_topics.push({name: following_topics[i].name, base: following_topics[i].id, center: following_topics[i].id, from: following_topics[i].id, page: 0, type: "branch", order: 5, group: 0})
+      @map_topics.push({name: following_topics[i].name, base: following_topics[i].id, center: following_topics[i].id, from: following_topics[i].id, page: 0, type: "branch", order: i+5, group: i+5})
       following_topics.count.times do |j|
         link = XplorerMap.where(from_id: following_topics[i].id, to_id: following_topics[j].id).first
         if(link == nil)
         else
-          @map_links.push({source: i, target:j, from_order: 5, to_order: 5, layer: 0})
+          @map_links.push({source: i, target:j, from_order: i+5, to_order: j+5, layer: 0})
         end
       end
     end
