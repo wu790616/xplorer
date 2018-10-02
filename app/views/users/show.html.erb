@@ -182,11 +182,9 @@
               <div class="container">
                 <div id="map"></div>
                 <script>
-                  var width  = $(window).width()*0.95;
-                  var height = $(window).height()*0.5;// - banner_height;
                   var topics = <%= raw(@map_topics.to_json) %>
                   var links  = <%= raw(@map_links.to_json) %>
-                  xmap(topics, links, width, height, -200);
+                  xmap(topics, links, 1);
                 </script>
               </div>
             <!-- 非本人當使用者設定可以看到X MAP時，顯示X MAP -->
@@ -194,11 +192,9 @@
               <div class="container">
                 <div id="map"></div>
                 <script>
-                  var width  = $(window).width()*0.95;
-                  var height = $(window).height()*0.5;// - banner_height;
                   var topics = <%= raw(@map_topics.to_json) %>
                   var links  = <%= raw(@map_links.to_json) %>
-                  xmap(topics, links, width, height, -200);
+                  xmap(topics, links, 1);
                 </script>
               </div>
             <!-- 非本人當使用者設定不可以看到X MAP時，顯示使用者不公開 -->
