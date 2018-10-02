@@ -24,9 +24,8 @@ Rails.application.routes.draw do
   resources :likes, only: [:create, :destroy]
   
   resources :notifications, only: [:index] do
-    collection do 
-        post :mark_all_read
-    end 
+    post :mark_all_read, on: :collection
+    post :mark_as_read, on: :member
   end
 
   authenticated :user do

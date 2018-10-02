@@ -11,4 +11,14 @@ class NotificationsController < ApplicationController
       format.js { render "mark_all_read" }
     end
   end
+
+  def mark_as_read
+    @notification = Notification.find(params[:id])
+    @notification.read = true
+    @notification.save
+
+    respond_to do |format|
+      format.js { render "mark_as_read" }
+    end
+  end
 end

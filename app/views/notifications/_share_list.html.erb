@@ -28,6 +28,7 @@
       <% end %>
       <% if notification.read == false %>
         <span class="label label-danger">NEW</span>
+        <span class="label label-default"><%= link_to "標為已讀", mark_as_read_notification_path(notification), method: :POST, remote: true %></span>
       <% end %>
       <a href=<%= notification.link %> >
       <div>
