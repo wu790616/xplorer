@@ -1,5 +1,5 @@
 class Notification < ApplicationRecord
-  after_create -> { NotificationRelayJob.perform_later(self, Notification.unread.count) }
+  after_create -> { NotificationRelayJob.perform_now(self, Notification.unread.count) }
 
   scope :unread, -> { where( :read => false ) }
 

@@ -26,5 +26,8 @@ module Xplorer
 
     # add ckeditor models to the autoload path
     config.autoload_paths += %w(#{config.root}/app/models/ckeditor)
+
+    # action cable
+    config.action_cable.mount_path = '/cable'
   end
 end
