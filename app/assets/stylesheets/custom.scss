@@ -292,7 +292,7 @@
 -------------------------------------------------- */
 
 #start-page-bg {
-  background-image: url("start-page-bg3.jpg");
+  background: asset_url("start-page-bg3.jpg");
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
