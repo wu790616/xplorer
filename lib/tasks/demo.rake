@@ -1,5 +1,7 @@
 namespace :demo do
+  DEFAULT_STRENGTH = 200
 
+  # 建立 Topic list
   task demo_topic: :environment do
     Topic.destroy_all
 
@@ -328,7 +330,6 @@ namespace :demo do
     Topic.create(name: "系統工程")
     Topic.create(name: "建築工程")
     Topic.create(name: "稅收")
-
     Topic.create(name: "藝術")
     Topic.create(name: "設計")
     Topic.create(name: "心理")
@@ -337,18 +338,8 @@ namespace :demo do
     puts "have created real topics"
     puts "now you have #{Topic.count} topics data (#{Topic.first.id}..#{Topic.last.id})"
   end
-
-
-  #create_table "xplorer_maps", force: :cascade do |t|
-  #  t.integer "from_id"
-  #  t.integer "to_id"
-  #  t.integer "strength", default: 0
-  #  t.datetime "created_at", null: false
-  #  t.datetime "updated_at", null: false
-  #end
   
-  DEFAULT_STRENGTH = 200
-
+  # 建立 Topic 初始連結 => Initailize system Xplorer map
   task demo_xmap: :environment do
     XplorerMap.destroy_all
 
@@ -1331,45 +1322,174 @@ namespace :demo do
     XplorerMap.create(from_id: Topic.all.where(name: "物理" ).first.id, to_id: Topic.all.where(name: "科學").first.id, strength: DEFAULT_STRENGTH)
   end
 
+  # 建立 Demo 用 User 資料
+  task demo_user: :environment do
+    User.destroy_all
+
+    file = File.open("#{Rails.root}/public/avatar/user#{rand(1..20)}.jpg")
+    User.create(
+      name: "Ari",
+      email: "ari@xplorer.com",
+      password: "12345678",
+      introduction: "Xplorer 開發團隊 - 提案",
+      avatar: file
+    )
+    file = File.open("#{Rails.root}/public/avatar/user#{rand(1..20)}.jpg")
+    User.create(
+      name: "Wendy",
+      email: "wendy@xplorer.com",
+      password: "12345678",
+      introduction: "Xplorer 開發團隊 - 後端",
+      avatar: file
+    )
+    file = File.open("#{Rails.root}/public/avatar/user#{rand(1..20)}.jpg")
+    User.create(
+      name: "Miki",
+      email: "miki@xplorer.com",
+      password: "12345678",
+      introduction: "Xplorer 開發團隊 - 前端",
+      avatar: file
+    )
+    file = File.open("#{Rails.root}/public/avatar/user#{rand(1..20)}.jpg")
+    User.create(
+      name: "Yedda",
+      email: "yedda@xplorer.com",
+      password: "12345678",
+      introduction: "Xplorer 開發團隊 - 後端",
+      avatar: file
+    )
+
+    puts "have created users for demo"
+    puts "now you have #{User.count} user data (#{User.first.id}..#{User.last.id})"
+  end
+
+  # 建立 Demo 用 User followship 資料
+  task demo_user_followship: :environment do
+    UserFollowship.destroy_all
+
+    user_Ari   = User.where(name: "Ari").first
+    user_Wendy = User.where(name: "Wendy").first
+    user_Miki  = User.where(name: "Miki").first
+    user_Yedda = User.where(name: "Yedda").first
+
+    user_Ari.user_followships.create(following: user_Wendy)
+    user_Ari.user_followships.create(following: user_Miki)
+    user_Ari.user_followships.create(following: user_Yedda)
+    user_Wendy.user_followships.create(following: user_Ari)
+    user_Wendy.user_followships.create(following: user_Miki)
+    user_Miki.user_followships.create(following: user_Ari)
+
+    puts "have created demo user_followships"
+    puts "now you have #{UserFollowship.count} user_followships data (#{UserFollowship.first.id}..#{UserFollowship.last.id})"
+  end
+
+  # 建立 Demo 用 Issue 資料
+  task demo_issue: :environment do
+    Issue.destroy_all
+
+    #puts "have created fake issues"
+    #puts "now you have #{Issue.count} issues data (#{Issue.first.id}..#{Issue.last.id})"
+  end
+
+  # 建立 Demo 用 Issue Tag Topic 資料
+  task demo_topic_tagships: :environment do
+    TopicTagship.destroy_all
+
+    #puts "have created fake topic_tagships"
+    #puts "now you have #{TopicTagship.count} topic_tagships data"
+  end
+
+  # 建立 Demo 用 User Bookmark Issue 資料
+  task demo_bookmarks: :environment do
+    Bookmark.destroy_all
+
+   #puts "have created demo bookmarks"
+   #puts "now you have #{Bookmark.count} user_followships data (#{Bookmark.first.id}..#{Bookmark.last.id})"
+  end
+
+  # 建立 Demo 用 User Comment Issue 資料
+  task demo_comments: :environment do
+    Comment.destroy_all
+
+    #puts "have created #{count} comments for user #{user.name}"
+    #puts "now you have #{Comment.count} comments data (#{Comment.first.id}..#{Comment.last.id})"
+  end
+
+  # 建立 Demo 用 User Like Issue 資料
+  task demo_likes: :environment do
+    Like.destroy_all
+
+    #puts "have created #{count} likes for user #{user.name}"
+    #puts "now you have #{Like.count} likes data (#{Like.first.id}..#{Like.last.id})"
+  end
+
+  # 建立 Demo 用 User Reply Comment 資料
+  task demo_replies: :environment do
+    Reply.destroy_all
+
+    #puts "have created #{count} replies for user #{user.name}"
+    #puts "now you have #{Reply.count} replies data (#{Reply.first.id}..#{Reply.last.id})"
+  end
+   
+  # 建立上列 Xplorer Map
   task xmap_all: :environment do
+    # 建立 Topic list
     puts "demo_topic processing..."
     Rake::Task['demo:demo_topic'].execute
-
+    # 建立 Topic 初始連結 => Initailize system Xplorer map
     puts "demo_xmap processing..."
     Rake::Task['demo:demo_xmap'].execute
-
+    # 更新所有主題熱門的相關推薦
     puts "update_link processing..."
     Rake::Task['xmap:update_link'].execute
+  end
 
-    puts "fake_user processing..."
-    Rake::Task['dev:fake_user'].execute
-    puts "fake_issue processing..."
-    Rake::Task['dev:fake_issue'].execute
+  # 建立 demo 用資料
+  task demo_all: :environment do
+    # 建立 Topic list
+    puts "demo_topic processing..."
+    Rake::Task['demo:demo_topic'].execute
+    # 建立 Topic 初始連結 => Initailize system Xplorer map
+    puts "demo_xmap processing..."
+    Rake::Task['demo:demo_xmap'].execute
+    # 建立包含所有主題與連結的 system Xplorer map 全圖
+   #puts "fullmap processing..."
+   #Rake::Task['xmap:fullmap'].execute
 
-    # Relationship between Users
-    puts "fake_user_followship processing..."
-    Rake::Task['dev:fake_user_followship'].execute
+    # 建立 Demo 用 User 資料
+    puts "demo_user processing..."
+    Rake::Task['demo:demo_user'].execute
+    # 建立 Demo 用 User followship 資料
+    puts "demo_user_followship processing..."
+    Rake::Task['demo:demo_user_followship'].execute
     
-    # Relationship between User and Topic
-    puts "fake_topic_followship processing..."
-    Rake::Task['dev:fake_topic_followship'].execute
-   #puts "fake_xmap_viewlogs processing..."
-   #Rake::Task['dev:fake_xmap_viewlogs'].execute
-   #puts "fake_topic_enterlogs processing..."
-   #Rake::Task['dev:fake_topic_enterlogs'].execute
+    # 下列 task 需再更新
+    # 建立 Demo 用 Issue 資料
+    puts "demo_issue processing..."
+    Rake::Task['demo:demo_issue'].execute
+    # 建立 Demo 用 Issue Tag Topic 資料
+    puts "demo_topic_tagships processing..."
+    Rake::Task['demo:demo_topic_tagships'].execute
 
+    # 待 demo Issue 建立後，更新下列 task 內容
     # Relationship between User and Issue
-    puts "fake_bookmarks processing..."
-    Rake::Task['dev:fake_bookmarks'].execute
-    puts "fake_comments processing..."
-    Rake::Task['dev:fake_comments'].execute
-    puts "fake_likes processing..."
-    Rake::Task['dev:fake_likes'].execute
-    puts "fake_replies processing..."
-    Rake::Task['dev:fake_replies'].execute
-    
-    # Relationship between Topic and Issue
-   #puts "fake_topic_tagships processing..."
-   #Rake::Task['dev:fake_topic_tagships'].execute
+    puts "demo_bookmarks processing..."
+    Rake::Task['demo:demo_bookmarks'].execute
+    puts "demo_comments processing..."
+    Rake::Task['demo:demo_comments'].execute
+    puts "demo_likes processing..."
+    Rake::Task['demo:demo_likes'].execute
+    puts "demo_replies processing..."
+    Rake::Task['demo:demo_replies'].execute
+
+    # 由每個 issue 上的 topic tag 更新 Xplorer map 關聯
+    puts "issuetag processing..."
+    Rake::Task['xmap:issuetag'].execute
+    # 更新所有主題熱門的相關推薦
+    puts "update_link processing..."
+    Rake::Task['xmap:update_link'].execute
   end
 end
+
+#Rake::Task['demo:xmap_all'] # 建立上列 Xplorer Map
+#Rake::Task['demo:demo_all'] # 建立所有 Demo 用資料

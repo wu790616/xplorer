@@ -169,10 +169,10 @@ namespace :xmap do
         end
       end
     end
-    File.open("#{Rails.root}/app/asserts/images/full_topic.json","w") do |f|
+    File.open("#{Rails.root}/app/assets/images/full_topic.json","w") do |f|
       f.write(map_topics.to_json)
     end
-    File.open("#{Rails.root}/app/asserts/images/full_link.json","w") do |f|
+    File.open("#{Rails.root}/app/assets/images/full_link.json","w") do |f|
       f.write(map_links.to_json)
     end
   end
