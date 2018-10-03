@@ -176,12 +176,25 @@ namespace :xmap do
       f.write(map_links.to_json)
     end
   end
-end
 
-# Rake::Task["xmap:create_link"].execute :from_topic => from_topic, :to_topic => to_topic# 建立尚未存在的主題關聯
-# Rake::Task["xmap:update_link"] # 更新所有主題熱門的相關推薦
-# Rake::Task["xmap:viewlog"] # 由 system Xplorer map 瀏覽履歷更新 Xplorer map 關聯
-# Rake::Task["xmap:issuetag"] # 由每個 issue 上的 topic tag 更新 Xplorer map 關聯
-# Rake::Task["xmap:topic_strength_enter"] # 由每個 user 進入 topic page 更新該 user 對 特定 topic 的關注度
-# Rake::Task["xmap:usermap"] # 建立每個 user 的 personal x map
-# Rake::Task["xmap:fullmap"] # 建立包含所有主題與連結的 system Xplorer map 全圖
+  task daily_update: :environment do
+    # 由 system Xplorer map 瀏覽履歷更新 Xplorer map 關聯
+    puts "viewlog processing..."
+    Rake::Task['xmap:viewlog'].execute
+    # 由每個 issue 上的 topic tag 更新 Xplorer map 關聯
+    puts "issuetag processing..."
+    Rake::Task['xmap:issuetag'].execute
+    # 由每個 user 進入 topic page 更新該 user 對 特定 topic 的關注度
+    puts "topic_strength_enter processing..."
+    Rake::Task['xmap:topic_strength_enter'].execute
+    # 更新所有主題熱門的相關推薦
+    puts "update_link processing..."
+    Rake::Task['xmap:update_link'].execute
+    # 建立每個 user 的 personal x map
+    puts "usermap processing..."
+    Rake::Task['xmap:usermap'].execute
+    # 建立包含所有主題與連結的 system Xplorer map 全圖
+    puts "fullmap processing..."
+    Rake::Task['xmap:fullmap'].execute
+  end
+end
