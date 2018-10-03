@@ -26,31 +26,37 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <% if current_user && current_page?(controller: 'topics', action: 'intro') == true %>
+          <% else %>
+            <ul class="nav navbar-nav navbar-center">
+              <li><%= link_to('重新探索？', root_path) %></li>
+            </ul>
+          <% end %>
           <ul class="nav navbar-nav navbar-right">
             <% if current_user %>
               <li class="active"><%= link_to('新增議題', new_issue_path) %> <span class="sr-only">(current)</span></li>             
               <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">個人 <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><%= link_to('個人檔案', user_path(current_user)) %></li>
-                <li><%= link_to('修改密碼', edit_user_registration_path) %></li>
-                <li><%= link_to('登出', destroy_user_session_path, method: :delete) %></li>
-              </ul>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">個人 <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><%= link_to('個人檔案', user_path(current_user)) %></li>
+                  <li><%= link_to('修改密碼', edit_user_registration_path) %></li>
+                  <li><%= link_to('登出', destroy_user_session_path, method: :delete) %></li>
+                </ul>
               </li>
               <li><%= render 'notifications/notification_center', notifications: @notifications %></li>              
             <% else %>
-            <ol class="custom-breadcrumb">
-              <li><%= link_to('註冊', new_user_registration_path)%></li>
-              <li><%= link_to('登入', new_user_session_path) %></li>
-            </ol>
+              <ol class="custom-breadcrumb">
+                <li><%= link_to('註冊', new_user_registration_path)%></li>
+                <li><%= link_to('登入', new_user_session_path) %></li>
+              </ol>
             <% end %>
           </ul>
-          <div class="nav navbar-nav navbar-right">
-            <%= form_tag search_topics_path, method: :get, class: "navbar-form navbar-right", role: "search" do %>
+          <ul class="nav navbar-nav navbar-right">
+            <li><%= form_tag search_topics_path, method: :get, class: "navbar-form navbar-right", role: "search" do %>
               <%= text_field_tag :search, params[:search], placeholder: "搜尋", class: "form-control" %>
               <%= submit_tag "送出", name: nil, class: "btn btn-default" %>
-            <% end %>
-          </div>
+            <% end %></li>
+          </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
