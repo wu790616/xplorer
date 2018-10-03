@@ -7,5 +7,5 @@ test:
 
 production:
   adapter: redis
-  url: redis://0.0.0.0:6379/1
+  url: redis://104.199.193.127:6379/1
   channel_prefix: xplorer_production
