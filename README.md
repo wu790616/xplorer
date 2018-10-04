@@ -19,6 +19,9 @@ Explorer for learning and find your X
 2. 自動建立個人 Xplorer map，讓使用者在探索與學習中建立自己的知識系統。
 
 ## User Story (Done)
+#### Onboarding
+1. 未登入使用者進入首頁的引導頁面
+
 #### 使用者相關
 1. 使用者可註冊/登入方式
     * Email (devise gem)
@@ -101,8 +104,6 @@ Explorer for learning and find your X
     * 可自訂主題標籤
         * 標籤欄位未找到欲標籤之主題，可以自行新增
 
-#### Onboarding
-1. 未登入使用者進入首頁的引導頁面(功能完成待介面優化）
 
 ## Getting Started
 #### Install project
