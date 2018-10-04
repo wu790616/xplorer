@@ -1,11 +1,8 @@
-function xmap(topics, links, max_layer) {
+function xmap(topics, links, max_layer, width, height) {
 	//----------------------------------------
 	// Size setting
-	var width        = $(window).width()*0.8;//document.getElementById("map").clientWidth;
-	var height       = $(window).height()*0.8;
-	var layer_width  =  width / (max_layer+1) / 2; // 中心 X size
+		var layer_width  =  width / (max_layer+1) / 2; // 中心 X size
 	var layer_height = height / (max_layer+1) / 2;
-
 	//----------------------------------------
 	// Style setting
 	var base_r       = width/80; //旁支圓半徑，中心現為旁支2倍
