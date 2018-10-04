@@ -1,3 +1,6 @@
+require 'open-uri'
+require 'nokogiri'
+
 namespace :demo do
 
   task demo_topic: :environment do
@@ -1331,6 +1334,123 @@ namespace :demo do
     XplorerMap.create(from_id: Topic.all.where(name: "物理" ).first.id, to_id: Topic.all.where(name: "科學").first.id, strength: DEFAULT_STRENGTH)
   end
 
+  task :issue_wiki, [:url] => [:environment] do |t, args|
+    #Issue.destroy_all
+
+    user = User.where(name: "維基百科").first
+    doc = Nokogiri::HTML(open(args[:url]))
+
+   ##PageBase
+   #doc.css("div#mw-page-base.noprint").remove
+   ##HeadBase
+   #doc.css("div#mw-head-base.noprint").remove
+   ##Content
+   #doc.css("div#content.mw-body").remove
+   #  #siteNotice
+   #  doc.css("div#content.mw-body div#siteNotice.mw-body-content").remove
+   #  #indicators
+   #  doc.css("div#content.mw-body div#mw-indicators.mw-body-content").remove
+   #  #firstHeading
+   #  doc.css("div#content.mw-body h1#firstHeading.firstHeading").remove
+   #  #bodyContent
+   #  doc.css("div#content.mw-body div#bodyContent.mw-body-content").remove
+   #    #siteSub
+   #    doc.css("div#content.mw-body div#bodyContent.mw-body-content div#siteSub.noprint").remove
+   #    #contentSub
+   #    doc.css("div#content.mw-body div#bodyContent.mw-body-content div#contentSub").remove
+   #    #jumpNav
+   #    doc.css("div#content.mw-body div#bodyContent.mw-body-content div#jump-to-nav").remove
+   #    #contentText
+   #    doc.css("div#content.mw-body div#bodyContent.mw-body-content div#mw-content-ltr").remove
+   #    #printFotter
+   #    doc.css("div#content.mw-body div#bodyContent.mw-body-content div.printfooter").remove
+   #    #catlinks
+   #    doc.css("div#content.mw-body div#bodyContent.mw-body-content div#catlinks.catlinks").remove
+   ##Navigation
+   #doc.css("div#mw-navigation").remove
+   ##Footer
+   #doc.css("div#footer").remove
+
+    #Reference list
+    #doc.css("#content #bodyContent #mw-content-text div div.reflist.columns.references-column-width").remove
+    text = doc.css("#content div#bodyContent.mw-body-content div#mw-content-text.mw-content-ltr")
+   #text = doc.css("div#content.mw-body div#bodyContent.mw-body-content div#mw-content-ltr")
+
+   #text = "<a href=#{args[:url]}>#{doc.css("div#content.mw-body h1#firstHeading.firstHeading").text}</a><br>"
+    user.issues.create(
+      title: doc.css("div#content.mw-body h1#firstHeading.firstHeading").text,
+      content: text,
+      draft: "false",
+      views_count: rand(1..500),
+      edit_time: Time.now
+    )
+    puts "Wiki issue @ issue id #{Issue.last.id}"
+  end
+
+  task demo_user: :environment do
+    User.destroy_all
+    file = File.open("#{Rails.root}/public/avatar/Wiki.png")
+    User.create(
+      name: "維基百科",
+      email: "wikipedia@xplorer.com",
+      password: "12345678",
+      introduction: "維基百科（英語：Wikipedia）是一個網路百科全書專案，特點是自由內容、自由編輯。它目前是全球網路上最大且最受大眾歡迎的參考工具書，名列全球十大最受歡迎的網站。維基百科目前由非營利組織維基媒體基金會負責營運。Wikipedia是一個混成詞，分別取自於網站核心技術「Wiki」以及英文中百科全書之意的「encyclopedia」。",
+      avatar: file
+    )
+    puts "User 維基百科 is created"
+    file = File.open("#{Rails.root}/public/avatar/user#{rand(1..10)}.jpg")
+    User.create(
+      name: "Ari",
+      email: "ari@xplorer.com",
+      password: "12345678",
+      introduction: "Xplorer 提案者",
+      avatar: file
+    )
+    puts "User Ari is created"
+    file = File.open("#{Rails.root}/public/avatar/user#{rand(1..10)}.jpg")
+    User.create(
+      name: "Wendy",
+      email: "wendy@xplorer.com",
+      password: "12345678",
+      introduction: "Xplorer 開發團隊成員",
+      avatar: file
+    )
+    puts "User Wendy is created"
+    file = File.open("#{Rails.root}/public/avatar/user#{rand(1..10)}.jpg")
+    User.create(
+      name: "Miki",
+      email: "miki@xplorer.com",
+      password: "12345678",
+      introduction: "Xplorer 開發團隊成員",
+      avatar: file
+    )
+    puts "User Miki is created"
+    file = File.open("#{Rails.root}/public/avatar/user#{rand(1..10)}.jpg")
+    User.create(
+      name: "Yedda",
+      email: "yedda@xplorer.com",
+      password: "12345678",
+      introduction: "Xplorer 開發團隊成員",
+      avatar: file
+    )
+    puts "User Yedda is created"
+  end
+
+  task demo_issue: :environment do
+    Issue.destroy_all
+    Rake::Task["demo:issue_wiki"].execute :url => "https://zh.wikipedia.org/wiki/%E5%8A%A8%E7%89%A9"
+    Rake::Task["demo:issue_wiki"].execute :url => "https://zh.wikipedia.org/wiki/%E8%83%9A%E8%83%8E"
+    Rake::Task["demo:issue_wiki"].execute :url => "https://zh.wikipedia.org/wiki/%E7%89%87%E5%81%87%E5%90%8D"
+    Rake::Task["demo:issue_wiki"].execute :url => "https://zh.wikipedia.org/wiki/%E5%93%BA%E4%B9%B3%E5%8A%A8%E7%89%A9"
+    Rake::Task["demo:issue_wiki"].execute :url => "https://zh.wikipedia.org/wiki/%E6%B1%89%E5%AD%97"
+    Rake::Task["demo:issue_wiki"].execute :url => "https://zh.wikipedia.org/wiki/%E5%8A%A0%E6%8B%BF%E5%A4%A7"
+    Rake::Task["demo:issue_wiki"].execute :url => "https://zh.wikipedia.org/wiki/%E7%9F%AD%E5%B0%BE%E8%B2%93"
+    Rake::Task["demo:issue_wiki"].execute :url => "https://zh.wikipedia.org/wiki/%E9%9F%93%E8%AA%9E"
+    Rake::Task["demo:issue_wiki"].execute :url => "https://zh.wikipedia.org/wiki/%E6%97%A5%E8%AA%9E"
+    Rake::Task["demo:issue_wiki"].execute :url => "https://zh.wikipedia.org/wiki/%E9%A0%98%E5%9C%9F%E7%B3%BE%E7%B4%9B"
+    Rake::Task["demo:issue_wiki"].execute :url => "https://zh.wikipedia.org/wiki/%E5%8F%B0%E7%81%A3"
+  end
+
   task xmap_all: :environment do
     puts "demo_topic processing..."
     Rake::Task['demo:demo_topic'].execute
@@ -1371,5 +1491,46 @@ namespace :demo do
     # Relationship between Topic and Issue
    #puts "fake_topic_tagships processing..."
    #Rake::Task['dev:fake_topic_tagships'].execute
+  end
+
+  task demo_all: :environment do
+    puts "demo_topic processing..."
+    Rake::Task['demo:demo_topic'].execute
+    puts "demo_user processing..."
+    Rake::Task['demo:demo_user'].execute
+    puts "demo_issue processing..."
+    Rake::Task['demo:demo_issue'].execute
+
+    puts "demo_xmap processing..."
+    Rake::Task['demo:demo_xmap'].execute
+    puts "update_link processing..."
+    Rake::Task['xmap:update_link'].execute
+
+    # Relationship between Users
+    puts "fake_user_followship processing..."
+    Rake::Task['dev:fake_user_followship'].execute
+
+    # Relationship between Topic and Issue
+   #puts "fake_topic_tagships processing..."
+   #Rake::Task['dev:fake_topic_tagships'].execute
+
+    # Relationship between User and Topic
+    puts "fake_topic_followship processing..."
+    Rake::Task['dev:fake_topic_followship'].execute
+   #puts "fake_xmap_viewlogs processing..."
+   #Rake::Task['dev:fake_xmap_viewlogs'].execute
+   #puts "fake_topic_enterlogs processing..."
+   #Rake::Task['dev:fake_topic_enterlogs'].execute
+
+    # Relationship between User and Issue
+    puts "fake_bookmarks processing..."
+    Rake::Task['dev:fake_bookmarks'].execute
+    puts "fake_likes processing..."
+    Rake::Task['dev:fake_likes'].execute
+   #puts "fake_comments processing..."
+   #Rake::Task['dev:fake_comments'].execute
+   #puts "fake_replies processing..."
+   #Rake::Task['dev:fake_replies'].execute
+
   end
 end
