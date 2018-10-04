@@ -1,22 +1,16 @@
 namespace :xmap do
-  #create_table "topics", force: :cascade do |t|
-  #  t.string "name"
-  #  t.string "avatar"
-  #  t.integer "topic_link1_id"
-  #  t.integer "topic_link2_id"
-  #  t.integer "topic_link3_id"
-  #  t.integer "topic_link4_id"
-  #  t.integer "topic_link5_id"
-  #  t.integer "topic_link6_id"
-  #  t.integer "topic_link7_id"
-  #  t.integer "topic_link8_id"
-  #  t.integer "followers_count", default: 0
-  #  t.integer "links_count", default: 0
-  #  t.datetime "created_at", null: false
-  #  t.datetime "updated_at", null: false
-  #  t.integer "topic_tagships_count", default: 0
-  #end
 
+  # 建立尚未存在的主題關聯
+  task :create_link, [:from_topic, :to_topic] => [:environment] do |t, args|
+     link = XplorerMap.all.where(from_id: args[:from_topic], to_id: args[:to_topic]).first
+     if(link == nil)
+       link = XplorerMap.create(from_id: args[:from_topic], to_id: args[:to_topic])
+     end
+     link.strength = link.strength + 1
+     link.save
+   end
+
+  # 更新所有主題熱門的相關推薦
   task update_link: :environment do
     Topic.all.each do |topic|
       links_count          = XplorerMap.where(from_id: topic.id).count
@@ -33,35 +27,7 @@ namespace :xmap do
     end
   end
 
-  #create_table "xplorer_maps", force: :cascade do |t|
-  #  t.integer "from_id"
-  #  t.integer "to_id"
-  #  t.integer "strength", default: 0
-  #  t.datetime "created_at", null: false
-  #  t.datetime "updated_at", null: false
-  #end
-  #create_table "topic_tagships", force: :cascade do |t|
-  #  t.integer "issue_id"
-  #  t.integer "topic_id"
-  #  t.string "progress", default: "init"
-  #  t.datetime "created_at", null: false
-  #  t.datetime "updated_at", null: false
-  #end
-
-  task :create_link, [:from_topic, :to_topic] => [:environment] do |t, args|
-   #puts "Inside xmap:create_link"
-    link = XplorerMap.all.where(from_id: args[:from_topic], to_id: args[:to_topic]).first
-    if(link == nil)
-      link = XplorerMap.create(from_id: args[:from_topic], to_id: args[:to_topic])
-     #puts "New link from #{args[:from_topic]} to #{args[:to_topic]}"
-   #else
-     #puts "Link from #{args[:from_topic]} to #{args[:to_topic]}"
-    end
-    link.strength = link.strength + 1
-    link.save
-   #puts "link save"    
-  end
-
+  # 由 system Xplorer map 瀏覽履歷更新 Xplorer map 關聯
   task viewlog: :environment do
     puts "[Start] - viewlog"
     link_count = 0
@@ -91,6 +57,7 @@ namespace :xmap do
     puts "[End] - viewlog"
   end
 
+  # 由每個 issue 上的 topic tag 更新 Xplorer map 關聯
   task issuetag: :environment do
     puts "[Start] - issuetag"
     issue_cnt = 0
@@ -122,6 +89,7 @@ namespace :xmap do
     puts "[End] - issuetag"
   end
 
+  # 由每個 user 進入 topic page 更新該 user 對 特定 topic 的關注度
   task topic_strength_enter: :environment do
     puts "[Start] - topic_strength_enter"
     enter_count = 0
@@ -154,31 +122,7 @@ namespace :xmap do
     puts "[End] - topic_strength_enter"
   end
 
-
-  #task topic_strength_follow: :environment do
-  #  BASIC_STRENGTH = 200
-  #  follow_count = 0
-  #  
-  #  topic_followships = TopicFollowship.all.where(progress: "init")
-  #  topic_followships.each do |follow|
-  #    follow.strength = follow.strength + BASIC_STRENGTH
-  #    follow.progress = "procressed"
-  #    follow.save
-  #    follow_count = follow_count + 1
-  #  end
-  #
-  #  puts "have created #{follow_count} followship"
-  #end
-
-  #create_table "user_x_maps", force: :cascade do |t|
-  #  t.integer "user_id"
-  #  t.integer "from_id"
-  #  t.integer "to_id"
-  #  t.integer "strength"
-  #  t.datetime "created_at", null: false
-  #  t.datetime "updated_at", null: false
-  #end
-  
+  # 建立每個 user 的 personal x map
   task usermap: :environment do
     puts "[Start] - usermap"
     user_count = 0
@@ -208,96 +152,49 @@ namespace :xmap do
     puts "[End] - usermap"
   end
 
-  #task fullmap: :environment do
-  #  require 'json'
-  #  # Full map
-  #  topics = Topic.all
-  #  map_topics = []
-  #  map_links = []
-  #  topics.count.times do |i|
-  #    map_topics.push({name: topics[i].name, base: topics[i].id, center: topics[i].id, from: topics[i].id, page: 0, strength: 200})
-  #    topics.count.times do |j|
-  #      link = XplorerMap.where(from_id: topics[i].id, to_id: topics[j].id).first
-  #      if(link == nil)
-  #      else
-  #        map_links.push({source: i, target:j, strength: -50})
-  #      end
-  #    end
-  #  end
-  #  File.open("public/full_topic.json","w") do |f|
-  #    f.write(map_topics.to_json)
-  #  end
-  #  File.open("public/full_link.json","w") do |f|
-  #    f.write(map_links.to_json)
-  #  end
-  #end
+  # 建立包含所有主題與連結的 system Xplorer map 全圖
+  task fullmap: :environment do
+    require 'json'
+    # Full map
+    topics = Topic.all
+    map_topics = []
+    map_links = []
+    topics.count.times do |i|
+      map_topics.push({name: topics[i].name, base: topics[i].id, center: topics[i].id, from: topics[i].id, page: 0, strength: 200})
+      topics.count.times do |j|
+        link = XplorerMap.where(from_id: topics[i].id, to_id: topics[j].id).first
+        if(link == nil)
+        else
+          map_links.push({source: i, target:j, strength: -50})
+        end
+      end
+    end
+    File.open("#{Rails.root}/app/assets/images/full_topic.json","w") do |f|
+      f.write(map_topics.to_json)
+    end
+    File.open("#{Rails.root}/app/assets/images/full_link.json","w") do |f|
+      f.write(map_links.to_json)
+    end
+  end
 
-  #task indexmap: :environment do
-  #  require 'json'
-  #  # Full map
-  #  topics = Topic.all.order(desc: :link_count).limit(20)
-  #  map_topics = []
-  #  map_links = []
-  #  topics.count.times do |i|
-  #    map_topics.push({name: topics[i].name, base: topics[i].id, center: topics[i].id, from: topics[i].id, page: 0, strength: 200})
-  #    topics.count.times do |j|
-  #      link = XplorerMap.where(from_id: topics[i].id, to_id: topics[j].id).first
-  #      if(link == nil)
-  #      else
-  #        map_links.push({source: i, target:j, strength: -50})
-  #      end
-  #    end
-  #  end
-  #  File.open("public/index_topic.json","w") do |f|
-  #    f.write(map_topics.to_json)
-  #  end
-  #  File.open("public/index_link.json","w") do |f|
-  #    f.write(map_links.to_json)
-  #  end
-  #end
-
-  #task fixed_indexmap: :environment do
-  #  require 'json'
-  #  # Full map
-  #  topics = []
-  #  topics.push(Topic.where(name: "電腦").first)
-  #  topics.push(Topic.where(name: "AI" ).first)
-  #  topics.push(Topic.where(name: "大數據" ).first)
-  #  topics.push(Topic.where(name: "藝術" ).first)
-  #  topics.push(Topic.where(name: "生活" ).first)
-  #  topics.push(Topic.where(name: "心理" ).first)
-  #  topics.push(Topic.where(name: "科學" ).first)
-  #  topics.push(Topic.where(name: "數學" ).first)
-  #  topics.push(Topic.where(name: "區塊鏈" ).first)
-  #  topics.push(Topic.where(name: "生物學" ).first)
-  #  topics.push(Topic.where(name: "化學" ).first)
-  #  topics.push(Topic.where(name: "物理" ).first)
-  #  topics.push(Topic.where(name: "語言" ).first)
-  #  topics.push(Topic.where(name: "文學" ).first)
-  #  topics.push(Topic.where(name: "行銷" ).first)
-  #  topics.push(Topic.where(name: "經濟" ).first)
-  #  topics.push(Topic.where(name: "市場" ).first)
-  #  topics.push(Topic.where(name: "設計" ).first)
-  #  topics.push(Topic.where(name: "運動學" ).first)
-  #  topics.push(Topic.where(name: "藝術" ).first)
-  #
-  #  map_topics = []
-  #  map_links = []
-  #  topics.count.times do |i|
-  #    map_topics.push({name: topics[i].name, base: topics[i].id, center: topics[i].id, from: topics[i].id, page: 0, strength: 200})
-  #    topics.count.times do |j|
-  #      link = XplorerMap.where(from_id: topics[i].id, to_id: topics[j].id).first
-  #      if(link == nil)
-  #      else
-  #        map_links.push({source: i, target:j, strength: -200})
-  #      end
-  #    end
-  #  end
-  #  File.open("public/fixed_topic.json","w") do |f|
-  #    f.write(map_topics.to_json)
-  #  end
-  #  File.open("public/fixed_link.json","w") do |f|
-  #    f.write(map_links.to_json)
-  #  end
-  #end
+  task daily_update: :environment do
+    # 由 system Xplorer map 瀏覽履歷更新 Xplorer map 關聯
+    puts "viewlog processing..."
+    Rake::Task['xmap:viewlog'].execute
+    # 由每個 issue 上的 topic tag 更新 Xplorer map 關聯
+    puts "issuetag processing..."
+    Rake::Task['xmap:issuetag'].execute
+    # 由每個 user 進入 topic page 更新該 user 對 特定 topic 的關注度
+    puts "topic_strength_enter processing..."
+    Rake::Task['xmap:topic_strength_enter'].execute
+    # 更新所有主題熱門的相關推薦
+    puts "update_link processing..."
+    Rake::Task['xmap:update_link'].execute
+    # 建立每個 user 的 personal x map
+    puts "usermap processing..."
+    Rake::Task['xmap:usermap'].execute
+    # 建立包含所有主題與連結的 system Xplorer map 全圖
+    puts "fullmap processing..."
+    Rake::Task['xmap:fullmap'].execute
+  end
 end
