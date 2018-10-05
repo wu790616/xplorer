@@ -205,7 +205,7 @@
     </div>
   </div>
 <script>
-  var width  = $(window).innerWidth()*0.9;
+  var width  = $('.tab-content').innerWidth()*0.9;
   var height = $(window).innerHeight()*0.8;
   var topics = <%= raw(@map_topics.to_json) %>
   var links  = <%= raw(@map_links.to_json) %>
