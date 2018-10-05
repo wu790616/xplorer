@@ -14,7 +14,7 @@
       </strong></h3>   
       <p>
         <% if strip_tags(issue.content).length > 150 %>
-        <%= truncate(strip_tags(issue.content), length: 150 ) %><%= link_to "瀏覽更多", issue_path(issue), class: "custom-a"%>
+        <%= truncate(strip_tags(issue.content), length: 150 ) %><%= link_to "瀏覽更多", issue_path(issue), class: "custom-a" %>
         <% else %>
         <%= strip_tags(issue.content) %>
         <% end %>

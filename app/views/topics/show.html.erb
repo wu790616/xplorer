@@ -20,13 +20,13 @@
         </button>
         <ul class="dropdown-menu dropdown-inverse">
           <li>
-            <%= link_to "零層", topic_path(@base.id, :center => @center.id, :from => @center.id, :page_num => 0, :scale => 0) %>
+            <%= link_to "0 層", topic_path(@base.id, :center => @center.id, :from => @center.id, :page_num => 0, :scale => 0) %>
           </li>
           <li>
-            <%= link_to "一層", topic_path(@base.id, :center => @center.id, :from => @center.id, :page_num => 0, :scale => 1) %>
+            <%= link_to "1 層", topic_path(@base.id, :center => @center.id, :from => @center.id, :page_num => 0, :scale => 1) %>
           </li>
           <li>
-            <%= link_to "兩層", topic_path(@base.id, :center => @center.id, :from => @center.id, :page_num => 0, :scale => 2) %>
+            <%= link_to "2 層", topic_path(@base.id, :center => @center.id, :from => @center.id, :page_num => 0, :scale => 2) %>
           </li>
         </ul>
       </div>
