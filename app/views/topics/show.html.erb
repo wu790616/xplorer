@@ -37,7 +37,7 @@
       var height = $(window).innerHeight()*0.8;
       var topics = <%= raw(@topics.to_json) %>;
       var links  = <%= raw(@links.to_json) %>;
-      var max_layer = (<%= @scale %> == 0) ? 1 : <%= @scale %>;
+      var max_layer = <%= @scale %>;
       xmap(topics, links, max_layer, width, height);
     </script> 
   </div>
