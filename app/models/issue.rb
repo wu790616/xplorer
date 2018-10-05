@@ -1,6 +1,7 @@
 class Issue < ApplicationRecord
   # Filter非草稿issue
   scope :published, -> { where( :draft => false ) }
+  before_save :set_cover
 
   # 一個Issue屬於一個使用者
   belongs_to :user
@@ -42,4 +43,14 @@ class Issue < ApplicationRecord
     issue.save!
   end
 
+  private
+
+  def set_cover
+    doc = Nokogiri::HTML(self.content)
+    if img = doc.xpath('//img').first
+      self.cover = img.attr('src')
+    else
+      self.cover = "xplorer-logo.png"
+    end
+  end
 end

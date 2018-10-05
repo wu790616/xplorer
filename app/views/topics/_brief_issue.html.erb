@@ -1,12 +1,7 @@
 <% issues.each do |issue| %>
   <div class="row", style="padding-top: 15px;">
     <div class="col-md-2">
-      <% doc = Nokogiri::HTML(raw issue.content) %>
-      <% if img = doc.xpath('//img').first %>
-        <%= image_tag (img.attr('src')), class: "img-responsive img-rounded" %>
-      <% else %>
-        <%= image_tag "xplorer-logo.png", class: "img-responsive img-rounded" %>
-      <% end %>
+      <%= image_tag issue.cover, class: "img-responsive img-rounded" %>
     </div>
     <div class="col-md-10">
       <h3 style="margin-top: 0px"><strong>
