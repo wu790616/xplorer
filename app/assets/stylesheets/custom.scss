@@ -1,4 +1,14 @@
+/* OVERRIDE BOOTSTRAP
+-------------------------------------------------- */
+a {
+  color: #333333;
+  text-decoration: none;
+}
 
+.custom-a {
+  color: #4582ec;
+  text-decoration: none;
+}
 .custom-form {
    @media (min-width: $screen-sm-min) {
     width: $container-sm;
@@ -521,4 +531,5 @@ ul.notificator {
   font-size: 12px;
   border-top: 1px solid #dddddd;
 }
+
 

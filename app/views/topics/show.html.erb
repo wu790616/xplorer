@@ -10,35 +10,46 @@
             <%= link_to "#{topic.name}", topic_path(topic.id, :page_num => 0) %>
           </div>
         <% end %>
-    </div>
+      </div>
+      <!-- Select system Xmap scale -->
+      <div class="btn-group">
+        <i class="dropdown-arrow dropdown-arrow-inverse"></i>
+        <button class="btn btn-primary status">圖層</button>
+        <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu dropdown-inverse">
+          <li>
+            <%= link_to "0 層", topic_path(@base.id, :center => @center.id, :from => @center.id, :page_num => 0, :scale => 0) %>
+          </li>
+          <li>
+            <%= link_to "1 層", topic_path(@base.id, :center => @center.id, :from => @center.id, :page_num => 0, :scale => 1) %>
+          </li>
+          <li>
+            <%= link_to "2 層", topic_path(@base.id, :center => @center.id, :from => @center.id, :page_num => 0, :scale => 2) %>
+          </li>
+        </ul>
+      </div>
     </div>
     <div class="col-md-10" id="map"></div>
     <script>
       var width  = $('#map').innerWidth();
       var height = $(window).innerHeight()*0.8;
-      var topics = <%= raw(@topics.to_json) %>
-      var links  = <%= raw(@links.to_json) %>
-      var max_layer = (<%= @scale %> == 0) ? 1 : <%= @scale %>
+      var topics = <%= raw(@topics.to_json) %>;
+      var links  = <%= raw(@links.to_json) %>;
+      var max_layer = (<%= @scale %> == 0) ? 1 : <%= @scale %>;
       xmap(topics, links, max_layer, width, height);
     </script> 
-  </div>
-  <!-- Select system Xmap scale -->
-  <!-- 為檢視方便暫時搬至此處，請依排版需求調整 （完成後此註解可刪）-->
-  <div class="row">
-    <%= link_to "熱門推薦", topic_path(@base.id, :center => @center.id, :from => @center.id, :page_num => 0, :scale => 0) %>
-    <%= link_to "一層擴展", topic_path(@base.id, :center => @center.id, :from => @center.id, :page_num => 0, :scale => 1) %>
-    <%= link_to "兩層擴展", topic_path(@base.id, :center => @center.id, :from => @center.id, :page_num => 0, :scale => 2) %>
-    <%= link_to "三層擴展", topic_path(@base.id, :center => @center.id, :from => @center.id, :page_num => 0, :scale => 3) %>
   </div>
   <!-- Show system Xmap View log -->
   <!-- 為檢視方便暫時搬至此處，請依排版需求調整 （完成後此註解可刪）-->
   <% if @logs.count > 0 %>
     <div class="row">
-      瀏覽過的主題:
+      <div>瀏覽過的主題:</div>
       <% @logs.each do |log| %>
-        <div class="col-xs-2 col-md-1">
+        | <span>
           <%= link_to "#{log.name}", topic_path(log.id, :center => log.id, :from => @center.id, :page_num => 0, :scale => @scale) %>
-        </div>
+        </span>
       <% end %>
     </div>
   <% end %>
@@ -69,7 +80,7 @@
                   <h3 style="margin-top: 0px"><%= link_to "#{issue.title}", issue_path(issue) %></h3>
                   <div class="comment-text">
                     <% if strip_tags(issue.content).length > 150 %>
-                      <%= truncate(strip_tags(issue.content), length: 150 ) %><%= link_to "瀏覽更多", issue_path(issue)%>
+                      <%= truncate(strip_tags(issue.content), length: 150 ) %><%= link_to "瀏覽更多", issue_path(issue), class: "custom-a" %>
                     <% else %>
                       <%= strip_tags(issue.content) %>
                     <% end %>

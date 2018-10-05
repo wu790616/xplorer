@@ -5,12 +5,13 @@ function xmap(topics, links, max_layer, width, height) {
 	var layer_height = height / (max_layer+1) / 2;
 	//----------------------------------------
 	// Style setting
-	var base_r       = width/80; //旁支圓半徑，中心現為旁支2倍
-	var branch_color = "blue";   //旁支顏色
-	var center_color = "orange"; //中心顏色
-	var from_color   = "red";    //上一步顏色
-	var text_color   = "blue";   //文字顏色
-	var line_width   = 2;        //連結線粗細
+	var base_r       = width/35	; //旁支圓半徑，中心現為旁支2倍
+	var branch_color = "#d6ecf0";   //旁支顏色
+	var center_color = "#177cb0"; //中心顏色
+	var from_color   = "#eacd76";    //上一步顏色
+	var centertext_color   = "white";   //中心文字顏色
+	var branchtext_color   = "black";   //旁支文字顏色
+	var line_width   = 1;        //連結線粗細
 		
 	//----------------------------------------
 	// Force setting
@@ -78,10 +79,8 @@ function xmap(topics, links, max_layer, width, height) {
 								.attr("xlink:href", function(d) { return "http://"+window.location.host+"/topics/"+d.base+"?center="+d.center+"&from="+d.from+"&page_num="+d.page+"&scale="+max_layer })
 								.attr("class", "nodes")
 								.append("circle")
-								.attr("r", function(d) {return (d.type === "center") ? base_r*2.5 : base_r;} )
-								.attr("fill", function(d) { return (d.type === "center") ? center_color : (d.type === "from") ? from_color :  (d.group == 2) ? "green" : branch_color; })
-								.attr('stroke','white')
-								.attr('stroke-width',line_width)
+								.attr("r", function(d) {return (d.type === "center") ? base_r*1.5 : base_r;} )
+								.attr("fill", function(d) { return (d.type === "center") ? center_color : (d.type === "from") ? from_color : branch_color; })
 								.call(d3.drag()
 								.on("start", dragstarted)
 								.on("drag", dragged)
@@ -90,9 +89,9 @@ function xmap(topics, links, max_layer, width, height) {
 								.data(topics)
 								.enter()
 								.append("text")
-								.style("fill", text_color)
-								.attr("dx", base_r)
-								.attr("dy", base_r)
+								.style("fill", function(d) {return (d.type === "center") ? centertext_color : branchtext_color;})
+								.attr("dx", -base_r+3)
+								.attr("dy", 4)
 								.text(function(d){return d.name;});
 
 	simulation
