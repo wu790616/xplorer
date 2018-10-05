@@ -1,4 +1,5 @@
 class TopicFollowshipsController < ApplicationController
+  before_action :authenticate_user!
   INIT_STRENGTH = 200
   
   def create
