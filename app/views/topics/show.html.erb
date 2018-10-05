@@ -87,7 +87,7 @@
                   <h3 style="margin-top: 0px"><%= link_to "#{issue.title}", issue_path(issue) %></h3>
                   <div class="comment-text">
                     <% if strip_tags(issue.content).length > 150 %>
-                      <%= truncate(strip_tags(issue.content), length: 150 ) %><%= link_to "瀏覽更多", issue_path(issue)%>
+                      <%= truncate(strip_tags(issue.content), length: 150 ) %><%= link_to "瀏覽更多", issue_path(issue), class: "custom-a" %>
                     <% else %>
                       <%= strip_tags(issue.content) %>
                     <% end %>
