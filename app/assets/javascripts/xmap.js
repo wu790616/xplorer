@@ -27,10 +27,10 @@ function xmap(topics, links, max_layer, width, height) {
 										 .force("center", d3.forceCenter(width / 2, height / 2));
 
 	//Append a SVG to the body of the html page. Assign this SVG as an object to svg
-	var svg = d3.select("#map").append("svg")
+	var svg = d3.select("#map")
 	    				.attr("width", width)
 							.attr("height", height);
-
+			svg.selectAll("*").remove();
 	// Append arrow ar line end
 			svg.append("defs").selectAll("marker")
 					.data(["arrow_branch"])
