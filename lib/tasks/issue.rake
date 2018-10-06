@@ -2,7 +2,11 @@ namespace :issue do
 
   # 假議題數量，隨時更新
   ISSUE_NUM = 21
+  # 其他預設數量
+  BOOK_NUM = 8
+  LIKE_NUM = 10
 
+  # 產生假議題
   task demo_issue: :environment do
     Issue.destroy_all
 
@@ -143,7 +147,7 @@ namespace :issue do
           issue.content = "<p>&nbsp;<img alt=\"adventure, athlete, athletic\" height=\"270\" src=\"https://images.pexels.com/photos/235922/pexels-photo-235922.jpeg?auto=compress&amp;cs=tinysrgb&amp;h=650&amp;w=940\" width=\"406\" /></p>\r\n\r\n<p>進行體育運動時，當心率達到最大心率的50%－90%，就可認定是在進行有氧訓練，或者可以用自我感覺對自己運動時的狀態測定，在自我感覺「很輕鬆」、「比較輕鬆」、「有點累」、「比較累」、「很累」五個等級中，如果認為是「有點累」，到「比較累」之間，也可認定是有氧運動。要達到增強耐力的鍛鍊效果，有氧訓練的最低要求是，每天累計鍛鍊時間30分鐘，每周運動三次。</p>\r\n\r\n<p>比較科學的定義，有氧運動是指長時間（15分鐘以上）、有節奏、會令心跳率上升的大肌肉運動。</p>\r\n\r\n<h3>運動333</h3>\r\n\r\n<p>每周運動3次，每次超過30分鐘，心跳每分鐘130下。<sup id=\"cite_ref-2\">[2]</sup></p>\r\n\r\n<h3>運動357</h3>\r\n\r\n<p>運動每次應達30分鐘，每周5次，運動時每分鐘心跳數應達最大心跳數的7成。<sup id=\"cite_ref-3\">[3]</sup></p>\r\n\r\n<p><b>預估最大心跳數</b>的公式為220減去自己的年齡。例如一位24歲且「<u>沒有心血管疾病</u>」的大學生的預估最大心跳數為：220-24=196 (心跳/每分鐘).</p>\r\n\r\n<h3>測定之替代方案</h3>\r\n\r\n<p>評估運動時喘的程度，應達到感覺有點喘，但還可以講話，便是適當的運動強度，但若喘到沒辦法講話，代表超出心臟可負荷範圍。</p>\r\n\r\n<h3>運動須知</h3>\r\n\r\n<ul>\r\n\t<li>運動不分季節，但要量力而為。</li>\r\n\t<li>高血壓不宜劇烈運動。台大醫院復健科醫師 陳思遠：「運動357的準則是強調運動的時間、頻率和強度，但如果高血壓患者從事過於劇烈的運動，例如激烈的羽球、籃球競賽等，容易在短時間內就喘不過氣，甚至血壓飆高，危及健康。」</li>\r\n\t<li>中老年人要達到333原則有點吃力，建議以運動完會喘，但仍可說話為原則，避免運動到上氣不接下氣。</li>\r\n\t<li>年輕人則應以運動333原則為低標，選擇跑步、騎單車或游泳等有氧運動，每周3次運動各至少30分鐘，促進新陳代謝，可改善身體機能。</li>\r\n</ul>\r\n\r\n<div class=\"embed-240p\" data-oembed-url=\"https://zh.wikipedia.org/wiki/%E6%9C%89%E6%B0%A7%E8%BF%90%E5%8A%A8\">\r\n<div class=\"iframely-embed\">\r\n<div class=\"iframely-responsive\" style=\"padding-bottom: 52.2493%; padding-top: 120px;\"><a data-iframely-url=\"//cdn.iframe.ly/api/iframe?url=https%3A%2F%2Fzh.wikipedia.org%2Fwiki%2F%25E6%259C%2589%25E6%25B0%25A7%25E8%25BF%2590%25E5%258A%25A8&amp;key=362e0e28db58eb85d2d0307a53f31d0e\" href=\"https://zh.wikipedia.org/wiki/%25E6%259C%2589%25E6%25B0%25A7%25E8%25BF%2590%25E5%258A%25A8\">有氧运动</a></div>\r\n</div>\r\n<script async=\"\" charset=\"utf-8\" src=\"//cdn.iframe.ly/embed.js\"></script>\r\n</div>\r\n\r\n<p>&nbsp;</p>\r\n"
           topic_taged(issue, "運動")
           topic_taged(issue, "有氧運動")
-                                                                                         
+
       end
 
       issue.save!
@@ -152,6 +156,45 @@ namespace :issue do
     end
   end
 
+  # 產生收藏
+  task demo_bookmarks: :environment do
+    Bookmark.destroy_all
+      User.all.each do |user|
+      count = 0
+      rand(1..BOOK_NUM).times do |j|
+        issue = Issue.all.sample
+        if issue.is_bookmarked?(user)
+          count = count
+        else
+          user.bookmarks.create(issue: issue)
+          count = count + 1
+        end
+      end
+      puts "have created #{count} bookmarks for user #{user.name}"
+    end
+    puts "now you have #{Bookmark.count} bookmarks data (#{Bookmark.first.id}..#{Bookmark.last.id})"
+  end
+
+  # 產生like
+  task demo_likes: :environment do
+    Bookmark.destroy_all
+      User.all.each do |user|
+      count = 0
+      rand(1..LIKE_NUM).times do |j|
+        issue = Issue.all.sample
+        if issue.is_liked?(user)
+          count = count
+        else
+          user.likes.create(issue: issue)
+          count = count + 1
+        end
+      end
+      puts "have created #{count} likes for user #{user.name}"
+    end
+    puts "now you have #{Like.count} likes data (#{Like.first.id}..#{Like.last.id})"
+  end
+
+  # issue_taged_topic
   def topic_taged(issue, topic_name)
     issue.topic_tagships.create(
       topic: Topic.find_by_name(topic_name)
