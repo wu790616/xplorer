@@ -180,12 +180,12 @@
                 <%= button_to "改為公開", user_path(@user), method: :patch, params: { :"user[topic_follow_privacy]" => true }, class: "btn btn-primary btn-xs" %>
               <% end %>
               <div class="container">
-                <div id="map"></div>
+                <svg id="map"></svg>
               </div>
             <!-- 非本人當使用者設定可以看到X MAP時，顯示X MAP -->
             <% elsif @user.topic_follow_privacy %>
               <div class="container">
-                <div id="map"></div>
+                <svg id="map"></svg>
               </div>
             <!-- 非本人當使用者設定不可以看到X MAP時，顯示使用者不公開 -->
             <% else %>
@@ -205,9 +205,9 @@
     </div>
   </div>
 <script>
-  var width  = $(window).innerWidth()*0.9;
+  var width  = $('.tab-content').innerWidth()*0.9;
   var height = $(window).innerHeight()*0.8;
   var topics = <%= raw(@map_topics.to_json) %>
   var links  = <%= raw(@map_links.to_json) %>
-  xmap(topics, links, 4, width, height);
+  xmap(topics, links, 1, width, height);
 </script>

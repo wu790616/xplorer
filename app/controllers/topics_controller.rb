@@ -90,7 +90,7 @@ class TopicsController < ApplicationController
     @scale  =  params[:scale].to_i
 
     # Xplorer map
-    xmap = @center.system_map(@base, from, params[:scale].to_i, params[:page].to_i, current_user)
+    xmap = @center.system_map(@base, from, params[:scale].to_i, params[:page_num].to_i, current_user)
     @topics = xmap[0][:topics]
     @links  = xmap[1][:links]
 
