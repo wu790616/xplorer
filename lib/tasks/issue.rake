@@ -1,17 +1,19 @@
 namespace :issue do
 
   # 假議題數量，隨時更新
-  ISSUE_NUM = 21
-  # 其他預設數量
-  BOOK_NUM = 8
-  LIKE_NUM = 10
+  ISSUE_ALL = 21
+  # 一個USER與議題互動的預設數量
+  BOOK_NUM = 5
+  LIKE_NUM = 8
+  COMMENT_NUM = 5
+  REPLY_NUM = 8
 
   # 產生假議題
   task demo_issue: :environment do
     Issue.destroy_all
 
     # 根據目前有幾篇假議題，決定create次數
-    ISSUE_NUM.times do |i|
+    ISSUE_ALL.times do |i|
       Issue.create!(
         draft: "false",
         views_count: rand(1..300),
@@ -161,7 +163,7 @@ namespace :issue do
     Bookmark.destroy_all
       User.all.each do |user|
       count = 0
-      rand(1..BOOK_NUM).times do |j|
+      BOOK_NUM.times do |j|
         issue = Issue.all.sample
         if issue.is_bookmarked?(user)
           count = count
@@ -170,7 +172,6 @@ namespace :issue do
           count = count + 1
         end
       end
-      puts "have created #{count} bookmarks for user #{user.name}"
     end
     puts "now you have #{Bookmark.count} bookmarks data (#{Bookmark.first.id}..#{Bookmark.last.id})"
   end
@@ -180,7 +181,7 @@ namespace :issue do
     Bookmark.destroy_all
       User.all.each do |user|
       count = 0
-      rand(1..LIKE_NUM).times do |j|
+      LIKE_NUM.times do |j|
         issue = Issue.all.sample
         if issue.is_liked?(user)
           count = count
@@ -189,9 +190,35 @@ namespace :issue do
           count = count + 1
         end
       end
-      puts "have created #{count} likes for user #{user.name}"
     end
     puts "now you have #{Like.count} likes data (#{Like.first.id}..#{Like.last.id})"
+  end
+
+  # 產生comment
+  task demo_comments: :environment do
+    Comment.destroy_all
+    User.all.each do |user|
+      count = 0
+      COMMENT_NUM.times do |j|
+        issue = Issue.all.sample 
+        case rand(1..4)
+          when 1
+            comment_content = "謝謝分享，長知識了。"
+          when 2
+            comment_content = "感謝大大無私分享！"
+          when 3
+            comment_content = "原來還有這種解釋！"
+          when 4
+            comment_content = "這篇真的很有水準，精彩見解。"
+        end      
+        user.comments.create(
+          issue: issue,
+          content: comment_content
+        )
+        count = count + 1
+      end
+    end
+    puts "now you have #{Comment.count} comments data (#{Comment.first.id}..#{Comment.last.id})"
   end
 
   # issue_taged_topic
