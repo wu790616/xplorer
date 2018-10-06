@@ -2981,21 +2981,9 @@ namespace :demo do
     puts "demo_user_followship processing..."
     Rake::Task['demo:demo_user_followship'].execute
     
-    # 下列 task 需再更新
-    # 建立 Demo 用 Issue 資料和Issue Tag Topic
-    puts "demo_issue processing..."
-    Rake::Task['issue:demo_issue'].execute
-
-    # 待 demo Issue 建立後，更新下列 task 內容
-    # Relationship between User and Issue
-    puts "demo_bookmarks processing..."
-    Rake::Task['issue:demo_bookmarks'].execute
-    #puts "demo_comments processing..."
-    #Rake::Task['demo:demo_comments'].execute
-    puts "demo_likes processing..."
-    Rake::Task['issue:demo_likes'].execute
-    #puts "demo_replies processing..."
-    #Rake::Task['demo:demo_replies'].execute
+    # 建立 Demo 用 Issue 所有相關資料
+    puts "demo_issue_all processing..."
+    Rake::Task['issue:issue_all'].execute
 
     # 由每個 issue 上的 topic tag 更新 Xplorer map 關聯
     puts "issuetag processing..."

@@ -3,8 +3,6 @@ namespace :issue do
   # 假議題數量，隨時更新
   ISSUE_ALL = 21
   # 一個USER與議題互動的預設數量
-  BOOK_NUM = 5
-  LIKE_NUM = 8
   COMMENT_NUM = 5
   REPLY_NUM = 8
 
@@ -163,7 +161,7 @@ namespace :issue do
     Bookmark.destroy_all
       User.all.each do |user|
       count = 0
-      BOOK_NUM.times do |j|
+      1..Issue.count.times do |j|
         issue = Issue.all.sample
         if issue.is_bookmarked?(user)
           count = count
@@ -178,10 +176,10 @@ namespace :issue do
 
   # 產生like
   task demo_likes: :environment do
-    Bookmark.destroy_all
+    Like.destroy_all
       User.all.each do |user|
       count = 0
-      LIKE_NUM.times do |j|
+      1..Issue.count.times do |j|
         issue = Issue.all.sample
         if issue.is_liked?(user)
           count = count
@@ -201,7 +199,7 @@ namespace :issue do
       count = 0
       COMMENT_NUM.times do |j|
         issue = Issue.all.sample 
-        case rand(1..4)
+        case rand(1..5)
           when 1
             comment_content = "謝謝分享，長知識了。"
           when 2
@@ -210,6 +208,8 @@ namespace :issue do
             comment_content = "原來還有這種解釋！"
           when 4
             comment_content = "這篇真的很有水準，精彩見解。"
+          when 5
+            comment_content = "我開始相信你了"
         end      
         user.comments.create(
           issue: issue,
@@ -219,6 +219,52 @@ namespace :issue do
       end
     end
     puts "now you have #{Comment.count} comments data (#{Comment.first.id}..#{Comment.last.id})"
+  end
+
+  # 產生reply
+  task demo_replies: :environment do
+    Reply.destroy_all
+    User.all.each do |user|
+      count = 0
+      REPLY_NUM.times do |j|
+        comment = Comment.all.sample
+        case rand(1..5)
+          when 1
+            reply_content = "我也這麼覺得"
+          when 2
+            reply_content = "認同"
+          when 3
+            reply_content = "原來不是只有我不知道"
+          when 4
+            reply_content = "這篇文真的不錯"
+          when 5
+            reply_content = "恩恩"
+        end 
+        user.replies.create(
+          comment: comment,
+          content: reply_content
+        )
+        count = count + 1
+      end
+    end
+    puts "now you have #{Reply.count} replies data (#{Reply.first.id}..#{Reply.last.id})"
+  end
+
+  task issue_all: :environment do
+    # 建立 Demo 用 Issue 資料和Issue Tag Topic
+    puts "demo_issue processing..."
+    Rake::Task['issue:demo_issue'].execute
+
+    # 待 demo Issue 建立後，更新下列 task 內容
+    # Relationship between User and Issue
+    puts "demo_bookmarks processing..."
+    Rake::Task['issue:demo_bookmarks'].execute
+    puts "demo_comments processing..."
+    Rake::Task['issue:demo_comments'].execute
+    puts "demo_likes processing..."
+    Rake::Task['issue:demo_likes'].execute
+    puts "demo_replies processing..."
+    Rake::Task['issue:demo_replies'].execute
   end
 
   # issue_taged_topic
