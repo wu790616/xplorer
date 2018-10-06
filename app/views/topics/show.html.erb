@@ -57,15 +57,18 @@
     <div class="panel panel-default widget">
       <div class="panel-heading", style="text-align: center;">
         <h3 class="panel-title"><%= @base.name %></h3>
-        <% if current_user && current_user.followingtopic?(@base) %>
-          <%= link_to topic_followship_path(@base), method: :delete do %>
-            <span class="glyphicon glyphicon-star", style="float: right;">關注中</span>
-          <% end %>
-        <% else %>
-          <%= link_to topic_followships_path(:topic_id => @base), method: :post do %>
-            <span class="glyphicon glyphicon-star-empty", style="float: right;">關注</span>
-          <% end %>
-        <% end %>
+        <div id="follow-topic">
+          <% if current_user && current_user.followingtopic?(@base) %>
+            <%= link_to topic_followship_path(@base), remote: true, method: :delete do %>
+              <span class="glyphicon glyphicon-star">關注中</span>
+            <% end %>
+          <% else %>
+            <%= link_to topic_followships_path(:topic_id => @base), remote: true, method: :post do %>
+              <span class="glyphicon glyphicon-star-empty">關注</span>
+            <% end %>
+          <% end %>           
+        </div>
+           
       </div>
       <div class="panel-body">
         <ul class="list-group">

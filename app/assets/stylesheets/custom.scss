@@ -226,6 +226,12 @@ a {
  border-top-left-radius:0px;border-top-right-radius:0px; 
  }
 
+#follow-topic {
+  display: inline-block; 
+  float: right;
+  width: 64px;
+}
+
 /* CUSTOMIZE THE COMMENT
 -------------------------------------------------- */
 .comments {
