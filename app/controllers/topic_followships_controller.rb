@@ -2,22 +2,26 @@ class TopicFollowshipsController < ApplicationController
   before_action :authenticate_user!
   INIT_STRENGTH = 200
   
-  def create
-    
+  def create  
     @followship = current_user.topic_followships.build(topic_id: params[:topic_id])
     @followship.strength = 200
     @followship.progress = "processed"
 
-    if @followship.save
+    unless @followship.save
       redirect_back(fallback_location: root_path)
-    else
-      redirect_back(fallback_location: root_path)
+    end
+
+    respond_to do |format|
+      format.js { render "topics/follow" }
     end
   end
 
   def destroy
     @followship = current_user.topic_followships.where(topic_id: params[:id]).first
     @followship.destroy
-    redirect_back(fallback_location: root_path)
+    
+    respond_to do |format|
+      format.js { render "topics/follow" }
+    end
   end
 end
