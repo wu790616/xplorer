@@ -2947,53 +2947,7 @@ namespace :demo do
     puts "now you have #{UserFollowship.count} user_followships data (#{UserFollowship.first.id}..#{UserFollowship.last.id})"
   end
 
-  # 建立 Demo 用 Issue 資料
-  task demo_issue: :environment do
-    Issue.destroy_all
-
-    #puts "have created fake issues"
-    #puts "now you have #{Issue.count} issues data (#{Issue.first.id}..#{Issue.last.id})"
-  end
-
-  # 建立 Demo 用 Issue Tag Topic 資料
-  task demo_topic_tagships: :environment do
-    TopicTagship.destroy_all
-
-    #puts "have created fake topic_tagships"
-    #puts "now you have #{TopicTagship.count} topic_tagships data"
-  end
-
-  # 建立 Demo 用 User Bookmark Issue 資料
-  task demo_bookmarks: :environment do
-    Bookmark.destroy_all
-
-   #puts "have created demo bookmarks"
-   #puts "now you have #{Bookmark.count} user_followships data (#{Bookmark.first.id}..#{Bookmark.last.id})"
-  end
-
-  # 建立 Demo 用 User Comment Issue 資料
-  task demo_comments: :environment do
-    Comment.destroy_all
-
-    #puts "have created #{count} comments for user #{user.name}"
-    #puts "now you have #{Comment.count} comments data (#{Comment.first.id}..#{Comment.last.id})"
-  end
-
-  # 建立 Demo 用 User Like Issue 資料
-  task demo_likes: :environment do
-    Like.destroy_all
-
-    #puts "have created #{count} likes for user #{user.name}"
-    #puts "now you have #{Like.count} likes data (#{Like.first.id}..#{Like.last.id})"
-  end
-
-  # 建立 Demo 用 User Reply Comment 資料
-  task demo_replies: :environment do
-    Reply.destroy_all
-
-    #puts "have created #{count} replies for user #{user.name}"
-    #puts "now you have #{Reply.count} replies data (#{Reply.first.id}..#{Reply.last.id})"
-  end
+  # Issue相關移至issue.rake
    
   # 建立上列 Xplorer Map
   task xmap_all: :environment do
@@ -3027,24 +2981,9 @@ namespace :demo do
     puts "demo_user_followship processing..."
     Rake::Task['demo:demo_user_followship'].execute
     
-    # 下列 task 需再更新
-    # 建立 Demo 用 Issue 資料
-    puts "demo_issue processing..."
-    Rake::Task['demo:demo_issue'].execute
-    # 建立 Demo 用 Issue Tag Topic 資料
-    puts "demo_topic_tagships processing..."
-    Rake::Task['demo:demo_topic_tagships'].execute
-
-    # 待 demo Issue 建立後，更新下列 task 內容
-    # Relationship between User and Issue
-    puts "demo_bookmarks processing..."
-    Rake::Task['demo:demo_bookmarks'].execute
-    puts "demo_comments processing..."
-    Rake::Task['demo:demo_comments'].execute
-    puts "demo_likes processing..."
-    Rake::Task['demo:demo_likes'].execute
-    puts "demo_replies processing..."
-    Rake::Task['demo:demo_replies'].execute
+    # 建立 Demo 用 Issue 所有相關資料
+    puts "demo_issue_all processing..."
+    Rake::Task['issue:issue_all'].execute
 
     # 由每個 issue 上的 topic tag 更新 Xplorer map 關聯
     puts "issuetag processing..."
