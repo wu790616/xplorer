@@ -12,7 +12,7 @@ class TopicFollowshipsController < ApplicationController
     end
 
     respond_to do |format|
-      format.js { render "follow" }
+      format.js { render "topics/follow" }
     end
   end
 
@@ -21,7 +21,7 @@ class TopicFollowshipsController < ApplicationController
     @followship.destroy
     
     respond_to do |format|
-      format.js { render "follow" }
+      format.js { render "topics/follow" }
     end
   end
 end
