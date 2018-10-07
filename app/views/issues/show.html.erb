@@ -52,15 +52,19 @@
             <!-- like/unlike -->
             <% if @issue.is_liked?(current_user) %> 
               <%= link_to 'Unlike', like_path(@issue), remote: true, method: :delete, class: "btn btn-info btn-sm" %>
-            <% else %>
+            <% elsif current_user %>
               <%= link_to 'Like', likes_path(issue_id: @issue), remote: true, method: :post, class: "btn btn-primary btn-sm" %>
+            <% else %>
+              <%= link_to 'Like', likes_path(issue_id: @issue), method: :post, class: "btn btn-primary btn-sm" %>
             <% end %>
 
             <!-- bookmark/unbookmark -->
             <% if @issue.is_bookmarked?(current_user) %> 
               <%= link_to '取消收藏', bookmark_path(@issue), remote: true, method: :delete, class: "btn btn-info btn-sm" %>
-            <% else %>
+            <% elsif current_user %>
               <%= link_to '收藏', bookmarks_path(issue_id: @issue), remote: true, method: :post, class: "btn btn-primary btn-sm" %>
+            <% else %>
+              <%= link_to '收藏', bookmarks_path(issue_id: @issue), method: :post, class: "btn btn-primary btn-sm" %>
             <% end %>
 
             <!-- Facebook share button -->
