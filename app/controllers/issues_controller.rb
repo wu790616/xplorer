@@ -12,19 +12,13 @@ class IssuesController < ApplicationController
     @issue.edit_time = Time.current
     if @issue.draft
       if @issue.save
+        flash[:notice] = "草稿儲存成功"
         redirect_to issue_path(@issue)
       else
         render :new
       end
     else
-      if @issue.title.empty? or @issue.content.empty? or @issue.taged_topics.empty?
-        @issue.draft = true
-        @issue.save
-        redirect_to edit_issue_path(@issue)
-      else
-        @issue.save
-        redirect_to issue_path(@issue)
-      end
+      publish_issue
     end
   end
 
@@ -49,16 +43,10 @@ class IssuesController < ApplicationController
     @issue.edit_time = Time.current
     if @issue.update(issue_params)
       if @issue.draft
+        flash[:notice] = "草稿儲存成功"
         redirect_to issue_path(@issue)
       else
-        if @issue.title.empty? or @issue.content.empty? or @issue.taged_topics.empty?
-          @issue.draft = true
-          @issue.save
-          redirect_to edit_issue_path(@issue)
-        else
-          @issue.save
-          redirect_to issue_path(@issue)
-        end
+        publish_issue
       end
     else
       render :edit
@@ -73,6 +61,19 @@ class IssuesController < ApplicationController
 
   def set_issue
     @issue = Issue.find(params[:id])
+  end
+
+  def publish_issue
+    if @issue.title.empty? or @issue.content.empty? or @issue.taged_topics.empty?
+      @issue.draft = true
+      @issue.save
+      flash[:alert] = "議題發佈時，標題、內容、標籤不可為空。"
+      redirect_to edit_issue_path(@issue)
+    else
+      @issue.save
+      flash[:notice] = "議題發佈成功"
+      redirect_to issue_path(@issue)
+    end
   end
 
 end
