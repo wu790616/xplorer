@@ -61,7 +61,7 @@ a {
   display: inline;
 }
 
-.dropdown-menu {
+.dropdown-menu-c {
   top: 35px;
 }
 
@@ -551,19 +551,20 @@ ul.notificator {
 -------------------------------------------------- */
 
 .info {
-  width: 250px;
-  background: white;
-  color: rgba(0, 0, 0, 0.87);
+  
   -webkit-clip-path: circle(24px at 30px 24px);
   clip-path: circle(24px at 10px 10px);
   -webkit-transition: -webkit-clip-path 0.5625s, clip-path 0.375s;
   transition: -webkit-clip-path 0.5625s, clip-path 0.375s;
   z-index: 999;
   position: absolute;
-  left: 120px;
 }
 
 .info:hover {
+  width: 250px;
+  background: white;
+  color: rgba(0, 0, 0, 0.87);
+
   -webkit-transition-timing-function: ease-out;
   transition-timing-function: ease-out;
   -webkit-transition-duration: 0.75s;
@@ -588,15 +589,15 @@ ul.notificator {
 
 .info-list:active { background: #ffca28; }
 
-.glyphicon {
-  padding: 10px;
+.glyphicon-c {
+  padding: 5px 0px 0px 5px;
   cursor: pointer;
   -webkit-transform-origin: 32px 24px;
   -ms-transform-origin: 32px 24px;
   transform-origin: 32px 24px;
 }
 
-.glyphicon div {
+.glyphicon-c div {
   position: relative;
   width: 20px;
   height: 2px;

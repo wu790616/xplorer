@@ -13,24 +13,24 @@
       </div>
       <div class="panel panel-default">
         <div class="panel-body">
-          <p class="text-center">
+          <div class="text-center">
             Xmap
-          </p>
-          <span class="info">
-            <span class="glyphicon glyphicon-info-sign" >
+            <span class="info text-left">
+              <span class="glyphicon glyphicon-info-sign glyphicon-c" ></span>
+              <p class="info-list">點擊中心點：進入該主題頁</p>
+              <p class="info-list">點擊旁支：探索相關主題</p>
+              <p class="info-list">圖層：Xmap顯示範圍</p>
             </span>
-            <div class="info-list">點擊中心點：進入該主題頁</div>
-            <div class="info-list">點擊旁支：探索相關主題</div>
-            <div class="info-list">圖層：Xmap顯示範圍</div>
-          </span>
+          </div>
+          <p></p>
           <!-- Select system Xmap scale -->
           <div class="btn-group">
             <i class="dropdown-arrow dropdown-arrow-inverse"></i>
-            <button class="btn btn-primary status">圖層</button>
+            <button class="btn btn-primary status", style="width: 75%;">圖層</button>
             <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
               <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu dropdown-inverse">
+            <ul class="dropdown-menu dropdown-inverse dropdown-menu-c ">
               <li>
                 <%= link_to "0 層", topic_path(@base.id, :center => @center.id, :from => @center.id, :page_num => 0, :scale => 0) %>
               </li>
@@ -42,7 +42,6 @@
               </li>
             </ul>
           </div>
-          
         </div>
       </div>
     </div>
