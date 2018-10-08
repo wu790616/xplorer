@@ -64,7 +64,7 @@ class IssuesController < ApplicationController
   end
 
   def publish_issue
-    if @issue.title.empty? or @issue.content.empty? or @issue.taged_topics.empty?
+    if @issue.title.empty? || @issue.content.empty? || @issue.taged_topics.empty?
       @issue.draft = true
       @issue.save
       flash[:alert] = "議題發佈時，標題、內容、標籤不可為空。"
