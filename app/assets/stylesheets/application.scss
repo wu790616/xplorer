@@ -29,7 +29,7 @@ body { padding-top: 70px; }
 $size: 35px;
 
 .social-share-button {
-  display: inline-block;
+  display: inline-grid;
   vertical-align: middle;
   .ssb-icon {
     background-size: $size $size;
