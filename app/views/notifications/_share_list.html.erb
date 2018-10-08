@@ -17,25 +17,34 @@
     <% notification_content = "在你的議題 #{notification.content} 下留言" %>
 <% end %>
 
-<li>
+<li class="col-md-12">
   <div class="media">
     <div class="media-left">
-      <img src=<%= notification_avatar %> class="media-object cat-icon rounded-circle" alt="...">
-    </div>
-    <div class="media-body">
       <%= link_to user_path(notification.user), { :class=>"notification-link" } do  %>
         <img src=<%= notification.user.avatar.url %> class="avatar rounded" alt="...">
       <% end %>
-      <% if notification.read == false %>
-        <span class="label label-danger">NEW</span>
-        <span class="label label-default"><%= link_to "標為已讀", mark_as_read_notification_path(notification), method: :POST, remote: true %></span>
-      <% end %>
-      <a class="notification-link" href=<%= notification.link %>>
-      <div class="notification-main">
-        <p class="media-heading"><b><%= notification.user.name %></b> <%= notification_content %></p>
-        <span class="notification-date"><%= notification.created_at.localtime.to_s(:long) %></span>
-      </div>
-      </a>
+    </div>
+    <div class="media-body">
+      <ol class="list-unstyled">
+        <li>
+          <% if notification.read == false %>
+            <span class="label label-danger">NEW</span>
+            <span class="label label-default"><%= link_to "標為已讀", mark_as_read_notification_path(notification), method: :POST, remote: true %></span>
+          <% end %>
+        <li>
+        <p></p>
+        <li>
+          <a class="notification-link" href=<%= notification.link %>>
+          <span class="notification-main">
+            <span class="media-heading">
+              <b><%= notification.user.name %></b>
+              <%= notification_content %>
+              <span class="notification-date"><%= notification.created_at.localtime.to_s(:db) %></span>
+            </span>
+          </span>
+          </a>
+        </li>
+      </ol>
     </div>
   </div>
 </li>
