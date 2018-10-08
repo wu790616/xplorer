@@ -56,6 +56,15 @@ a {
     min-height: 400px;
 }
 
+.btn-group,
+.btn-group-vertical {
+  display: inline;
+}
+
+.dropdown-menu-c {
+  top: 35px;
+}
+
 .fb-profile img.fb-image-lg{
     z-index: 0;
     width: 100%;  
@@ -536,6 +545,62 @@ ul.notificator {
   padding: 8px;
   font-size: 12px;
   border-top: 1px solid #dddddd;
+}
+
+/* CUSTOMIZE TOPIC PAGE-INFO ICON
+-------------------------------------------------- */
+
+.info {
+  
+  -webkit-clip-path: circle(24px at 30px 24px);
+  clip-path: circle(24px at 10px 10px);
+  -webkit-transition: -webkit-clip-path 0.5625s, clip-path 0.375s;
+  transition: -webkit-clip-path 0.5625s, clip-path 0.375s;
+  z-index: 999;
+  position: absolute;
+}
+
+.info:hover {
+  width: 250px;
+  background: white;
+  color: rgba(0, 0, 0, 0.87);
+
+  -webkit-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+  -webkit-transition-duration: 0.75s;
+  transition-duration: 0.75s;
+  -webkit-clip-path: circle(390px at 225px 24px);
+  clip-path: circle(390px at 150px 24px);
+  background: #f0f0f4;
+}
+
+.info-list {
+  display: block;
+  line-height: 30px;
+  padding: 0 10px;
+  color: inherit;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+
+.info-list:active { background: #ffca28; }
+
+.glyphicon-c {
+  padding: 5px 0px 0px 5px;
+  cursor: pointer;
+  -webkit-transform-origin: 32px 24px;
+  -ms-transform-origin: 32px 24px;
+  transform-origin: 32px 24px;
+}
+
+.glyphicon-c div {
+  position: relative;
+  width: 20px;
+  height: 2px;
 }
 
 
