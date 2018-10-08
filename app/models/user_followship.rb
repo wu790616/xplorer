@@ -7,8 +7,7 @@ class UserFollowship < ApplicationRecord
   private
 
   def notify
-    Notification.create( recipient: self.following, user: self.user,  action: "followed", notifiable: self.following, 
-      link: Rails.application.routes.url_helpers.user_path(self.user) )
+    Notification.create( recipient: self.following, user: self.user,  action: "followed", notifiable: self.following )
   end
 
 end
