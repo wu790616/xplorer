@@ -47,24 +47,37 @@
             <%=raw @issue.content %>
           </div>
         </div>
+        <br>
         <div class="text-right", id="interact-button">
           <% if @issue.draft == false %>
             <!-- like/unlike -->
             <% if @issue.is_liked?(current_user) %> 
-              <%= link_to 'Unlike', like_path(@issue), remote: true, method: :delete, class: "btn btn-info btn-sm" %>
+              <%= link_to like_path(@issue), remote: true, method: :delete, class: "btn btn-info btn-sm" do %>
+                <span class="glyphicon glyphicon-heart"></span> 取消讚
+              <% end %>
             <% elsif current_user %>
-              <%= link_to 'Like', likes_path(issue_id: @issue), remote: true, method: :post, class: "btn btn-primary btn-sm" %>
+              <%= link_to likes_path(issue_id: @issue), remote: true, method: :post, class: "btn btn-primary btn-sm" do %>
+                <span class="glyphicon glyphicon-heart-empty"></span> 讚
+              <% end %>
             <% else %>
-              <%= link_to 'Like', likes_path(issue_id: @issue), method: :post, class: "btn btn-primary btn-sm" %>
+              <%= link_to likes_path(issue_id: @issue), method: :post, class: "btn btn-primary btn-sm" do %>
+                <span class="glyphicon glyphicon-heart-empty"></span> 讚
+              <% end %>
             <% end %>
 
             <!-- bookmark/unbookmark -->
             <% if @issue.is_bookmarked?(current_user) %> 
-              <%= link_to '取消收藏', bookmark_path(@issue), remote: true, method: :delete, class: "btn btn-info btn-sm" %>
+              <%= link_to bookmark_path(@issue), remote: true, method: :delete, class: "btn btn-info btn-sm" do   %>
+                <i class="fas fa-bookmark"></i> 取消收藏
+              <% end %>
             <% elsif current_user %>
-              <%= link_to '收藏', bookmarks_path(issue_id: @issue), remote: true, method: :post, class: "btn btn-primary btn-sm" %>
+              <%= link_to bookmarks_path(issue_id: @issue), remote: true, method: :post, class: "btn btn-primary btn-sm" do%>
+                <i class="far fa-bookmark"></i> 收藏
+              <% end %>
             <% else %>
-              <%= link_to '收藏', bookmarks_path(issue_id: @issue), method: :post, class: "btn btn-primary btn-sm" %>
+              <%= link_to bookmarks_path(issue_id: @issue), method: :post, class: "btn btn-primary btn-sm" do %>
+                <i class="far fa-bookmark"></i> 收藏
+              <% end %>
             <% end %>
 
             <!-- Facebook share button -->
