@@ -98,7 +98,7 @@ class TopicsController < ApplicationController
     @issues = @base.taged_issues.published.order(edit_time: :desc).page(params[:page]).per(15)
 
     # User activity
-    if((params[:from].to_i != 0)&(params[:from] != params[:center]))
+    if (params[:from].to_i != 0) && (params[:from] != params[:center])
       ahoy.track "XmapViewlog", {from: params[:from].to_i, to: params[:center].to_i, layer: @scale, progress: "init"}
     end
 
