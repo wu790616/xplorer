@@ -170,11 +170,10 @@ $ redis-server
 * Search: [Ransack](https://github.com/activerecord-hackery/ransack)
 * Schedule: [Whenever](https://github.com/javan/whenever)
 * HTML parser: [Nokogiri](http://www.nokogiri.org/)
-
-## Fake Issue Source
-[Wikipedia](https://zh.wikipedia.org/wiki/Wikipedia:%E9%A6%96%E9%A1%B5)
-[Ari的學習心法](https://medium.com/%E6%88%91%E7%9A%84%E5%AD%B8%E7%BF%92%E4%B9%8B%E6%97%85)
-[Pexels](https://www.pexels.com/)
+* Fake Issue Source
+  * [Wikipedia](https://zh.wikipedia.org/wiki/Wikipedia:%E9%A6%96%E9%A1%B5)
+  * [Ari的學習心法](https://medium.com/%E6%88%91%E7%9A%84%E5%AD%B8%E7%BF%92%E4%B9%8B%E6%97%85)
+  * [Pexels](https://www.pexels.com/)
 
 ## Authors
 [Miki](https://github.com/miki770420)
