@@ -7,7 +7,6 @@ class Reply < ApplicationRecord
   private
 
   def notify
-    Notification.create( recipient: self.comment.user, user: self.user,  action: "replied", notifiable: self.comment, content: self.comment.issue.title,
-     link: Rails.application.routes.url_helpers.issue_path(self.comment.issue) )
+    Notification.create( recipient: self.comment.user, user: self.user,  action: "replied", notifiable: self.comment, content: self.comment.issue.title )
   end
 end

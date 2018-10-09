@@ -7,7 +7,6 @@ class Bookmark < ApplicationRecord
   private
 
   def notify
-    Notification.create( recipient: self.issue.user, user: self.user,  action: "bookmarked", notifiable: self.issue, content: self.issue.title, 
-    link: Rails.application.routes.url_helpers.issue_path(self.issue) )
+    Notification.create( recipient: self.issue.user, user: self.user,  action: "bookmarked", notifiable: self.issue, content: self.issue.title )
   end
 end

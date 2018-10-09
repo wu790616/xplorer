@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_04_173618) do
+ActiveRecord::Schema.define(version: 2018_10_08_144013) do
 
   create_table "ahoy_events", force: :cascade do |t|
     t.integer "visit_id"
@@ -110,7 +110,6 @@ ActiveRecord::Schema.define(version: 2018_10_04_173618) do
   create_table "notifications", force: :cascade do |t|
     t.integer "user_id"
     t.string "content"
-    t.string "link"
     t.boolean "read", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -124,19 +123,6 @@ ActiveRecord::Schema.define(version: 2018_10_04_173618) do
     t.integer "user_id"
     t.integer "comment_id"
     t.text "content"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "skills", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "skillships", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "skill_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

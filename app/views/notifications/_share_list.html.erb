@@ -4,8 +4,7 @@
     <% notification_content = "追蹤了你!" %>
   <% when "liked" %>
     <% notification_avatar = "https://cdn4.iconfinder.com/data/icons/mayssam/512/heart-128.png" %>
-    <% notification_content = "喜歡你的議題: #{notification.content}" %>
-    
+    <% notification_content = "喜歡你的議題: #{notification.content}" %>    
   <% when "bookmarked" %>
     <% notification_avatar = "https://cdn4.iconfinder.com/data/icons/mayssam/512/star-128.png" %>
     <% notification_content = "收藏你的議題: #{notification.content}" %>
@@ -34,7 +33,7 @@
         <li>
         <p></p>
         <li>
-          <a class="notification-link" href=<%= notification.link %>>
+          <a class="notification-link" href=<%= notifable_link(notification) %>>
           <span class="notification-main">
             <span class="media-heading">
               <b><%= notification.user.name %></b>
