@@ -1,3 +1,4 @@
+<script src="//cdn.iframe.ly/embed.js" async></script>
 <div class="container col-lg-12 main">
   <div class="col-lg-12 post">
     <div class="container">
@@ -44,7 +45,15 @@
         <hr>
         <div class="row">
           <div class="col-lg-12">
-            <%=raw @issue.content %>
+            <%= raw Sanitize.fragment(@issue.content, Sanitize::Config.merge(Sanitize::Config::RELAXED,
+            :elements => Sanitize::Config::RELAXED[:elements] + ['iframe'],
+            :attributes => {
+              'iframe' => ['allowfullscreen', 'src', 'scrolling'],
+              'div' => ['data-oembed-url'],
+              'a' => ['data-iframely-url', 'data-href', 'href', 'target']
+            },
+            :remove_contents => true
+            )) %>
           </div>
         </div>
         <br>
