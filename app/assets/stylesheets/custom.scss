@@ -376,6 +376,7 @@ a {
   height: 100%;
 }
 
+
 /* CUSTOMIZE GLYPHICON COLOR
 -------------------------------------------------- */
 .red {
@@ -605,6 +606,40 @@ ul.notificator {
   position: relative;
   width: 20px;
   height: 2px;
+}
+
+/* CUSTOMIZE FOOTER
+-------------------------------------------------- */
+
+body {
+ height: 100%;
+ position: relative;
+ padding-top: 70px; /* Bootstrap body padding for fixed navbar */
+}
+
+main {
+ min-height: 100vh; /* will cover the 100% of viewport */
+ overflow: hidden;
+ display: block;
+ position: relative;
+ padding-bottom: 50px; /* height of your footer */
+}
+
+footer{
+  background-color: #f0f0f4;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 35px;
+  text-align: center;
+  color: #333333;
+  position: absolute;
+}
+
+footer p {
+    padding: 10.5px;
+    margin: 0px;
+    line-height: 100%;
 }
 
 
