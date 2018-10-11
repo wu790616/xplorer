@@ -217,8 +217,15 @@
     var url = document.location.toString();
     if (url.match('#')) {
       $('#personal-tabs a[href="#' + url.split('#')[1] + '"]').tab('show');
+      $(window).scrollTop($('#personal-alltab').offset().top - 80);
     } else {
       $('#personal-tabs a[href="#' + "posted_issues" + '"]').tab('show');
     }
+
+    // Change hash for page-reload
+    $('#personal-tabs a').on('shown.bs.tab', function (e) {
+      window.location.hash = e.target.hash;
+      $(window).scrollTop($('#personal-alltab').offset().top - 80);
+    })
   });
 </script>
