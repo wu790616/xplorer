@@ -1,5 +1,5 @@
 
-<div class="container">
+<div class="container" id="personal-show">
   <div class="row">
     <div class="col-md-12 col-lg-12">
       <div class="well profile custom-well row">
@@ -83,12 +83,12 @@
   </div>
 </div>
 
-<div class="container" style="padding-bottom: 10px">
+<div class="container" style="padding-bottom: 10px" id="personal-alltab" >
   <div class="row">
-    <div data-spy="scroll" class="tabbable-panel">
+    <div data-spy="scroll" class="tabbable-panel" >
       <div class="tabbable-line">
-        <ul class="nav nav-tabs ">
-          <li class="active">
+        <ul class="nav nav-tabs" id="personal-tabs">
+          <li>
             <a href="#posted_issues" data-toggle="tab">
             已發布議題 </a>
           </li>
@@ -210,4 +210,15 @@
   var topics = <%= raw(@map_topics.to_json) %>
   var links  = <%= raw(@map_links.to_json) %>
   xmap(topics, links, 1, width, height);
+
+  // Anchor for bookmarked issues and Xmap
+  $(document).on("turbolinks:load", function(){ 
+    // Javascript to enable link to tab
+    var url = document.location.toString();
+    if (url.match('#')) {
+      $('#personal-tabs a[href="#' + url.split('#')[1] + '"]').tab('show');
+    } else {
+      $('#personal-tabs a[href="#' + "posted_issues" + '"]').tab('show');
+    }
+  });
 </script>
