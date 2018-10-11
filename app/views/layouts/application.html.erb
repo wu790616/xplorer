@@ -12,68 +12,73 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="/topics">XPLORER</a>
-        </div>
+    <header>
+      <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/topics">XPLORER</a>
+          </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav navbar-right">
-            <% if current_user %>
-              <li class="active"><%= link_to('新增議題', new_issue_path) %> <span class="sr-only">(current)</span></li>
-              <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">個人 <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><%= link_to('個人檔案', user_path(current_user)) %></li>
-                <li><%= link_to('修改密碼', edit_user_registration_path) %></li>
-                <li><%= link_to('登出', destroy_user_session_path, method: :delete) %></li>
-                <li role="separator" class="divider"></li>
-                <li><%= link_to('通知', user_notifications_path(current_user)) %></li>
-              </ul>
-            </li>
-            <% else %>
-            <ol class="custom-breadcrumb">
-              <li><%= link_to('註冊', new_user_registration_path)%></li>
-              <li><%= link_to('登入', new_user_session_path) %></li>
-            </ol>
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+              <% if current_user %>
+                <li class="active"><%= link_to('新增議題', new_issue_path) %> <span class="sr-only">(current)</span></li>
+                <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">個人 <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><%= link_to('個人檔案', user_path(current_user)) %></li>
+                  <li><%= link_to('修改密碼', edit_user_registration_path) %></li>
+                  <li><%= link_to('登出', destroy_user_session_path, method: :delete) %></li>
+                  <li role="separator" class="divider"></li>
+                  <li><%= link_to('通知', user_notifications_path(current_user)) %></li>
+                </ul>
+              </li>
+              <% else %>
+              <ol class="custom-breadcrumb">
+                <li><%= link_to('註冊', new_user_registration_path)%></li>
+                <li><%= link_to('登入', new_user_session_path) %></li>
+              </ol>
+              <% end %>
+            </ul>
+            <!-- 搜尋 -->
+            <%= form_tag search_topics_path, method: :get, class: "navbar-form navbar-right", role: "search" do %>
+                <%= text_field_tag :search, params[:search], placeholder: "搜尋", class: "form-control" %>
+                <%= submit_tag "送出", name: nil, class: "btn btn-default" %>
             <% end %>
-          </ul>
-          <!-- 搜尋 -->
-          <%= form_tag search_topics_path, method: :get, class: "navbar-form navbar-right", role: "search" do %>
-              <%= text_field_tag :search, params[:search], placeholder: "搜尋", class: "form-control" %>
-              <%= submit_tag "送出", name: nil, class: "btn btn-default" %>
-          <% end %>
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
-    </nav>
-    <% if flash[:notice] %>
-      <div class="alert alert-info alert-dismissible" role="alert">
-        <%= notice %>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-    <% end %>
-    <% if flash[:alert] %>
-      <div class="alert alert-warning alert-dismissible" role="alert">
-        <%= alert %>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-    <% end %>
-    <%= yield %>
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+      </nav>
+      <% if flash[:notice] %>
+        <div class="alert alert-info alert-dismissible" role="alert">
+          <%= notice %>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      <% end %>
+      <% if flash[:alert] %>
+        <div class="alert alert-warning alert-dismissible" role="alert">
+          <%= alert %>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      <% end %>
+    </header>
+    <main>
+      <%= yield %>
+    </main>
     <footer>
       <p>© 2018 Xplorer</p>
     </footer>
   </body>
+  
 </html>
