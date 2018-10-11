@@ -160,7 +160,7 @@ $ redis-server
 * Rails 5.2.1
 * Authentication and OAuth: [Devise](https://github.com/plataformatec/devise), [Omniauth Facebook](https://github.com/mkdynamic/omniauth-facebook), [Omniauth Google Oauth2](https://github.com/zquestz/omniauth-google-oauth2)
 * User Activity: [Ahoy](https://github.com/ankane/ahoy)
-* Editor: [Ckeditor](https://github.com/galetahub/ckeditor)
+* Editor: [Ckeditor](https://github.com/galetahub/ckeditor), [Iframely](https://iframely.com/)
 * Pagination: [Kaminari](https://github.com/kaminari/kaminari)
 * Uploader: [CarrierWave](https://github.com/carrierwaveuploader/carrierwave)
 * HTTP client and tools: [REST Client](https://github.com/rest-client/rest-client)
