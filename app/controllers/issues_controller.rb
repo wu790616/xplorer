@@ -32,6 +32,9 @@ class IssuesController < ApplicationController
   end
 
   def edit
+    if @issue.user != current_user
+      redirect_to issue_path(@issue)
+    end
   end
 
   def destroy

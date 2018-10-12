@@ -85,6 +85,9 @@ gem 'ransack', github: 'activerecord-hackery/ransack'
 # gem for task schedule
 gem 'whenever', require: false
 
+# gem for sanitize
+gem 'sanitize'
+
 group :production do
   # for heroku deploy
   # gem 'pg'
