@@ -30,15 +30,18 @@ class TopicsController < ApplicationController
     @map_topics = []
     @map_links = []
     topics.count.times do |i|
-      if current_user
-        if current_user.followingtopic?(topics[i])
-          @map_topics.push({name: topics[i].name, base: topics[i].id, center: topics[i].id, from: topics[i].id, page: 0, strength: 200, status: 10})
-        else
-          @map_topics.push({name: topics[i].name, base: topics[i].id, center: topics[i].id, from: topics[i].id, page: 0, strength: 200, status: 4})
-        end
-      else
-        @map_topics.push({name: topics[i].name, base: topics[i].id, center: topics[i].id, from: topics[i].id, page: 0, strength: 200, status: 8})
-      end
+      status =  if current_user
+                  if current_user.followingtopic?(topics[i])
+                    10
+                  else
+                    4
+                  end
+                else
+                  8
+                end
+      
+      @map_topics.push({name: topics[i].name, base: topics[i].id, center: topics[i].id, from: topics[i].id, page: 0, strength: 200, status: status})
+      
       topics.count.times do |j|
         link = XplorerMap.where(from_id: topics[i].id, to_id: topics[j].id).first
         if(link == nil)
